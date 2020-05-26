@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "67617613263",
+    "firebase_url": "https://spanish-translator-24aeb.firebaseio.com",
+    "project_id": "spanish-translator-24aeb",
+    "storage_bucket": "spanish-translator-24aeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67617613263:android:6576954ebde2062baf9eba",
+        "android_client_info": {
+          "package_name": "com.english.french"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1ywBfUH9zMAOzTbiqMsexkB5VMKaoTGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67617613263:android:19fce456a7542d9aaf9eba",
+        "android_client_info": {
+          "package_name": "com.haiti.haitec.haiticode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1ywBfUH9zMAOzTbiqMsexkB5VMKaoTGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67617613263:android:9f23299067677e78af9eba",
+        "android_client_info": {
+          "package_name": "com.spanish.english.spanish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1ywBfUH9zMAOzTbiqMsexkB5VMKaoTGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67617613263:android:ab07f298b6131d9aaf9eba",
+        "android_client_info": {
+          "package_name": "translator.english.french.haiti.com.french_translator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1ywBfUH9zMAOzTbiqMsexkB5VMKaoTGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67617613263-mti7vih77kcmh5e2mhlcsmfn0ins8rbs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

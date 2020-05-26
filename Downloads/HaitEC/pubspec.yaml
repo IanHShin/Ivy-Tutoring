@@ -1,0 +1,46 @@
+name: first_app
+description: A new Flutter application.
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+   sdk: flutter
+  flutter_plugin_tts: ^1.0.2
+  grouped_buttons: ^1.0.4
+  translator: ^0.1.2
+  url_launcher: ^5.1.2
+  share: ^0.6.2+1
+  flutter_screenutil: ^0.6.0
+  intl: ^0.16.0
+  toast: ^0.1.5
+  sticky_header_list: ^1.0.6
+  firebase_admob: ^0.9.3+2
+  random_words: ^1.0.2
+  firebase_messaging: ^6.0.13
+  firebase_auth: ^0.16.0
+  firebase_core: ^0.4.4+3
+  video_player:
+
+  cupertino_icons: ^0.1.2
+  rflutter_alert:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+  assets:
+   -  images/
+
+  fonts:
+     - family: Pacifico
+       fonts:
+       - asset: fonts/Pacifico-Regular.ttf
+
