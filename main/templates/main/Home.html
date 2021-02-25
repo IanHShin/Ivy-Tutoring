@@ -1,0 +1,60 @@
+{% load static %}
+<head>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+</head>
+
+{%include "main\HeadNav.html" %}
+
+<div class="parallax-container">
+    <div class="parallax">
+        <img src="{%static 'media\Tutor.jpg' %}" class = "responsive-img">
+                <h1 class="ml131">Ivy Tutoring</h1>
+    </div>
+</div>
+<center><h1>TEXT TEXT TEXT TEXT TEXT</h1></center>
+<center><h1>TEXT TEXT TEXT TEXT TEXT</h1></center>
+<center><h1>TEXT TEXT TEXT TEXT TEXT</h1></center>
+<center><h1>TEXT TEXT TEXT TEXT TEXT</h1></center>
+<center><h1>TEXT TEXT TEXT TEXT TEXT</h1></center>
+
+<script>
+$(document).ready(function(){
+    $('.parallax').parallax();
+});
+  var textWrapper = document.querySelector('.ml131');
+  textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+  anime.timeline({loop: false})
+    .add({
+      targets: '.ml131 .letter',
+      translateY: [100,0],
+      translateZ: 0,
+      opacity: [0,1],
+      easing: "easeOutExpo",
+      duration: 6000,
+      delay: (el, i) => 300 + 30 * i
+    })
+</script>
+<style>
+    
+    .ml131{
+        position:absolute;
+        font-size: 6em;
+        color:white;
+        letter-spacing:1px;
+        width:100%;
+        text-align:center;
+        top:40%;
+    }
+
+</style>
