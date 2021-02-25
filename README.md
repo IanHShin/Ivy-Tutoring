@@ -6,6 +6,7 @@ mkdir IvyTutor (you can name this whatever)
 cd IvyTutor
 ``` 
 ** Its important to note, that Python should be > Python 3.8.0
+
 We will now create a virtual enviroment. Do this by running in "IvyTutor" folder..
 ```bash
 python -m venv env 
