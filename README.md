@@ -1,4 +1,4 @@
-#Setup 
+# Setup 
 Open terminal, and make a folder for you project.
 ```bash
 cd Documents 
