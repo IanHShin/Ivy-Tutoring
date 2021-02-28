@@ -1,0 +1,15 @@
+{% include "main\HeadNav.html" %}
+<div class= "RegBlock">
+    <form method = "POST">
+        {% csrf_token %}
+        {{ form.as_p }} 
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+</div>
+<style>
+    div.RegBlock{
+        position:relative;
+        top:50px;
+        margin-left:.5%;
+    }
+</style>

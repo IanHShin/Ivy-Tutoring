@@ -1,0 +1,25 @@
+{%include "main\HeadNav.html" %}
+<div class="LogBlock">
+    <form method = "POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class = "btn" style= "background-color:cc0033; color:white"
+        type= "submit">Login</button>
+    </form>
+</div>
+
+<p class = "OptReg">If you do not have an account <a href= "signup/tutor">Sign Up!</a></p>
+
+<style>
+    div.LogBlock{
+        position:relative;
+        top:50px;
+        margin-left:.5%;
+    }
+    p.OptReg{
+        position:relative;
+        top:50px;
+        margin-left:.5%;
+        font-size:20px;
+    }
+</style>
