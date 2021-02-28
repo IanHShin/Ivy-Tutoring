@@ -8,6 +8,9 @@ app_name = 'main'
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
+    path("signup/tutor", views.TutorReg, name = "TutorReg"),
+    path("login", views.UserLogin, name = "Login"),
+    path("logout/", views.logout_request, name = "logout")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
