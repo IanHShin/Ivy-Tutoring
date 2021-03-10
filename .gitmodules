@@ -1,0 +1,6 @@
+[submodule "Downloads/hcp2bids"]
+	path = Downloads/hcp2bids
+	url = https://github.com/niniko1997/hcp2bids.git
+[submodule "hcp2bids"]
+	path = hcp2bids
+	url = https://github.com/niniko1997/hcp2bids.git
