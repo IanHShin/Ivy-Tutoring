@@ -16,7 +16,9 @@ def homepage(request):
     return render(request=request,
                   template_name='main/Home.html')
 
-
+def services(request):
+	return render(request=request,
+                  template_name='main/Services.html')
 
 def TutorReg(request):
 	if request.method == 'POST':
