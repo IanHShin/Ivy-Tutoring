@@ -75,7 +75,7 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+# Database table error try : manage.py migrate --run-syncdb
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -128,3 +128,12 @@ STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static/'),
 )
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# For sendgrid only
+# emailApi = os.getenv('SENDGRID_KEY')
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'apikey' 
+# EMAIL_HOST_PASSWORD = emailApi
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True

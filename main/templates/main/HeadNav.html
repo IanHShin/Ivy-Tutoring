@@ -13,18 +13,19 @@
             <ul id="nav" class = "right hide-on-med-and-down">
                 {% if user.is_authenticated %}
                     <li><a href = "/"> Home </a></li> 
+                    <li><a href = "/AboutUs"> About us </a></li> 
                     <li><a> {{ user.username }}</a></li>
                     <li><a> Services </a></li>
-                    <li><a href = "Tutor"> Tutor </a></li>
-                    <li><a> Contact </a></li>
-                    <li><a href="logout"> Logout </a></li>
+                    <li><a href = "/Tutor"> Tutor </a></li>
+                    <li><a href = "/Contact/"> Contact </a></li>
+                    <li><a href="/logout"> Logout </a></li>
                 {% else %}
                     <li><a href = "/"> Home </a></li> 
+                    <li><a href = "/AboutUs"> About us </a></li> 
                     <li><a href= "/Services"> Services </a></li>
-                    <li><a href = "Tutor"> Tutor </a></li>
-                    <li><a> Contact</a></li>
-                    <li><a href = "/AboutUs"> About Us </a></li>
-                    <li><a href = "Applicant">Career</a></li>
+                    <li><a href = "/Tutor"> Tutor </a></li>
+                    <li><a href = "/Contact/"> Contact </a></li>
+                    <li><a href = "/Applicant">Career</a></li>
                     <li><a href = "/login"> Login </a></li>
                 {% endif %}
                
