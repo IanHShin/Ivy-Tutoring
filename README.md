@@ -19,6 +19,12 @@ After this, run this to activate your virtual enviroment.
 ```bash 
 python env\Scripts\activate 
 ```
+*For Mac use this to activate your virtual enviroment*
+
+```bash
+source env/bin/activate
+``` 
+
 Once this is done, we can navigate to the new "Ivy-Tutoring" folder that we cloned from GitHub. 
 ```bash
 cd Ivy-Tutoring
