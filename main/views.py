@@ -20,6 +20,15 @@ def services(request):
 	return render(request=request,
                   template_name='main/Services.html')
 
+def about(request):
+	aboutUsContext = {
+		"pictureTexts": "Our Story",
+		"learnText": "Learn more about us here"
+	}
+	pictureTexts = ["Our Story", "Learn more about us here" ]
+	
+	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
+
 def TutorReg(request):
 	if request.method == 'POST':
 		form = TutorForm(request.POST)
@@ -51,7 +60,7 @@ def UserLogin(request):
 				login(request,user)
 				return redirect("/")
 	form = AuthenticationForm()
-	return render(request, 'main/Login.html',context = {"form":form})
+	return render(request, 'main/Login.html',context = {"form":form} )
 
 def logout_request(request):
 	logout(request)

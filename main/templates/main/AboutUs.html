@@ -1,0 +1,120 @@
+{% load static %}
+<head>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</head>
+
+{%include "main/HeadNav.html" %}
+
+<div class="parallax-container">
+    <div class="parallax">
+        <img src="{%static 'media\AboutUs.jpg' %}" class = "responsive-img">
+            {{aboutUsContext}}
+                <h1 class="ml131">{{aboutUsContext.pictureTexts}}</h1>
+    </div>
+</div>
+
+<div class = "writingSection">
+    <div class = "container" >
+        <h4 class="" style="text-align:left;"><strong><font color="#a82e2e">Get to know more about us...</font></strong></h4>
+        <hr>
+        <div class = "">
+            <font size = "3">
+                In Home Tutoring in Baltimore, Howard, Montgomery & Anne Arundel Counties in MD
+                We are sometimes asked whether Total Tutoring Services offers a “program.” No, we do not. 
+                In fact, we believe that one-size-fits-all instructional programs can often be part of the problem, rather than the solution.
+                <br>
+                The one-size-fits-all instructional programs that are used by some tutoring services and learning centers are often rigid without consideration for the student’s actual challenges and needs, and can lead to further frustration. With these programs, the tutoring may not relate at all to what your child is working on in school.
+                We believe tutoring should take a different approach and be focused on mastering the student’s school curriculum, based on their particular challenges and needs.
+                <br>
+                Through one-on-one interaction, our tutors can determine a student’s strengths and weaknesses and create an individualized approach to address any problem areas.
+                This approach is flexible and allows the tutor and student to creatively work through challenging subject matters.
+            </font>    
+        </div>
+        <hr>
+        <h4 class="" style="text-align:left;"><font color="black">Our tutors </font></h4>
+        
+        <div class = "">
+            <font size = "3">
+                At Total Tutoring Services our tutors possess exceptional academic qualifications, extensive tutoring experience, and vibrant personalities.
+                Our tutors are certified teachers, experts in their field and accomplished professionals who possess a profound interest in education and working with young people.
+                <br>
+                You will find them to be engaging, patient, intelligent, and above all, passionate about teaching. Total Tutoring is partnered with NCSI, America's number one choice for background checks, to ensure that every tutor on our team meets the guidelines of safety and security.
+                As a result, our tutors are highly qualified and committed to helping students improve not just academically but also personally.
+            </font>
+        </div> 
+
+        <hr>
+
+        <h4 class="" style="text-align:left;"><font color="black">Our director </font></h4>
+            
+        <div>
+            <div class="row">        
+                <div class="col-md-6 col-xs-6 text-right">
+                    <img src="{%static 'media\Director.jpg' %}"  style="height: 400; width: 350;"/>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <p>
+                    <font size = "3">
+                        Total Tutoring Services was founded in 2008 by local educator Kaitlin Gaj.  Kaitlin holds a Masters Degree in Education from Drexel University along with a Bachelors Degree in Finance from Saint Vincent College.
+                        Kaitlin is a former Anne Arundel County classroom teacher with 17+ years in the educational field.  
+                        Kaitlin is extensively involved with every family that receives tutoring from Total Tutoring Services.
+                        <br>
+                        Kaitlin personally conducts the initial consultation, oversees placement, and provides ongoing guidance to all the families with whom she works with.​
+                        For more information on how our tutors can help your child, call us today at 443-604-9358.
+                    </font>
+                </p>
+                </div>
+           </div>
+        </div>
+
+        <hr>
+
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $('.parallax').parallax();
+    });
+      var textWrapper = document.querySelector('.ml131');
+      textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+    
+      anime.timeline({loop: false})
+        .add({
+          targets: '.ml131 .letter',
+          translateY: [100,0],
+          translateZ: 0,
+          opacity: [0,1],
+          easing: "easeOutExpo",
+          duration: 6000,
+          delay: (el, i) => 300 + 30 * i
+        })
+</script>
+<style>
+    
+.ml131{
+        position:absolute;
+        font-size: 6em;
+        color:black;
+        letter-spacing:1px;
+        width:100%;
+        text-align:center;
+        top:40%;
+    }
+
+
+</style>
