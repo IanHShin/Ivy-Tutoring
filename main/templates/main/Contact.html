@@ -1,8 +1,30 @@
-{%include "main/HeadNav.html" %}
-<br>
-<br>
-<form method="POST" class="form-group">
+{% block title %}Contact Us{% endblock %}
+
+
+{% block content %}
+    <form method="POST" class="form-group">
     {% csrf_token %}
-    {{form.as_p}}
+    {% autoescape off %}  
+     <br>
+    {{ form.first_name.label }}
+    {{ form.first_name }}
+    <br>
+    {{ form.last_name.label }}
+    {{ form.last_name }}
+    <br>
+    {{ form.email.label }}
+    {{ form.email }}
+    <br>
+    {{ form.user_type.label }}
+    {{ form.user_type }}
+    <br>
+    {{ form.subject.label }}
+    {{ form.subject }}
+    <br>
+    {{ form.message.label }}
+    {{ form.message }}
+    <br>
+    {% endautoescape %}
     <button type="submit" class="btn btn-success">Submit</button>
-</form>
+    </form>
+{% endblock %}
