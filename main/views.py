@@ -12,9 +12,11 @@ from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError, EmailMessage
 from .forms import *
+from .models import *
 import json
 import os
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 #IanShin -> homepage, logout_request
 #ChenWei -> TutorReg, UserLogin
@@ -160,3 +162,17 @@ class tutorList(ListView):
 	def get_context_data(self,**kwargs):
 		data = super().get_context_data(**kwargs)
 		return data
+def profile(request):
+	return render(request, "main/Profile.html")
+
+def profileEdit(request):
+	form = ProfileForm(instance = request.user)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
+		if form.is_valid():
+			form.save()
+			return redirect("main:Profile")
+		else:
+			form = ProfileForm()
+	context = {'form':form}	
+	return render(request,"main/EditProfile.html", context)

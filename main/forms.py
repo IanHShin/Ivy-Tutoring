@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User,Profile
 from django.forms import Textarea
 
 class TutorForm(UserCreationForm):
@@ -42,3 +42,9 @@ class ContactForm(forms.Form):
 	# user_type = forms.CharField(label='Are You: ', widget=forms.Select(choices=user_choices))
 	subject = forms.CharField(label='Subject')
 	message = forms.CharField(label='Message', widget=forms.Textarea(attrs={"rows":10,"cols":20}),max_length = 500)
+
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = ['pro_pic','descript','intro']
+

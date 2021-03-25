@@ -17,7 +17,11 @@ urlpatterns = [
 	path("Tutor", tutorList.as_view(), name = "Tutor"),
 	path('Contact/', views.ContactUs, name='contactus'),
 	path('activate/<uidb64>/<token>/', views.activate, name='activate'),
-	path("AboutUs", views.about, name="AboutUs")
+	path("AboutUs", views.about, name="AboutUs"),
+	path("Profile",views.profile,name = "Profile"),
+    path("EditProfile", views.profileEdit, name = "EditProfile"),
+    
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
