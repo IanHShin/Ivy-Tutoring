@@ -29,32 +29,40 @@
                         <div class="card-body">
                             <h4>
                                 <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif; font-size:30px;'>
-                                    {{user.first_name}} {{user.last_name}}      
+                                    {{user.first_name}} {{user.last_name}}
+                                    <img class="img" style  = "width:15%;border-radius: 20%;" src="{%static 'media\TutorSticker.png' %}">      
                                 </b>
-                                <div class="card-text" style = "width:400px;max-width:-webkit-fill-available; font-size:16px;">   
-                                    {%render_field request.user.profile.descript %} 
-                                    
+                                
+                                <div class="card-text" style = "width:500px;max-width:-webkit-fill-available; font-size:20px;">   
+                                    {%render_field request.user.profile.descript %}       
                                 </div> 
-                                <li><a href="EditProfile"> Edit </a></li>
                             </h4>
-                             
+                            <li><a href= "EditProfile"> Edit</a></li>
                     </div>
                 </div>
             </div>
-            <hr style = "height:2px;border:none;color:#c0bebe;background-color:#c0bebe;">
+            <hr style = "position:relative; margin-left: auto; margin-right:auto;
+             width: 95%;height:2px;border:none;color:#c0bebe;background-color:#c0bebe;">
         </div>
     </div>
 </body>
+
 <div class = "writingSection">
     <div class = "container" >
-        <div class = "", style = "text-align: left;">
+        <h2> Hi, I'm {{user.first_name}}</h2>
+        <div class = "", style = "text-align: left; color:#5C5C5C;">
             <font size = "5">
-                {{user.profile.intro}}
+                {{user.profile.intro | safe }}
             </font>    
         </div>
 
     </div>
 </div>
+<div class="container-fluid">
+    <h5 style = "line-height:300%; font-weight: bolder; color:#0E7D29;">{{user.first_name}} is verified</h5>
+    <p style = "font-size:20px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
+        that each tutor <br> meets our high standards of trust & excellence.</p>
+  </div>
 
 
 
@@ -67,13 +75,15 @@
         top:70;
         width:45%;
         right:25%;
+        border-radius:4%;   
         height:60%;
     }
     .row{
         margin-left:0;
     }
     .card-img{
-        width:75%;
+        max-width:75%;
+        height:85%;
         border-radius:50%;
         left:15%;
         position:absolute;
@@ -82,10 +92,25 @@
     }
     .writingSection{
         position:relative;
-        bottom:450px;
-        left:300px;
-    }
+        bottom:550px;
+        left:25%;
+        width:70%;
 
+    }
+    .col-sm-5{
+        position:absoulte;
+        height:200;
+        width:100%;
+    }
+    .container-fluid{
+        background-color:#def3ec;
+        position:relative;
+        bottom:50%;
+        left:178;
+        height:17%;
+        width:45%;
+        
+    }
 
     
 </style>

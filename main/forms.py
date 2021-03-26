@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from .models import User,Profile
 from django.forms import Textarea
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from django_summernote.fields import SummernoteTextFormField
 
 class TutorForm(UserCreationForm):
 	date_birth = forms.DateField(label='Date Of Birth', widget = forms.SelectDateWidget(years=range(1900, (int(timezone.localtime().year)))))
@@ -47,4 +49,8 @@ class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ['pro_pic','descript','intro']
+		widgets = {
+            'intro': SummernoteWidget(),
+           
+        }
 

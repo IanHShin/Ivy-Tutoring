@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
 </head>
 {%include "main/HeadNav.html" %}
 
@@ -43,7 +44,7 @@
                         <form method = "POST" action = "" enctype="multipart/form-data">
                             {%csrf_token%}
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
-                                    {{form.as_p}}
+                                    {{ form.as_p|safe }}
                                 </div>
                                     <div>
                                         <input class="btn btn-primary" type="submit">
@@ -58,6 +59,7 @@
         </div>
     </div>
 </body>
+
 
 
 
@@ -102,8 +104,10 @@
         top:10%;
     }
     .card-img{
-        width:50%;
+        max-width:50%;
+        max-height:25%;
         border-radius:50%;
+        border:1.5px solid #c0bebe;
     }
     .col-sm-9{
         max-width:100%;

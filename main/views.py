@@ -162,6 +162,7 @@ class tutorList(ListView):
 	def get_context_data(self,**kwargs):
 		data = super().get_context_data(**kwargs)
 		return data
+
 def profile(request):
 	return render(request, "main/Profile.html")
 
