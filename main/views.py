@@ -127,8 +127,10 @@ def applicant(request): #consider using main_admins. Could be easier for Melissa
 	return render(request,"main/Applicant.html", {"form":form})
 
 def ContactUs(request):
-	sender = os.getenv('SENDER_EMAIL')
-	receiver = os.getenv('RECEIVER_EMAIL') # Permanent Email for M to receive
+	# sender = os.getenv('SENDER_EMAILl')
+	# receiver = "os.getenv('RECEIVER_EMAILl')" # Permanent Email for M to receive
+	sender = "somedomain@mail.com"
+	receiver = "admin@gmail.com"
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		# Get all the data from form
