@@ -11,6 +11,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError, EmailMessage
+from django.contrib.auth.decorators import login_required
+from .decorator import *
 from .forms import *
 from .models import *
 import json
@@ -37,7 +39,7 @@ def about(request):
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
-
+@Check_Login
 def TutorReg(request):
 	if request.method == 'POST':
 		form = TutorForm(request.POST)
@@ -84,6 +86,7 @@ def activate(request, uidb64, token):
 	else:
 		return HttpResponse('Activation Link Invalid!')
 
+@Check_Login
 def UserLogin(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(request, data = request.POST)
@@ -122,8 +125,10 @@ def applicant(request): #consider using main_admins. Could be easier for Melissa
 	return render(request,"main/Applicant.html", {"form":form})
 
 def ContactUs(request):
-	sender = os.getenv('SENDER_EMAIL')
-	receiver = os.getenv('RECEIVER_EMAIL') # Permanent Email for M to receive
+	# sender = os.getenv('SENDER_EMAILl')
+	# receiver = "os.getenv('RECEIVER_EMAILl')" # Permanent Email for M to receive
+	sender = "somedomain@mail.com"
+	receiver = "admin@gmail.com"
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		# Get all the data from form
@@ -163,9 +168,11 @@ class tutorList(ListView):
 		data = super().get_context_data(**kwargs)
 		return data
 
+@login_required(login_url="main:Login")
 def profile(request):
 	return render(request, "main/Profile.html")
-
+	
+@login_required(login_url="main:Login")
 def profileEdit(request):
 	form = ProfileForm(instance = request.user)
 	if request.method == "POST":
