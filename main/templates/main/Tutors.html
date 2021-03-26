@@ -35,11 +35,19 @@
           </font>    
       </div>
       <hr>
-{% for use in users %}
+{% for use in users%}
 <div class="col s12 m8 offset-m2 l6 offset-l3">
     <div class="card-panel grey lighten-5 z-depth-1">
+      {% if use.profile.pro_pic %} 
+              <img class="card-img" src="{{ use.profile.pro_pic.url }}">
+              {{use.first_name}}{{use.last_name}}
+              <br>
+              {{use.profile.descript}} 
+          {% else %}
+              <img class="card-img" src="{%static 'media/Default.jpg' %}">
+          {% endif %}
       <div class="row valign-wrapper">
-        {{use.first_name}} {{use.last_name}}
+        
       </div>
     </div>
  {%endfor%}   
@@ -81,6 +89,14 @@
       text-align:center;
       top:40%;
   }
-
+.letter{
+  font-family:emoji;
+}
+.card-img{
+        max-width:15%;
+        max-height:25%;
+        border-radius:50%;
+        border:1.5px solid #c0bebe;
+    }
 
 </style>

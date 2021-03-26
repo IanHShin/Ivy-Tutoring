@@ -26,7 +26,8 @@
     <div class = "container" >
         <center><h4>We Tutor <i>ALL</i> Academic Subjects & Tests</h4></center>
         <center><h6>​* Elementary * Middle School * High School * College * Adult * Test Prep  </h6></center>
-        <hr>
+        <br>
+       
     
     </div>
     
@@ -37,9 +38,10 @@
       <div class="row">
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+            <img class="card-img-top" src="{%static 'media\tutor-explaining.png' %}">
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text" style= "text-align: center; font-size:26px;">1 on 1 Tutoring</p>
+              <p class="card-text" style = "text-align:center;">Meet with your handpicked tutor that matches your child's personality, and schedule. We offer personalized workload just for you!</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary">Learn More</button>
@@ -50,9 +52,10 @@
         </div>
         <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <img class="card-img-top" src="{%static 'media\textbooks.png' %}">
                 <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text" style= "text-align: center; font-size:26px;">Variety of Subjects</p>
+                  <p class="card-text" style = "text-align:center;">From Algebra,Calculus,SAT,to History. Ivy Tutroing has an array of subjects and guarantees we can find a tutor for your child!</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Learn More</button>
@@ -63,9 +66,10 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                  <img class="card-img-top" src="{%static 'media\a-plus-test.png' %}">
                   <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text" style= "text-align: center; font-size:26px;">The Right Fit</p>
+              <p class="card-text" style = "text-align:center;">Each student is different, and each tutor is different! Ivy Tutoring strives to find the most fruitful mentor-student relationship</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Learn More</button>
@@ -75,7 +79,7 @@
                 </div>
               </div>
   </div>
-  <hr>
+  <hr style = "height:1.5px;border:none;color:#c0bebe;background-color:#c0bebe;">
 
   <div class="container-fluid">
     <div class="row">
@@ -198,9 +202,20 @@ $(document).ready(function(){
 .card {
     border: none;
     margin-bottom: 24px;
-    -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
-    box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+    -webkit-box-shadow: 0 0 0px 0 rgba(236,236,241,.44);
+    box-shadow: 0 0 0px 0 rgba(236,236,241,.44);
+    background-color: #f8f9fa;
 }
-
-
+.card-img-top{
+  width: 90%;
+  height:280;
+  border-radius:50%;
+}
+.btn-group{
+  position:relative;
+  left:110;
+}
+.letter{
+  font-family:emoji;
+}
 </style>

@@ -22,7 +22,7 @@
                     {% if request.user.profile.pro_pic %} 
                         <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
                     {% else %}
-                        <img class="card-img" src="{%static 'media\Default.jpg' %}">
+                        <img class="card-img" src="{%static 'media/Default.jpg' %}">
                     {% endif %}
                 </div>
                 <div class="col-sm-7">
@@ -62,6 +62,7 @@
     <h5 style = "line-height:300%; font-weight: bolder; color:#0E7D29;">{{user.first_name}} is verified</h5>
     <p style = "font-size:20px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
         that each tutor <br> meets our high standards of trust & excellence.</p>
+        <img class="shield-img" src="{%static 'media\Shield.png' %}">
   </div>
 
 
@@ -109,7 +110,12 @@
         left:178;
         height:17%;
         width:45%;
-        
+    }
+    .shield-img{
+        position:relative;
+        width:26%;
+        left:80%;
+        bottom:137px;
     }
 
     

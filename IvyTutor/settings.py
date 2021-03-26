@@ -156,6 +156,7 @@ SUMMERNOTE_CONFIG = {
         ],
     }
 }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # For sendgrid only
 # emailApi = os.getenv('SENDGRID_KEY')
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
