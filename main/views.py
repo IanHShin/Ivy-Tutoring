@@ -140,7 +140,7 @@ def ContactUs(request):
 			# user_type = form.cleaned_data.get('user_type')
 			email = form.cleaned_data.get('email')
 			message = form.cleaned_data.get('message')
-			content = f"First Name: {first_name}\nLast Name: {last_name}\nEmail: {email}\nUser: {user_type}\nMessage: {message}"
+			content = f"First Name: {first_name}\nLast Name: {last_name}\nEmail: {email}\nMessage: {message}"
 			try: 
 				send_mail(subject,  content, sender, [receiver]) #We will only use this during development. CLI for confirmation
 			except BadHeaderError: #Prevents header injection
