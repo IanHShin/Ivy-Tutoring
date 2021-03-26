@@ -11,10 +11,13 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError, EmailMessage
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from .models import *
+from .decorator import *
 import json
 import os
+
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -38,6 +41,7 @@ def about(request):
 	
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
 
+@Check_Login
 def TutorReg(request):
 	if request.method == 'POST':
 		form = TutorForm(request.POST)
@@ -84,6 +88,7 @@ def activate(request, uidb64, token):
 	else:
 		return HttpResponse('Activation Link Invalid!')
 
+@Check_Login
 def UserLogin(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(request, data = request.POST)
@@ -163,9 +168,11 @@ class tutorList(ListView):
 		data = super().get_context_data(**kwargs)
 		return data
 
+@login_required(login_url="main:Login")
 def profile(request):
 	return render(request, "main/Profile.html")
 
+@login_required(login_url="main:Login")
 def profileEdit(request):
 	form = ProfileForm(instance = request.user)
 	if request.method == "POST":
