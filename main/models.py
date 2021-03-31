@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    date_birth = models.DateField(null=True)
-    user_type = models.IntegerField(null=True)
-    email_confirm = models.BooleanField(default=False)
+	email_confirm = models.BooleanField(default=False)
+	admin_approval = models.BooleanField(default=False)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete = models.CASCADE,default= None)
