@@ -1,0 +1,8 @@
+{% autoescape off %} 
+Someone register for Ivy Tutoring and already confirm their email
+Please confirm the following name is one of the tutor, if so, click the link to approve registration 
+First Name: {{ user.first_name }}, Last Name: {{ user.last_name }}  
+Click on the link below to confirm username:{{ user.username }} registration,
+http://{{ domain }}{% url 'main:approve' uidb64=uid token=token %}  
+Please ignore this email if you don't know {{ user.username }}.  
+{% endautoescape %}

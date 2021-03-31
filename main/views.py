@@ -39,13 +39,15 @@ def about(request):
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
+
 @Check_Login
 def TutorReg(request):
 	if request.method == 'POST':
 		form = TutorForm(request.POST)
 		if form.is_valid():
 			user = form.save()
-			sender = os.getenv('SENDER_EMAIL')
+			# sender = os.getenv('SENDER_EMAIL')
+			sender = "admin@testmail.com"
 			receiver = form.cleaned_data.get('email')
 			# Get the current site
 			current_site = get_current_site(request)
@@ -78,13 +80,44 @@ def activate(request, uidb64, token):
 	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
 		user = None
 	if user is not None and default_token_generator.check_token(user, token):
-		user.is_active = True
 		user.email_confirm = True
-		addGroup(user)
 		user.save()
+		sender = "admin@testmail.com"
+		receiver = "admin@testmail.com"
+		# Get the current site
+		current_site = get_current_site(request)
+		# Subject of the activate email
+		subject = 'Activate Your Ivy Tutoring Account'
+		# Message
+		message = render_to_string('main/admin_approval.html', {
+			'user': user,
+			'domain': current_site.domain,
+			'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+			'token': default_token_generator.make_token(user),
+		})
+			# Send Email
+		email = EmailMessage(subject, message, from_email=sender, to=[receiver])
+		email.send()
 		return HttpResponse('Email Confirmed')
 	else:
 		return HttpResponse('Activation Link Invalid!')
+
+# When admin click on the link, the tutor will finally have access to site
+def approval(request, uidb64, token):
+	UserModel = get_user_model()
+	try:
+		uid = urlsafe_base64_decode(uidb64).decode()
+		user = UserModel._default_manager.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+	if user is not None and default_token_generator.check_token(user, token):
+		user.is_active = True
+		user.admin_approval = True
+		addGroup(user)
+		user.save()
+		return HttpResponse('User Approved')
+	else:
+		return HttpResponse('Link Expired')
 
 @Check_Login
 def UserLogin(request):
@@ -145,7 +178,7 @@ def ContactUs(request):
 				send_mail(subject,  content, sender, [receiver]) #We will only use this during development. CLI for confirmation
 			except BadHeaderError: #Prevents header injection
 				return HttpResponse("Invalid Header Found")
-			return redirect("main:homepage")
+		return redirect("main:homepage")
 	else:
 		form = ContactForm()
 		return render(request, 'main/Contact.html', {'form': form})

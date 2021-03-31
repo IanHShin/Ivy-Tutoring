@@ -9,15 +9,15 @@ from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_summernote.fields import SummernoteTextFormField
 
 class TutorForm(UserCreationForm):
-	date_birth = forms.DateField(label='Date Of Birth', widget = forms.SelectDateWidget(years=range(1900, (int(timezone.localtime().year)))))
+	# date_birth = forms.DateField(label='Date Of Birth', widget = forms.SelectDateWidget(years=range(1900, (int(timezone.localtime().year)))))
 
 	class Meta:
 		model = User
-		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'date_birth']
+		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name']
 
 	def save(self, commit=True):
 		tutor = super(TutorForm, self).save(commit=False)
-		tutor.user_type = 1
+		# tutor.user_type = 1
 		tutor.is_active = False
 		if commit:
 			tutor.save()

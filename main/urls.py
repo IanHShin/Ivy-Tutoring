@@ -1,9 +1,11 @@
 from django.urls import path
-from . import views
+from django.contrib.auth import views as authen_views
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from .views import tutorList
+from . import views
+
 
 app_name = 'main'
 
@@ -17,10 +19,10 @@ urlpatterns = [
 	path("Tutor", tutorList.as_view(), name = "Tutor"),
 	path('Contact/', views.ContactUs, name='contactus'),
 	path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+	path('approval/<uidb64>/<token>/', views.approval, name='approve'),
 	path("AboutUs", views.about, name="AboutUs"),
 	path("Profile",views.profile,name = "Profile"),
-    path("EditProfile", views.profileEdit, name = "EditProfile"),
-    
+    path("EditProfile", views.profileEdit, name = "EditProfile"),    
 
 ]
 if settings.DEBUG:
