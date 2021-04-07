@@ -28,3 +28,42 @@
     <button type="submit" class="btn btn-success">Submit</button>
     </form>
 {% endblock %}
+{%include "main/HeadNav.html" %}
+
+
+<body>
+    <h4 class="" style="text-align:center;"><strong><font color="#a82e2e">Contact Us!</font></strong></h4>
+        <div class = "", style = "text-align: center; position:relative; top:70;">
+            <font size = "5">
+                Whether you want to find out more about our services, find a position as tutor, or simply have a question...
+                <br>
+                Reach out!                
+            </font>    
+        </div>
+            
+    <div class="container bcontent">
+        <div class="card">
+            <form method="POST" class="form-group">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>  
+
+</body>
+
+<style>
+    h4{
+        position:relative;
+        top:50;
+    }
+    .container{
+        width:70%;
+        position:relative;
+        top:10%;
+    }
+    
+
+
+</style>

@@ -13,13 +13,224 @@
 <br>
 <a class="btn btn-primary" href="/login">Login</a>
 <br>
+<head>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
 
   <section class="section">
     <div class="container">
       <button class="button is-primary" id="submitBtn">Purchase!</button>
-    </div>
   </section>
 
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="{% static 'main.js' %}"></script>
+</div>
+<div>
+    <div class = "container" >
+        <center><h4>We Tutor <i>ALL</i> Academic Subjects & Tests</h4></center>
+        <center><h6>​* Elementary * Middle School * High School * College * Adult * Test Prep  </h6></center>
+        <br>
+       
+    
+    </div>
+    
+</div>
+<div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="{%static 'media\tutor-explaining.png' %}">
+            <div class="card-body">
+              <p class="card-text" style= "text-align: center; font-size:26px;">1 on 1 Tutoring</p>
+              <p class="card-text" style = "text-align:center;">Meet with your handpicked tutor that matches your child's personality, and schedule. We offer personalized workload just for you!</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href = "/Contact"  class="btn btn-sm btn-outline-secondary" role= 'button'>Learn More</button></a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{%static 'media\textbooks.png' %}">
+                <div class="card-body">
+                  <p class="card-text" style= "text-align: center; font-size:26px;">Variety of Subjects</p>
+                  <p class="card-text" style = "text-align:center;">From Algebra,Calculus,SAT,to History. Ivy Tutroing has an array of subjects and guarantees we can find a tutor for your child!</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href = "/Services"  class="btn btn-sm btn-outline-secondary" role= 'button'>Learn More</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="{%static 'media\a-plus-test.png' %}">
+                  <div class="card-body">
+                    <p class="card-text" style= "text-align: center; font-size:26px;">The Right Fit</p>
+              <p class="card-text" style = "text-align:center;">Each student is different, and each tutor is different! Ivy Tutoring strives to find the most fruitful mentor-student relationship</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <a href = "/Tutor"  class="btn btn-sm btn-outline-secondary" role= 'button'>Learn More</button></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  </div>
+  <hr style = "height:1.5px;border:none;color:#c0bebe;background-color:#c0bebe;">
+
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <center><h2>Our Process</h2></center>
+    
+                    <div class="hori-timeline" dir="ltr">
+                        <ul class="list-inline events">
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <h5 class="font-size-16">1. Search</h5>
+                                    <p class="text-muted">Look for in-person or online tutoring. Need help? Request a tutor and we'll have them contact you.</p>
+                                </div>
+                            </li>
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <h5 class="font-size-16">2. Select</h5>
+                                    <p class="text-muted">Our tutor profiles include education, qualifications, and a tutor bio.</p>
+                                </div>
+                            </li>
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <h5 class="font-size-16">3. Schedule</h5>
+                                    <p class="text-muted">Contact us to get connected with a tutor and find a time and place that works for everyone. We accommodate all scheduling requests!</p>
+                                </div>
+                            </li>
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <h5 class="font-size-16">4. Study</h5>
+                                    <p class="text-muted">One-on-one tutoring is the most effective way to learn. Ivy Tutoring handles all the behind the scenes stuff so that you can concentrate on what's important.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+    </div>
+
+
+  <div>
+    <div class = "container" >
+        <center><h5><i>Our Tutors are Ready to Help Your Child Succeed!</i></h5></center>
+        <center><h5><i>Call Us Today at 123-456-7890 to Get Started!</i></h5></center>
+    
+    </div>
+
+</div> 
+
+
+<script>
+$(document).ready(function(){
+    $('.parallax').parallax();
+});
+  var textWrapper = document.querySelector('.ml131');
+  textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+  anime.timeline({loop: false})
+    .add({
+      targets: '.ml131 .letter',
+      translateY: [100,0],
+      translateZ: 0,
+      opacity: [0,1],
+      easing: "easeOutExpo",
+      duration: 6000,
+      delay: (el, i) => 300 + 30 * i
+    })
+</script>
+<style>
+    
+.ml131{
+        position:absolute;
+        font-size: 6em;
+        color:white;
+        letter-spacing:1px;
+        width:100%;
+        text-align:center;
+        top:40%;
+    }
+.hori-timeline .events {
+    border-top: 3px solid #e9ecef;
+}
+.hori-timeline .events .event-list {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding-top: 70px;
+    margin-right: 0;
+}
+.hori-timeline .events .event-list:before {
+    content: "";
+    position: absolute;
+    height: 36px;
+    border-right: 2px dashed #dee2e6;
+    top: 0;
+}
+.hori-timeline .events .event-list .event-date {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    right: 0;
+    width: 75px;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+@media (min-width: 2000px) {
+    .hori-timeline .events .event-list {
+        display: inline-block;
+        width: 24%;
+        padding-top: 45px;
+    }
+    .hori-timeline .events .event-list .event-date {
+        top: -12px;
+    }
+}
+.card {
+    border: none;
+    margin-bottom: 24px;
+    -webkit-box-shadow: 0 0 0px 0 rgba(236,236,241,.44);
+    box-shadow: 0 0 0px 0 rgba(236,236,241,.44);
+    background-color: #f8f9fa;
+}
+.card-img-top{
+  width: 90%;
+  height:280;
+  border-radius:50%;
+}
+.btn-group{
+  position:relative;
+  left:110;
+}
+.letter{
+  font-family:emoji;
+}
+</style>

@@ -1,8 +1,53 @@
-{%include "main/HeadNav.html" %}
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+{% load static %}
+<head>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+{%include "main/HeadNav.html" %}
+
+<div class="parallax-container">
+    <div class="parallax">
+        <img style = "bottom:163px;" src="{%static 'media\Books.jpg' %}" class = "responsive-img">
+                <h1 class="ml131">Services</h1>
+    </div>
+</div>
+
+    <div class = "writingSection">
+      <div class = "container" >
+          <h4 class="" style="text-align:center;">
+            <br>
+            <strong><font color="#a82e2e">We provide tutoring for all subjects from the best Pre K-College educators! 
+            </font>
+            <br>
+            <br>
+            <br>
+            <i>Individualized education programs customized to your specific needs, taught by experienced education professionals.</i>
+            </strong></h4>
+            <!--Ignore these <br> doing this as a temp solution.-->
+            <br>
+            <br>
+            <br>
+            <br>
+            <a href = "/Contact"  class="btn btn-sm btn-outline-secondary" role= 'button' style = "position:relative;left:40%;">
+              Contact Us!</button></a>
+      
+      </div>
+    </div>
+
+<div class="album py-5 bg-light">
+  <div class="container">
 
 <div style="margin:80px">
     <h1>Services</h1>
@@ -65,9 +110,41 @@
           
     </div>
 </div>
+</div>
+</div>
 
-
+<script>
+  $(document).ready(function(){
+      $('.parallax').parallax();
+  });
+    var textWrapper = document.querySelector('.ml131');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+  
+    anime.timeline({loop: false})
+      .add({
+        targets: '.ml131 .letter',
+        translateY: [100,0],
+        translateZ: 0,
+        opacity: [0,1],
+        easing: "easeOutExpo",
+        duration: 6000,
+        delay: (el, i) => 300 + 30 * i
+      })
+  </script>
+ 
 <style>
+  .ml131{
+          position:absolute;
+          font-size: 6em;
+          color:rgb(150, 150, 150);
+          letter-spacing:1px;
+          width:100%;
+          text-align:center;
+          top:40%;
+      }
+  .letter{
+    font-family:emoji;  
+  }
     .space{
         height: 100px;
     }
@@ -79,6 +156,14 @@
     .card{
         margin: 5px;
         width: 400px;
+    }
+    .btn{
+      height:7%;
+      font-size:20px;
+      width:18%;
+      text-align:center;
+      line-height:3.5;
+      background-color:#FFD45A;
     }
 
 </style>

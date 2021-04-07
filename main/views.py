@@ -28,6 +28,17 @@ def stripe_config(request):
 	if request.method == 'GET':
 		stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
 		return JsonResponse(stripe_config, safe=False)
+from django.contrib.auth import get_user_model
+from django.views.generic import ListView
+from django.core.mail import send_mail, BadHeaderError, EmailMessage
+from django.contrib.auth.decorators import login_required
+from .decorator import *
+from .forms import *
+from .models import *
+import json
+import os
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 @csrf_exempt
 def create_checkout_session(request):
@@ -81,6 +92,16 @@ def addGroup(user):
 def ContactUs(request):
 	sender = os.getenv('SENDER_EMAIL')
 	receiver = os.getenv('RECEIVER_EMAIL') # Permanent Email for M to receive
+def about(request):
+	aboutUsContext = {
+		"pictureTexts": "Our Story",
+		"learnText": "Learn more about us here"
+	}
+	pictureTexts = ["Our Story", "Learn more about us here" ]
+	
+	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
+@Check_Login
+def TutorReg(request):
 	if request.method == 'POST':
 		form = contactForm(request.POST)
 		if form.is_valid():
@@ -138,6 +159,7 @@ def activate(request, uidb64, token):
 	else:
 		return HttpResponse('Activation link is invalid!')
 
+@Check_Login
 def UserLogin(request):
 	if request.method == 'POST':
 		username = request.POST['username']
@@ -155,6 +177,63 @@ def UserLogin(request):
 			# 	return render(request, 'main/tutor.html')
 		else:
 			return render(request, 'main/login.html')
+		form = AuthenticationForm(request, data = request.POST)
+		if form.is_valid():
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request,user)
+				return redirect("/")
+	form = AuthenticationForm()
+	return render(request, 'main/Login.html',context = {"form":form})
+
+def logout_request(request):
+	logout(request)
+	return redirect("main:homepage")
+
+def applicant(request): #consider using main_admins. Could be easier for Melissa 
+	if request.method == "POST":
+		form = ApplicantForm(request.POST)
+		if form.is_valid():
+			subject = "New Applicant!"
+			body = {
+				'firstName': form.cleaned_data['firstName'],
+				'lastName': form.cleaned_data['lastName'],
+				'emailAddress': form.cleaned_data['emailAddress'],
+				'message':form.cleaned_data['message'],
+			}
+			message = "\n".join(body.values())
+			try: 
+				send_mail(subject,message, "admin@example.com",['admin@example.com']) #We will only use this during development. CLI for confirmation
+			except BadHeaderError: #Prevents header injection
+				return HttpResponse("Invalid Header Found")
+			return redirect("main:homepage")
+	form = ApplicantForm()
+	return render(request,"main/Applicant.html", {"form":form})
+
+def ContactUs(request):
+	# sender = os.getenv('SENDER_EMAILl')
+	# receiver = "os.getenv('RECEIVER_EMAILl')" # Permanent Email for M to receive
+	sender = "somedomain@mail.com"
+	receiver = "admin@gmail.com"
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		# Get all the data from form
+		if form.is_valid():
+			subject = form.cleaned_data.get('subject')
+			first_name = form.cleaned_data.get('first_name')
+			last_name = form.cleaned_data.get('last_name')
+			# For later
+			# user_type = form.cleaned_data.get('user_type')
+			email = form.cleaned_data.get('email')
+			message = form.cleaned_data.get('message')
+			content = f"First Name: {first_name}\nLast Name: {last_name}\nEmail: {email}\nMessage: {message}"
+			try: 
+				send_mail(subject,  content, sender, [receiver]) #We will only use this during development. CLI for confirmation
+			except BadHeaderError: #Prevents header injection
+				return HttpResponse("Invalid Header Found")
+			return redirect("main:homepage")
 	else:
 		return render(request, 'main/login.html')
 
@@ -200,3 +279,28 @@ def UserLogout(request):
 # 		form = TutorForm() 
 # 		return render(request, 'main/signup.html', {'form': form })
 
+class tutorList(ListView):
+	model = User
+	template_name = "main/Tutors.html"
+	context_object_name = "users"
+	
+	def get_context_data(self,**kwargs):
+		data = super().get_context_data(**kwargs)
+		return data
+
+@login_required(login_url="main:Login")
+def profile(request):
+	return render(request, "main/Profile.html")
+	
+@login_required(login_url="main:Login")
+def profileEdit(request):
+	form = ProfileForm(instance = request.user)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
+		if form.is_valid():
+			form.save()
+			return redirect("main:Profile")
+		else:
+			form = ProfileForm()
+	context = {'form':form}	
+	return render(request,"main/EditProfile.html", context)

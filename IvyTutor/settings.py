@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main.apps.MainConfig',
+    'widget_tweaks',
+    'django_summernote',
+    
+    
 ]
 AUTH_USER_MODEL = 'main.User'
 
@@ -54,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'IvyTutor.urls'
+
 
 TEMPLATES = [
     {
@@ -127,8 +132,31 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static/'),
 )
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+#For summer-note only
+SUMMERNOTE_THEME = 'bs4'  
+X_FRAME_OPTIONS = 'ALLOWALL'
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    'iframe': True,
+
+    'summernote': {
+
+        'width': '500px',
+        'height': '200px',
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+           
+        ],
+    }
+}
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # For sendgrid only
 # emailApi = os.getenv('SENDGRID_KEY')
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
