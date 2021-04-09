@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from django.contrib.staticfiles.urls import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from django.conf import settings
 from .views import tutorList
 
@@ -20,10 +19,10 @@ urlpatterns = [
 	path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 	path("AboutUs", views.about, name="AboutUs"),
 	path("Profile",views.profile,name = "Profile"),
-    path("EditProfile", views.profileEdit, name = "EditProfile"),
-    
+	path("EditProfile", views.profileEdit, name = "EditProfile"),
+
 
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+	urlpatterns += static(settings.MEDIA_URL,
+							document_root=settings.MEDIA_ROOT)

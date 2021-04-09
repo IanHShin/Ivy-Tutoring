@@ -1,5 +1,6 @@
 {%include "main/HeadNav.html" %}
 <div class="LogBlock">
+    <p>Login is only available for tutors, please contact us for more information</p>
     {% for message in messages %}
         <p>{{ message }}</p>
     {% endfor %}
@@ -10,7 +11,7 @@
         type= "submit">Login</button>
     </form>
 </div>
-<p class = "OptReg">If you do not have an account <a href= "/signup/tutor">Sign Up!</a></p>
+<!-- <p class = "OptReg">If you do not have an account <a href= "/signup/tutor">Sign Up!</a></p> -->
 
 <style>
     div.LogBlock{
@@ -18,10 +19,10 @@
         top:50px;
         margin-left:.5%;
     }
-    p.OptReg{
+/*    p.OptReg{
         position:relative;
         top:50px;
         margin-left:.5%;
         font-size:20px;
-    }
+    }*/
 </style>

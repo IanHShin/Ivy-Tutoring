@@ -106,7 +106,6 @@ def TutorReg(request, token):
 				for i in errorData:
 					errorMsg = errorData[i][0]['message'] 
 					messages.error(request, errorMsg)
-
 		form = TutorForm() 
 		context = {'form': form }
 		return render(request, 'main/SignUp.html', context)
@@ -120,7 +119,7 @@ def activate(request, uidb64, token):
 	try:
 		uid = urlsafe_base64_decode(uidb64).decode()
 		user = UserModel._default_manager.get(pk=uid)
-	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+	except(TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
 		user = None
 	if user is not None and default_token_generator.check_token(user, token):
 		user.is_active = True
@@ -132,6 +131,7 @@ def activate(request, uidb64, token):
 	else:
 		messages.error(request, "Invalid Link")
 		return redirect("main:homepage")
+
 
 @Check_Login
 def UserLogin(request):

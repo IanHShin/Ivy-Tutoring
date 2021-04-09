@@ -1,6 +1,4 @@
-from django.utils import timezone
 from django import forms
-from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from .models import User,Profile
@@ -12,6 +10,15 @@ class TutorForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name']
+
+	def clean(self):
+		email = self.cleaned_data.get('email')
+		username = self.cleaned_data.get('username')
+		if User.objects.filter(email=email).exists():
+			raise ValidationError("account with that email already exists, reset password if needed.")
+		if User.objects.filter(username=username).exists():
+			raise ValidationError("account with that username already exists, reset password if needed.")
+		return self.cleaned_data
 
 	def save(self, commit=True):
 		tutor = super(TutorForm, self).save(commit=False)
@@ -50,7 +57,7 @@ class ProfileForm(forms.ModelForm):
 		model = Profile
 		fields = ['pro_pic','descript','intro']
 		widgets = {
-            'intro': SummernoteWidget(),
-           
-        }
+			'intro': SummernoteWidget(),
+
+		}
 
