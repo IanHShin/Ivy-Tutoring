@@ -1,3 +1,4 @@
+
 # Setup  
 Open terminal, and make a folder for you project.
 ```bash
@@ -29,7 +30,7 @@ Once this is done, we can navigate to the new "Ivy-Tutoring" folder that we clon
 ```bash
 cd Ivy-Tutoring
 ```
-To download all dependencies simply run this. 
+To download all dependencies simply run this. THIS IS A MUST 
 ```python 
 pip3 install -r requirements.txt 
 (OR)
