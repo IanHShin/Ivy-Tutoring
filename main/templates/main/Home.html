@@ -1,4 +1,18 @@
 {% load static %}
+<h1>Registration</h1>
+<br>
+<a class="btn btn-primary" href="/contact">Contact Us</a>
+<br>
+<a class="btn btn-primary" href="/signup/parent">Parent</a>
+<br>
+<a class="btn btn-primary" href="/signup/student">Student</a>
+<br>
+<a class="btn btn-primary" href="/signup/tutor">Tutor</a>
+<br>
+<h1>Login</h1>
+<br>
+<a class="btn btn-primary" href="/login">Login</a>
+<br>
 <head>
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -14,13 +28,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-{%include "main/HeadNav.html" %}
+  <section class="section">
+    <div class="container">
+      <button class="button is-primary" id="submitBtn">Purchase!</button>
+  </section>
 
-<div class="parallax-container">
-    <div class="parallax">
-        <img src="{%static 'media\Tutor.jpg' %}" class = "responsive-img">
-                <h1 class="ml131">Ivy Tutoring</h1>
-    </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'main.js' %}"></script>
 </div>
 <div>
     <div class = "container" >
