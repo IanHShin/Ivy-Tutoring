@@ -1,3 +1,5 @@
+venv/
+v/
 
-*.pyc
+
 *.pyc
