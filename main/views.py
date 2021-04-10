@@ -37,7 +37,6 @@ def about(request):
 		"learnText": "Learn more about us here"
 	}
 	pictureTexts = ["Our Story", "Learn more about us here" ]
-	
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
 @Check_Login
 def TutorReg(request):
