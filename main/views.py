@@ -12,6 +12,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.views.generic import ListView
 from django.core.mail import send_mail, BadHeaderError, EmailMessage
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt 
+from django.conf import settings
+from django.views.generic.base import TemplateView
+import stripe
 from .decorator import *
 from .forms import *
 from .models import *
@@ -40,6 +44,52 @@ def about(request):
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
+
+@csrf_exempt
+def stripe_config(request):
+	if request.method == 'GET':
+		stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+		return JsonResponse(stripe_config, safe=False)
+
+@csrf_exempt
+def create_checkout_session(request):
+	if request.method == 'GET':
+		domain_url = "http://" + str(get_current_site(request)) + "/"
+		# domain_url = 'http://localhost:8000/'
+		stripe.api_key = settings.STRIPE_SECRET_KEY
+		try:
+			# Create new Checkout Session for the order
+			# Other optional params include:
+			# [billing_address_collection] - to display billing address details on the page
+			# [customer] - if you have an existing Stripe Customer ID
+			# [payment_intent_data] - capture the payment later
+			# [customer_email] - prefill the email input in the form
+			# For full details see https://stripe.com/docs/api/checkout/sessions/create
+			# ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
+			checkout_session = stripe.checkout.Session.create(
+				success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
+				cancel_url=domain_url + 'cancelled/',
+				payment_method_types=['card'],
+				mode='payment',
+				line_items=[
+					{
+						'name': 'test_product',
+						'quantity': 1,
+						'currency': 'USD',
+						'amount': '5000', # in USD
+					}
+				]
+			)
+			return JsonResponse({'sessionId': checkout_session['id']})
+		except Exception as e:
+			return JsonResponse({'error': str(e)})
+
+class SuccessView(TemplateView):
+	template_name = 'main/success.html'
+
+
+class CancelledView(TemplateView):
+	template_name = 'main/cancelled.html'
 
 #Admin User only, decorator to check that required
 @login_required(login_url="main:Login")

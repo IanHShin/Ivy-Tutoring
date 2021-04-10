@@ -20,6 +20,7 @@ urlpatterns = [
 	path("AboutUs", views.about, name="AboutUs"),
 	path("Profile",views.profile,name = "Profile"),
 	path("EditProfile", views.profileEdit, name = "EditProfile"),
+	path("CheckOut/", views.create_checkout_session, name = "CheckOut"),
 
 
 ]
