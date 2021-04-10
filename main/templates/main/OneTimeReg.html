@@ -2,7 +2,12 @@
 
 <form method = "POST">
     {% csrf_token %}
+    <br>
+    <br>
+    <br>
+	{% for message in messages %}
+		<p>{{ message }}</p>
+	{% endfor %}
     {{ form.as_p }} 
-    {{ form.errors }}
     <button type="submit" class="btn btn-success">Submit</button>
 </form>

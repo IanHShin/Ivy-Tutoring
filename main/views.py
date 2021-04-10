@@ -42,32 +42,37 @@ def about(request):
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
 
 #Admin User only, decorator to check that required
+@login_required(login_url="main:Login")
+@Check_Superuser
 def OneTimeReg(request):
 	if request.method == "POST":
 		form = OneTimeRegForm(request.POST)
 		if form.is_valid():
 			sender = "admin@gmail.com"
 			receiver = form.cleaned_data.get('email')
-			# Get the current site
-			current_site = get_current_site(request)
-			# Create custom token
-			token = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 10))
-			OTP.objects.create(token=token)
-			# Subject of the activate email
-			subject = 'Register for your account'
-			# Message
-			message = render_to_string('main/OneTimeLink.html', {
-				'domain': current_site.domain,
-				'token': token,
-			})
-			# Send Email
-			email = EmailMessage(subject, message, from_email=sender, to=[receiver])
-			email.send()
+			if User.objects.filter(email=receiver).exists():
+				messages.error(request, "Account with that email already exists")
+			else:
+				# Get the current site
+				current_site = get_current_site(request)
+				# Create custom token
+				token = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 30))
+				OTP.objects.create(token=token)
+				# Subject of the activate email
+				subject = 'Register for your account'
+				# Message
+				message = render_to_string('main/OneTimeLink.html', {
+					'domain': current_site.domain,
+					'token': token,
+				})
+				# Send Email
+				email = EmailMessage(subject, message, from_email=sender, to=[receiver])
+				email.send()
 	else:
 		form = OneTimeRegForm() 
 		context = {'form': form }
 		return render(request, 'main/OneTimeReg.html', context)
-	return redirect("main:homepage")
+	return redirect("main:OTL")
 
 @Check_Login
 def TutorReg(request, token):

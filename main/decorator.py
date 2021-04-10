@@ -11,7 +11,10 @@ def Check_Login(func):
 	return wrapper
 
 
-# def TBD(func):
-# 	def wrapper(request, *args, **kwargs):
-# 		return redirect("main:homepage")
-# 	return wrapper
+def Check_Superuser(func):
+	def wrapper(request, *args, **kwargs):
+		if not request.user.is_superuser:
+			return redirect("main:homepage")
+		else:
+			return func(request, *args, **kwargs)
+	return wrapper
