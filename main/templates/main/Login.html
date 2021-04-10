@@ -1,15 +1,25 @@
-{% block title %}Login{% endblock %}
+{%include "main/HeadNav.html" %}
+<div class="LogBlock">
+    <form method = "POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class = "btn" style= "background-color:cc0033; color:white"
+        type= "submit">Login</button>
+    </form>
+</div>
 
-{% block content %}
+<p class = "OptReg">If you do not have an account <a href= "/signup/tutor">Sign Up!</a></p>
 
-<form method="POST" class="form-group">
-    {% csrf_token %}
-	<br>
-	<input type="text" id="username" name="username"  placeholder="Username">
-	<br>
-	<input type="password" name="password" id="password" placeholder="Password">
-	<br>
-	<button type="submit" class="btn">Login</button>
-</form>
-
-{% endblock %}
+<style>
+    div.LogBlock{
+        position:relative;
+        top:50px;
+        margin-left:.5%;
+    }
+    p.OptReg{
+        position:relative;
+        top:50px;
+        margin-left:.5%;
+        font-size:20px;
+    }
+</style>
