@@ -38,6 +38,11 @@
                                 </div> 
                             </h4>
                             <li><a href= "EditProfile"> Edit</a></li>
+                            {% if user.is_authenticated %}
+                                {% if user.is_superuser %}
+                                    <li><a href="/OTL">OTL</a></li>
+                                {% endif %}
+                            {% endif %}
                     </div>
                 </div>
             </div>

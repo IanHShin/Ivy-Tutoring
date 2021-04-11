@@ -14,4 +14,5 @@ class Profile(models.Model):
 		return f'{self.user.username} Profile'
 
 class OTP(models.Model):
+	email = models.EmailField(max_length=100, null=True, default=None)
 	token = models.CharField(max_length = 30, null=True, default=None)
