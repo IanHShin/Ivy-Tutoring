@@ -19,6 +19,9 @@
                     <li><a href = "/Tutor"> Tutor </a></li>
                     <li><a href = "/Contact/"> Contact </a></li>
                     <li><a href="/logout"> Logout </a></li>
+                    {% if user.is_superuser %}
+                        <li><a href="/OTL">OTL</a></li>
+                    {% endif %}
                 {% else %}
                     <li><a href = "/"> Home </a></li> 
                     <li><a href = "/AboutUs"> About us </a></li> 

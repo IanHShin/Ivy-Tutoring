@@ -15,7 +15,11 @@
 </head>
 
 {%include "main/HeadNav.html" %}
-
+{% for message in messages %}
+    <script>
+      alert('{{ message }}');
+    </script>
+{% endfor %}
 <div class="parallax-container">
     <div class="parallax">
         <img src="{%static 'media\Tutor.jpg' %}" class = "responsive-img">
