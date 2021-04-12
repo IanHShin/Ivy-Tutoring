@@ -1,28 +1,52 @@
 {%include "main/HeadNav.html" %}
-<div class="LogBlock">
-    <p>Login is only available for tutors, please contact us for more information</p>
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}
-    <form method = "POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button class = "btn" style= "background-color:cc0033; color:white"
-        type= "submit">Login</button>
-    </form>
-</div>
+
+    <div class="card-panel grey lighten-5 z-depth-1">
+    </div>
+
+    <div class = "LogBlock">
+        <hr>   
+        <h5 class="" style="text-align:left;"><strong><font color="#a82e2e">Log in</font></strong></h5>
+        <form method = "POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class = "btn" style= "background-color:cc0033; color:white"
+            type= "submit">Login</button>
+        </form>
+        </div>
+    </div>
+    <div class = "container" style = "width:25%;">
+        <div class="col s12 m2 offset-m2 l6 offset-l3">
+            <div class="card-panel grey lighten-5 z-depth-1" style = "position:relative; left:400px;top:-232px; height:273px; width:250px;">
+                <p>Not a Tutor?</p>
+                <p><a href = "{% url 'main:contactus' %}">Contact Us</a> for more information!</p>
+            <div class="row valign-wrapper">
+            </div>
+            </div>
+        </div>
+    
+
 <!-- <p class = "OptReg">If you do not have an account <a href= "/signup/tutor">Sign Up!</a></p> -->
 
 <style>
-    div.LogBlock{
+    div.card-panel{
         position:relative;
-        top:50px;
-        margin-left:.5%;
+        top:100px;
+        height:355px;
+        left:28%;
+        width:900px;
     }
-/*    p.OptReg{
-        position:relative;
-        top:50px;
-        margin-left:.5%;
-        font-size:20px;
-    }*/
+    div.LogBlock{
+        position:absolute;
+        top:200px;
+        margin-left:30%;
+        width:500px;
+    }
+    hr{
+      height:3px;
+      border:none;
+      width:209.2p;
+      color:#c0bebe;
+      background-color:#c0bebe;
+      
+    }
 </style>

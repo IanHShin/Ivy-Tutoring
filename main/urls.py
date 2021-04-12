@@ -21,6 +21,7 @@ urlpatterns = [
 	path("Profile",views.profile,name = "Profile"),
 	path("EditProfile", views.profileEdit, name = "EditProfile"),
 	path("CheckOut/", views.create_checkout_session, name = "CheckOut"),
+	path("Search_Results/", views.Search_Results,name = "SearchResults"),
 
 
 ]

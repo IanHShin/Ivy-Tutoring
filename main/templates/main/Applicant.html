@@ -1,5 +1,8 @@
 {%include "main/HeadNav.html" %}
 <div style="margin:80px">
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
     <h1>Career</h1>
     <h4>Join our team! We are accepting applications for online tutors!</h4>
     <p>

@@ -1,8 +1,12 @@
+{% load widget_tweaks %}
 {%include "main/HeadNav.html" %}
 
 
 <body>
     <h4 class="" style="text-align:center;"><strong><font color="#a82e2e">Contact Us!</font></strong></h4>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
         <div class = "", style = "text-align: center; position:relative; top:70;">
             <font size = "5">
                 Whether you want to find out more about our services, find a position as tutor, or simply have a question...
@@ -21,19 +25,87 @@
         </div>
     </div>  
 
+    <h2 class="line1" style="text-align:left;"><strong><font color="#000000">Let's Chat</font></strong></h2>
+    <h2 class="line2" style="text-align:left;"><strong><font color="#000000">Whether you have a question, </font></strong></h2>
+    <h2 class="line3" style="text-align:left;"><strong><font color="#000000">or want to be a tutor! </font></strong></h2>
+    <h5 class="line4" style="text-align:left;"><strong><font color="#a82e2e">Lets build something together </font></strong></h5>
+        <div class="container bcontent">
+    
+                <form method="POST" class="form-group">
+                    {% csrf_token %}
+                    <div class="form-label-group">
+                        {% render_field form.first_name placeholder="First Name" class+="form-control"  %}
+                        {% render_field form.last_name placeholder="Last Name" class+="form-control"  %}
+                        {% render_field form.email placeholder="abc123@gmail.com" class+="form-control"  %}
+                        {% render_field form.subject placeholder="Subject" class+="form-control"  %}
+                        {% render_field form.message placeholder="Message" class+="form-control"  %}
+                    </div>
+                    <button type="submit" class="btn btn-success" style = "font-size:18px; margin-top:20px; box-shadow:1px 1px rgb(63, 62, 62);">Send Message</button>
+                </form>
+        
+        </div>  
+    
 </body>
 
-<style>
-    h4{
-        position:relative;
-        top:50;
-    }
-    .container{
-        width:70%;
-        position:relative;
-        top:10%;
-    }
-    
 
+<style>
+    body{
+        background-color:#edf1f1;
+        
+    }
+   
+    .line1{
+        min-width:700px;
+        position:relative;
+        top:27%;
+        left:7%;
+    }
+    .line2{
+        min-width:700px;
+        position:relative;
+        top:25%;
+        left:7%;
+    }
+    .line3{
+        min-width:700px;
+        position:relative;
+        top:23%;
+        left:7%;
+    }
+    .line4{
+        min-width:700px;
+        position:relative;
+        top:23%;
+        left:7%;
+    }
+
+    .container {
+        min-width:700px;
+        width:40%;
+        position:relative;
+        top:-10%;
+        left:25%;
+        border:20px solid white;
+        background-color:white;
+        height:670px;
+
+    }
+    .container input[type="text"] {
+        height:6rem;
+        font-size:22px;
+    }
+    .container input[type = "email"]{
+        height:6rem;
+        font-size:22px
+    }
+    .container textarea{
+        height:10rem;
+        font-size:20px
+    }
+    .container button{
+        width:250px;
+        height:60px;
+        border-radius:10%;
+    }
 
 </style>
