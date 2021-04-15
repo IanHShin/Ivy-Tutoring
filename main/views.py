@@ -17,7 +17,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.db.models import Q
-
 import stripe
 from .decorator import *
 from .forms import *
@@ -125,10 +124,11 @@ def OneTimeReg(request):
 				# Send Email
 				sendEmail(subject, content, sender, receiver)
 				messages.success(request, "Register Email Sent")
+			return HttpResponseRedirect(reverse("main:OTL"))
 	else:
 		form = OneTimeRegForm() 
-		return render(request, 'main/OneTimeReg.html', {'form': form })
-	return redirect("main:OTL")
+	return render(request, 'main/OneTimeReg.html', {'form': form })
+	
 
 @Check_Login
 def TutorReg(request, token):
@@ -143,7 +143,7 @@ def TutorReg(request, token):
 			form = TutorForm(request.POST)
 			if form.is_valid():
 				user = form.save()
-				messages.success(request, user.username + " Account created, " + " Email confirmation has been sent to your email, " + "Please Confirm Email")
+				messages.success(request, user.username + " Account created, Please Confirm Email")
 				sender = "admin@gmail.com"
 				receiver = form.cleaned_data.get('email')
 				# Get the current site
@@ -168,11 +168,43 @@ def TutorReg(request, token):
 					messages.error(request, errorMsg)
 		else:
 			form = TutorForm() 
-			return render(request, 'main/SignUp.html', {'form': form })
+		return render(request, 'main/SignUp.html', {'form': form })
 	else:
 		messages.error(request, "Invalid Link")
 		return redirect("main:homepage")
-		
+
+@Check_Login
+def ResendConfirmation(request):
+	if request.method == 'POST':
+		form = ResendConfirmationForm(request.POST)
+		if form.is_valid():
+			sender = "admin@gmail.com"
+			receiver = form.cleaned_data['email']
+			# Get the current site
+			current_site = get_current_site(request)
+			# Subject of the activate email
+			subject = 'Activate Your Ivy Tutoring Account'
+			# Get user base on the email
+			try:
+				user = User.objects.get(email=receiver)
+			except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+				user = None
+			if user is not None and not user.email_confirm:
+				content = render_to_string('main/activate_email.html', {
+					'user': user,
+					'domain': current_site.domain,
+					'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+					'token': default_token_generator.make_token(user),
+				})
+				# Send Email
+				sendEmail(subject, content, sender, receiver)
+				messages.success(request, "Email Confirmation Resent")
+			else:
+				messages.error(request, "Acount with the email does not exist, or is already confirmed")
+	else:
+		form = ResendConfirmationForm() 
+	return render(request, 'main/Resend.html', {'form': form })
+
 
 # When user click on the link that is sended to their email to activate 
 def activate(request, uidb64, token):
@@ -183,7 +215,6 @@ def activate(request, uidb64, token):
 	except(TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
 		user = None
 	if user is not None and default_token_generator.check_token(user, token):
-		user.is_active = True
 		user.email_confirm = True
 		addGroup(user)
 		user.save()
@@ -200,15 +231,17 @@ def UserLogin(request):
 			username = request.POST['username']
 			password = request.POST['password']
 			user = authenticate(username=username, password=password)
-			if user is not None:
+			if user.is_superuser or (user is not None and user.email_confirm):
 				login(request,user)
-				return redirect("main:homepage")
-		# elif request.user.is_anonymous:
-		# 	messages.error(request, "Email not confirmed")
+				return redirect("main:Profile")
+			elif user is not None and not user.email_confirm:
+				messages.error(request, "Email not confirmed, <a href='/Resend'>Resend Email Confirmation</a>")
+				return HttpResponseRedirect(reverse("main:Login"))
 		else:
 			messages.error(request, "Username or Password Incorrect")
-			return redirect("main:Login")
-	form = AuthenticationForm()
+			return HttpResponseRedirect(reverse("main:Login"))
+	else:
+		form = AuthenticationForm()
 	return render(request, 'main/Login.html',context = {"form":form})
 
 def logout_request(request):
@@ -233,10 +266,11 @@ def applicant(request): #consider using main_admins. Could be easier for Melissa
 				content += "\n" + key + ":\n\t" + value
 			sendEmail(body["subject"], content, sender, receiver)
 			messages.success(request, "Tutor Applcation Received")
+			return HttpResponseRedirect(reverse("main:Applicant"))
 	else:
 		form = ApplicantForm()
-		return render(request,"main/Applicant.html", {"form":form})
-	return redirect("main:Applicant")
+	return render(request,"main/Applicant.html", {"form":form})
+	
 
 def ContactUs(request):
 	# sender = os.getenv('SENDER_EMAILl')
@@ -261,10 +295,11 @@ def ContactUs(request):
 				content += "\n" + key + ":\n\t" + value
 			sendEmail(body["subject"], content, sender, receiver)
 			messages.success(request, "Contact form sent, please allow 24 hours for us to reply.")
+			return HttpResponseRedirect(reverse("main:contactus"))
 	else:
 		form = ContactForm()
-		return render(request, 'main/Contact.html', {'form': form})
-	return redirect("main:contactus")
+	return render(request, 'main/Contact.html', {'form': form})
+	
 
 def addGroup(user):
 	if Group.objects.filter(name='Tutor'):

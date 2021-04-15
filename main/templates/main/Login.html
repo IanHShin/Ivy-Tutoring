@@ -6,6 +6,9 @@
     <div class = "LogBlock">
         <hr>   
         <h5 class="" style="text-align:left;"><strong><font color="#a82e2e">Log in</font></strong></h5>
+        {% for message in messages %}
+            <p>{{ message|safe }}</p>
+        {% endfor %}
         <form method = "POST">
             {% csrf_token %}
             {{form.as_p}}
