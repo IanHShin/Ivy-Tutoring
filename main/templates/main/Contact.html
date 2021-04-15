@@ -8,7 +8,9 @@
     <h2 class="line3" style="text-align:left;"><strong><font color="#000000">or want to be a tutor! </font></strong></h2>
     <h5 class="line4" style="text-align:left;"><strong><font color="#a82e2e">Lets build something together </font></strong></h5>
         <div class="container bcontent">
-    
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
                 <form method="POST" class="form-group">
                     {% csrf_token %}
                     <div class="form-label-group">

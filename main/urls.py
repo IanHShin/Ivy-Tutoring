@@ -22,6 +22,7 @@ urlpatterns = [
 	path("EditProfile", views.profileEdit, name = "EditProfile"),
 	path("CheckOut/", views.create_checkout_session, name = "CheckOut"),
 	path("Search_Results/", views.Search_Results,name = "SearchResults"),
+	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
 
 
 ]
