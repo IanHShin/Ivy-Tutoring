@@ -123,7 +123,7 @@ def OneTimeReg(request):
 				# Send Email
 				sendEmail(subject, content, sender, receiver)
 				messages.success(request, "Register Email Sent")
-			return HttpResponseRedirect(reverse("main:OTL"))
+		return HttpResponseRedirect(reverse("main:OTL"))
 	else:
 		form = OneTimeRegForm() 
 	return render(request, 'main/OneTimeReg.html', {'form': form })
@@ -225,7 +225,7 @@ def activate(request, uidb64, token):
 @Check_Login
 def UserLogin(request):
 	if request.method == 'POST':
-		form = AuthenticationForm(request, data = request.POST)
+		form = LoginForm(request, data = request.POST)
 		if form.is_valid():
 			username = request.POST['username']
 			password = request.POST['password']
@@ -236,11 +236,8 @@ def UserLogin(request):
 			elif user is not None and not user.email_confirm:
 				messages.error(request, "Email not confirmed, <a href='/Resend'>Resend Email Confirmation</a>")
 				return HttpResponseRedirect(reverse("main:Login"))
-		else:
-			messages.error(request, "Username or Password Incorrect")
-			return HttpResponseRedirect(reverse("main:Login"))
 	else:
-		form = AuthenticationForm()
+		form = LoginForm()
 	return render(request, 'main/Login.html',context = {"form":form})
 
 def logout_request(request):
@@ -295,6 +292,8 @@ def ContactUs(request):
 			sendEmail(body["subject"], content, sender, receiver)
 			messages.success(request, "Contact form sent, please allow 24 hours for us to reply.")
 			return HttpResponseRedirect(reverse("main:contactus"))
+		else:
+			messages.error(request, "Invalid Captcha")
 	else:
 		form = ContactForm()
 	return render(request, 'main/Contact.html', {'form': form})

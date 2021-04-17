@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'widget_tweaks',
     'django_summernote',
+    'captcha',
     
     
 ]

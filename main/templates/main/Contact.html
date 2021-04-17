@@ -19,6 +19,8 @@
                         {% render_field form.email placeholder="abc123@gmail.com" class+="form-control"  %}
                         {% render_field form.subject placeholder="Subject" class+="form-control"  %}
                         {% render_field form.message placeholder="Message" class+="form-control"  %}
+                        {% render_field form.captcha placeholder="aBcD" class+="form-control"  %}
+
                     </div>
                     <button type="submit" class="btn btn-success" style = "font-size:18px; margin-top:20px; box-shadow:1px 1px rgb(63, 62, 62);">Send Message</button>
                 </form>
@@ -67,7 +69,7 @@
         left:25%;
         border:20px solid white;
         background-color:white;
-        height:670px;
+        height:850px;
 
     }
     .container input[type="text"] {

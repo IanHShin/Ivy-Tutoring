@@ -1,15 +1,17 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User,Profile
 from django.forms import Textarea
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_summernote.fields import SummernoteTextFormField
+from captcha.fields import CaptchaField
 
 class TutorForm(UserCreationForm):
+	captcha = CaptchaField()
 	class Meta:
 		model = User
-		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name']
+		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'captcha']
 
 	def clean(self):
 		email = self.cleaned_data.get('email')
@@ -27,11 +29,17 @@ class TutorForm(UserCreationForm):
 	# 		tutor.save()
 	# 	return tutor
 
+class LoginForm(AuthenticationForm):
+	def __init__(self, *args, **kwargs):
+		super(LoginForm, self).__init__(*args, **kwargs)
+	captcha = CaptchaField()
+
 class ApplicantForm(forms.Form):
 	firstName = forms.CharField(label = "First Name", max_length=30)
 	lastName = forms.CharField(label = "Last Name", max_length = 30)
 	emailAddress = forms.EmailField(label = "Email Address", max_length = 100)
 	message = forms.CharField(widget=forms.Textarea(attrs={"rows":10,"cols":20}),max_length = 500)
+	captcha = CaptchaField()
 
 class ContactForm(forms.Form):
 	# For later
@@ -48,6 +56,7 @@ class ContactForm(forms.Form):
 	# user_type = forms.CharField(label='Are You: ', widget=forms.Select(choices=user_choices))
 	subject = forms.CharField(label='Subject')
 	message = forms.CharField(label='Message', widget=forms.Textarea(attrs={"rows":10,"cols":20}),max_length = 500)
+	captcha = CaptchaField()
 
 class OneTimeRegForm(forms.Form):
 	email = forms.EmailField(label="Email")
