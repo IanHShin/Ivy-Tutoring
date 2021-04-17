@@ -73,10 +73,9 @@ def create_checkout_session(request):
 				mode='payment',
 				line_items=[
 					{
-						'name': 'test_product',
-						'quantity': 1,
-						'currency': 'USD',
-						'amount': '5000', # in USD
+						'price': 'price_1IfwLAJAbZRgc8MgVyp9ZahB',
+                        'quantity': 1,
+
 					}
 				]
 			)

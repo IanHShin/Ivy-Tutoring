@@ -3,6 +3,7 @@ from . import views
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from django.conf import settings
 from .views import tutorList
+from main.views import *
 
 app_name = 'main'
 
@@ -21,8 +22,10 @@ urlpatterns = [
 	path("Profile",views.profile,name = "Profile"),
 	path("EditProfile", views.profileEdit, name = "EditProfile"),
 	path("CheckOut/", views.create_checkout_session, name = "CheckOut"),
-
-
+	path('config/', stripe_config),
+	path('create-checkout-session/', create_checkout_session),
+	path('success/', SuccessView.as_view()),  # new
+	path('cancelled/', CancelledView.as_view()),
 ]
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,
