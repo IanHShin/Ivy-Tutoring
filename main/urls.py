@@ -26,6 +26,10 @@ urlpatterns = [
 	path('create-checkout-session/', create_checkout_session),
 	path('success/', SuccessView.as_view()),  # new
 	path('cancelled/', CancelledView.as_view()),
+	path("Search_Results/", views.Search_Results,name = "SearchResults"),
+	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
+
+
 ]
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL,

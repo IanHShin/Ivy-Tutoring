@@ -20,34 +20,41 @@
               <h1 class="ml131">Our Team</h1>
   </div>
 </div>
+
 <div class = "writingSection">
   <div class = "container" >
       <h4 class="" style="text-align:center;"><strong><font color="#a82e2e">A little bit about our team...</font></strong></h4>
-      <hr>
-      <div class = "", style = "text-align: center;">
-          <font size = "5">
-              Give your child the study help they need with passionate and intelligent tutors.
-              <br>
-              With a robust online scheduling system, thorough hiring process, and personalized learning
-              <br>
-              Ivy Tutoring guarentees an effective, and safe enviroment for your child to learn!
-              
-          </font>    
-      </div>
-      <hr>
+        <hr>
+          <div class = "", style = "text-align: center;">
+              <font size = "5">
+                  Give your child the study help they need with passionate and intelligent tutors.
+                  <br>
+                  With a robust online scheduling system, thorough hiring process, and personalized learning
+                  <br>
+                  Ivy Tutoring guarentees an effective, and safe enviroment for your child to learn!
+                  
+              </font>    
+          </div>
+        <hr>
+
+      <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}">
+        <input name = "searchBar" type = "text" class = "input" placeholder = "Search.." , value = {{request.GET.searchBar}}>       
+      </form>
+
 {% for use in users%}
 <div class="col s12 m8 offset-m2 l6 offset-l3">
     <div class="card-panel grey lighten-5 z-depth-1">
       {% if use.profile.pro_pic %} 
-              <img class="card-img" src="{{ use.profile.pro_pic.url }}">
+            <img class="card-img" src="{{ use.profile.pro_pic.url }}">
               {{use.first_name}} {{use.last_name}}
-              <br>
+            <br>
               {{use.profile.descript}} 
           {% else %}
               <img class="card-img" src="{%static 'media/Default.jpg' %}">
+              {{use.first_name}} {{use.last_name}}
+            <br>
+              {{use.profile.descript}} 
           {% endif %}
-      <div class="row valign-wrapper">
-        
       </div>
     </div>
  {%endfor%}   
