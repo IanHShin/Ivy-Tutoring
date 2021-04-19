@@ -248,19 +248,20 @@ def applicant(request): #consider using main_admins. Could be easier for Melissa
 	sender = "somedomain@mail.com"
 	receiver = "admin@gmail.com"
 	if request.method == "POST":
-		form = ApplicantForm(request.POST)
+		form = ApplicantForm(request.POST, request.FILES)
 		if form.is_valid():
+			subject = "New Applicant!"
 			body = {
-				"subject" : "New Applicant!",
 				'First Name': form.cleaned_data['firstName'],
 				'Last Name': form.cleaned_data['lastName'],
 				'Email Address': form.cleaned_data['emailAddress'],
 				'Message' : form.cleaned_data['message'],
 			}
+			resume = request.FILES.getlist('resume')[0]
 			content = ""
 			for key, value in body.items():
 				content += "\n" + key + ":\n\t" + value
-			sendEmail(body["subject"], content, sender, receiver)
+			sendEmail(subject, content, sender, receiver, resume)
 			messages.success(request, "Tutor Applcation Received")
 			return HttpResponseRedirect(reverse("main:Applicant"))
 	else:
@@ -277,8 +278,8 @@ def ContactUs(request):
 		form = ContactForm(request.POST)
 		# Get all the data from form
 		if form.is_valid():
+			subject = form.cleaned_data['subject']
 			body = {
-				"subject" : form.cleaned_data['subject'],
 				'First Name': form.cleaned_data['first_name'],
 				'Last Name': form.cleaned_data['last_name'],
 				# For later
@@ -289,7 +290,7 @@ def ContactUs(request):
 			content = ""
 			for key, value in body.items():
 				content += "\n" + key + ":\n\t" + value
-			sendEmail(body["subject"], content, sender, receiver)
+			sendEmail(subject, content, sender, receiver)
 			messages.success(request, "Contact form sent, please allow 24 hours for us to reply.")
 			return HttpResponseRedirect(reverse("main:contactus"))
 		else:
@@ -308,9 +309,12 @@ def addGroup(user):
 		group = Group.objects.get(name='Tutor')
 		user.groups.add(group)
 
-def sendEmail(*args):
+def sendEmail(subject, content, sender, receiver, resume=None):
+	email = EmailMessage(subject, content, sender, [receiver])
+	if resume is not None:
+		email.attach(resume.name, resume.read(), resume.content_type)
 	try: 
-		send_mail(args[0], args[1], args[2], [args[3]])
+		email.send()
 	except BadHeaderError:
 		return HttpResponse("Invalid Header Found")
 

@@ -16,3 +16,6 @@ class Profile(models.Model):
 class OTP(models.Model):
 	email = models.EmailField(max_length=100, null=True, default=None)
 	token = models.CharField(max_length = 30, null=True, default=None)
+
+# class Resume(models.Model):
+# 	resume = models.FileField(upload_to='resume', blank=True, null=True)
