@@ -41,7 +41,7 @@
             <br>
             <br>
             <a href = "/Contact"  class="btn btn-sm btn-outline-secondary" role= 'button' style = "position:relative;left:40%;">
-              Contact Us!</button></a>
+              Contact Us! </button></a>
       
       </div>
     </div>
@@ -49,58 +49,68 @@
 <div class="album py-5 bg-light">
   <div class="container">
 
-<div style="margin:80px">
+<div style="margin:0px">
     <h1>Services</h1>
     <h4>We provide tutoring for many subjects!</h4>
-    <p>
-        Please <a href="/contact">contact us</a> if you have any questions.
-    </p>
     
     <div class="row">
-        
-        <div class="card" >
+      
+          <div class="card" >
+            <img src="{%static 'media\Books.jpg' %}" alt="">
             <h5 class="card-header">Math</h5>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
             </div>
-          </div>
+          </div>        
+        
           <div class="card" >
             <h5 class="card-header">Science</h5>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
             </div>
+            <img src="{%static 'media\logo.png' %}" alt="">
           </div>
+
           <div class="card" >
-            <h5 class="card-header">English</h5>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
-          <div class="card" >
-            <h5 class="card-header">Social Studies</h5>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
-          <div class="card" >
+            <img src="{%static 'media\Star.png' %}" alt="">
             <h5 class="card-header">History</h5>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
             </div>
           </div>
+        
+          <div class="card" >
+            <h5 class="card-header">English</h5>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <img src="{%static 'media\logo.png' %}" alt="">
+          </div>
+
+          <div class="card" >
+            <img src="{%static 'media\a-plus-test.png' %}" alt="">
+            <h5 class="card-header">Social Studies</h5>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+          </div>
+        
           <div class="card" >
             <h5 class="card-header">Reading</h5>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
             </div>
+            <img src="{%static 'media\Books.jpg' %}" alt="">
           </div>
+
           <div class="card" >
+            <img src="{%static 'media\Puzzle.png' %}" alt="">
             <h5 class="card-header">Writing</h5>
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
@@ -150,13 +160,23 @@
     }
 
     .card-header{
-        background-color:#98AFA5;
+        /* background-color:#98AFA5; */
+        background-color:white;
+        margin-top: 0px;
+        text-align: center;
     }
 
     .card{
         margin: 5px;
-        width: 400px;
+        width: 32%;
     }
+
+    .card-body {
+      text-align: center;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+
     .btn{
       height:7%;
       font-size:20px;
