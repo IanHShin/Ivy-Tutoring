@@ -12,6 +12,7 @@
         <form method = "POST">
             {% csrf_token %}
             {{form.as_p}}
+            <p>Forgot<a href="/ForgotUsername"> Username</a> or <a href="/ForgotPassword">Password</a></p>
             <button class = "btn" style= "background-color:cc0033; color:white"
             type= "submit">Login</button>
         </form>
