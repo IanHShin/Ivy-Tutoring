@@ -28,6 +28,7 @@ urlpatterns = [
 	path('cancelled/', CancelledView.as_view()),
 	path("Search_Results/", views.Search_Results,name = "SearchResults"),
 	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
+	path("ForgotUsername/", views.SendUsername, name='SendUsername'),
 
 
 ]

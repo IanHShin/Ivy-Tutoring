@@ -202,8 +202,30 @@ def ResendConfirmation(request):
 				messages.error(request, "Acount with the email does not exist, or is already confirmed")
 	else:
 		form = ResendConfirmationForm() 
-	return render(request, 'main/Resend.html', {'form': form })
+	return render(request, 'main/ResendEmailConfirmation.html', {'form': form })
 
+@Check_Login
+def SendUsername(request):
+	if request.method == 'POST':
+		form = ResendUsernameForm(request.POST)
+		if form.is_valid():
+			sender = "admin@gmail.com"
+			receiver = form.cleaned_data['email']
+			subject = 'Forgot Username'
+			try:
+				user = User.objects.get(email=receiver)
+			except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+				user = None
+			if user is not None:
+				username = user.username
+				receiver = user.email
+				content = f"Here is your username you requested, \"{username}\""
+				# Send Email
+				sendEmail(subject, content, sender, receiver)
+			messages.success(request, "Username will be sent to the email.")
+	else:
+		form = ResendUsernameForm() 
+	return render(request, 'main/ForgotUsername.html', {'form': form })
 
 # When user click on the link that is sended to their email to activate 
 def activate(request, uidb64, token):
