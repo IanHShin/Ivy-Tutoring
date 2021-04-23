@@ -22,13 +22,6 @@ class TutorForm(UserCreationForm):
 			raise ValidationError("account with that username already exists, reset password if needed.")
 		return self.cleaned_data
 
-	# def save(self, commit=True):
-	# 	tutor = super(TutorForm, self).save(commit=False)
-	# 	# tutor.is_active = True
-	# 	if commit:
-	# 		tutor.save()
-	# 	return tutor
-
 class LoginForm(AuthenticationForm):
 	def __init__(self, *args, **kwargs):
 		super(LoginForm, self).__init__(*args, **kwargs)
@@ -63,6 +56,9 @@ class OneTimeRegForm(forms.Form):
 	email = forms.EmailField(label="Email")
 
 class ResendConfirmationForm(forms.Form):
+	email = forms.EmailField(label='Email')
+
+class ResendUsernameForm(forms.Form):
 	email = forms.EmailField(label='Email')
 
 class ProfileForm(forms.ModelForm):
