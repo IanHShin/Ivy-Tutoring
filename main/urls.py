@@ -21,7 +21,6 @@ urlpatterns = [
 	path("AboutUs", views.about, name="AboutUs"),
 	path("Profile/<str:username>/",views.profile,name = "profile"),
 	path("Profile/<str:username>/EditProfile", views.profileEdit, name = "EditProfile"),
-	path("CheckOut/", views.create_checkout_session, name = "CheckOut"),
 	path('config/', stripe_config),
 	path('create-checkout-session/', create_checkout_session),
 	path('success/', SuccessView.as_view()),  # new
@@ -31,6 +30,10 @@ urlpatterns = [
 	path("Profile/<str:username>/EditProfile/EditLocation/", views.LocationEdit, name = "LocationEdit"),
 	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit"),
 	path("ForgotUsername/", views.SendUsername, name='SendUsername'),
+	path("CreateInvoice/", views.CreateInvoice, name='CreateInvoice'),
+	path("Payment/", views.Payment, name='Payment'),
+	path('PaypalCheckout/<invoice_id>/', views.PaypalCheckout, name='PaypalCheckout'),
+	path('PaypalSuccess/<invoice_id>/', views.PaypalSuccess, name='PaypalSuccess'),
 
 
 ]

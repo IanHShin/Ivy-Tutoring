@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User,Profile
+from .models import User,Profile, Invoice
 from django.forms import Textarea
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_summernote.fields import SummernoteTextFormField
@@ -61,6 +61,17 @@ class ResendConfirmationForm(forms.Form):
 
 class ResendUsernameForm(forms.Form):
 	email = forms.EmailField(label='Email')
+
+class InvoiceForm(forms.ModelForm):
+	class Meta:
+		model = Invoice
+		fields = ['email', 'amount', 'detail']
+		widgets = {
+			'detail' : forms.Textarea(attrs={'placeholder': 'Detail such as student name and hours of service'}),
+		}
+
+class PaymentForm(forms.Form):
+	invoice_id = forms.CharField(label="Invoice ID")
 
 class ProfileForm(forms.ModelForm):
 	class Meta:

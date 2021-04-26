@@ -31,6 +31,45 @@ import string
 #IanShin -> homepage, logout_request
 #ChenWei -> TutorReg, UserLogin
 
+def Payment(request):
+	if request.method == "POST":
+		form = PaymentForm(request.POST)
+		if form.is_valid():
+			invoice_id = form.cleaned_data.get('invoice_id')
+			if Invoice.objects.filter(invoice_id=invoice_id).exists():
+				invoice = Invoice.objects.get(invoice_id=invoice_id)
+				if invoice.paid == False:
+					return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
+				elif invoice.paid==True:
+					messages.error(request, "Invoice is already paid")
+			else:
+				messages.error(request, "Invoice ID does not exist, please contact admin")
+	else:
+		form = PaymentForm()
+	return render(request, "main/Payment.html", {'form':form})
+
+def PaypalCheckout(request, invoice_id):
+	if Invoice.objects.filter(invoice_id=invoice_id).exists():
+		invoice = Invoice.objects.get(invoice_id=invoice_id)
+		context = {
+			'invoice_number' : invoice.invoice_id,
+			'price' : invoice.amount,
+			'email' : invoice.email,
+			'detail' : invoice.detail,
+		}
+		return render(request, "main/PaypalCheckout.html", context=context)
+	else:
+		return redirect("main:homepage")
+
+def PaypalSuccess(request, invoice_id):
+	if Invoice.objects.filter(invoice_id=invoice_id).exists():
+		invoice = Invoice.objects.get(invoice_id=invoice_id)
+		invoice.paid = True
+		invoice.save()
+		return render(request, 'main/PaypalSuccess.html', {})
+	else:
+		return redirect("main:homepage")
+
 def homepage(request):
     return render(request=request,
                   template_name='main/Home.html')
@@ -129,6 +168,33 @@ def OneTimeReg(request):
 	else:
 		form = OneTimeRegForm() 
 	return render(request, 'main/OneTimeReg.html', {'form': form })
+
+#Admin User only
+@login_required(login_url="main:Login")
+@Check_Superuser
+def CreateInvoice(request):
+	if request.method == "POST":
+		form = InvoiceForm(request.POST)
+		if form.is_valid():
+			sender = "admin@gmail.com"
+			receiver = form.cleaned_data.get('email')
+			while True:
+				invoice_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 20))
+				if not Invoice.objects.filter(invoice_id=invoice_id).exists():
+					break
+			email = form.cleaned_data.get('email')
+			amount = form.cleaned_data.get('amount')
+			detail = form.cleaned_data.get('detail')
+			Invoice.objects.create(email=receiver, invoice_id=invoice_id, amount=amount, detail=detail)
+			messages.success(request, "Invoice Created")
+			subject = "Invoice"
+			current_site = get_current_site(request)
+			content = f"Please Click On the Link {str(current_site)}/CheckOut and enter the invoice ID to pay {invoice_id}."
+			sendEmail(subject, content, sender, receiver)
+		return HttpResponseRedirect(reverse("main:CreateInvoice"))
+	else:
+		form = InvoiceForm() 
+	return render(request, 'main/CreateInvoice.html', {'form': form })
 	
 
 @Check_Login
@@ -382,6 +448,7 @@ def profileEdit(request,username):
 	context = {'form':form}	
 	return render(request,"main/EditProfile.html", context)
 
+@login_required(login_url="main:Login")
 def LocationEdit(request,username):
 	form = ProfileForm(instance = request.user.profile)
 	if request.method == "POST":
@@ -394,7 +461,8 @@ def LocationEdit(request,username):
 			form = ProfileForm()
 	context = {'form':form}	
 	return render(request,"main/EditLocation.html", context)
-
+	
+@login_required(login_url="main:Login")
 def EditSkills(request,username):
 	form = ProfileForm(instance = request.user.profile)
 	if request.method == "POST":

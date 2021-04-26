@@ -21,3 +21,10 @@ class OTP(models.Model):
 	email = models.EmailField(max_length=100, null=True, default=None)
 	token = models.CharField(max_length = 30, null=True, default=None)
 
+class Invoice(models.Model):
+	email = models.EmailField(max_length=100)
+	invoice_id = models.CharField(max_length=20)
+	amount = models.DecimalField(max_digits=6, decimal_places=2)
+	detail = models.CharField(max_length=100)
+	paid = models.BooleanField(default=False)
+
