@@ -41,16 +41,22 @@
         <input name = "searchBar" type = "text" class = "input" placeholder = "Search.." , value = {{request.GET.searchBar}}>       
       </form>
 
+   
+
 {% for use in users%}
 <div class="col s12 m8 offset-m2 l6 offset-l3">
     <div class="card-panel grey lighten-5 z-depth-1">
-      {% if use.profile.pro_pic %} 
-            <img class="card-img" src="{{ use.profile.pro_pic.url }}">
-              {{use.first_name}} {{use.last_name}}
+      {% if use.profile.pro_pic %}
+        <a href="{% url 'main:profile' username=use.username %}" target="_blank">
+          <img class="card-img" src="{{ use.profile.pro_pic.url }}">
+        </a>
+            {{use.first_name}} {{use.last_name}}
             <br>
               {{use.profile.descript}} 
           {% else %}
+          <a href="{% url 'main:profile' username=use.username %}" target="_blank">
               <img class="card-img" src="{%static 'media/Default.jpg' %}">
+          </a>
               {{use.first_name}} {{use.last_name}}
             <br>
               {{use.profile.descript}} 
@@ -59,7 +65,6 @@
     </div>
  {%endfor%}   
 </div>
-
 
 <style type= "text/css">
     .col {

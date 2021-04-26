@@ -19,8 +19,8 @@ urlpatterns = [
 	path('Contact/', views.ContactUs, name='contactus'),
 	path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 	path("AboutUs", views.about, name="AboutUs"),
-	path("Profile",views.profile,name = "Profile"),
-	path("EditProfile", views.profileEdit, name = "EditProfile"),
+	path("Profile/<str:username>/",views.profile,name = "profile"),
+	path("Profile/<str:username>/EditProfile", views.profileEdit, name = "EditProfile"),
 	path("CheckOut/", views.create_checkout_session, name = "CheckOut"),
 	path('config/', stripe_config),
 	path('create-checkout-session/', create_checkout_session),
@@ -28,6 +28,8 @@ urlpatterns = [
 	path('cancelled/', CancelledView.as_view()),
 	path("Search_Results/", views.Search_Results,name = "SearchResults"),
 	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
+	path("Profile/<str:username>/EditProfile/EditLocation/", views.LocationEdit, name = "LocationEdit"),
+	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit")
 
 
 ]

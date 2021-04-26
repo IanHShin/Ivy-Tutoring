@@ -29,42 +29,48 @@
                         <div class="card-body">
                             <h4>
                                 <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif; font-size:30px;'>
-                                    {{user.first_name}} {{user.last_name}}
+                                    {{person.user.first_name}} {{person.user.last_name}} 
                                     <img class="img" style  = "width:15%;border-radius: 20%;" src="{%static 'media\TutorSticker.png' %}">      
                                 </b>
                                 
                                 <div class="card-text" style = "width:500px;max-width:-webkit-fill-available; font-size:20px;">   
-                                    {%render_field request.user.profile.descript %}       
+                                    {%render_field person.descript %}
+                                    <br>    
+                                    {{person.city}} {{person.state}}
                                 </div> 
                             </h4>
-                            <li><a href= "EditProfile"> Edit</a></li>
-                            {% if user.is_authenticated %}
-                                {% if user.is_superuser %}
-                                    <li><a href="/OTL">OTL</a></li>
-                                {% endif %}
-                            {% endif %}
                     </div>
                 </div>
+                 {% if person.user.username == user.username %}
+                 <center><a href= "EditProfile"> Edit</a></center>
+                        {% if user.is_superuser %}
+                            <a href="/OTL">OTL</a>
+                        {% endif %}
+                    {% endif %}
             </div>
             <hr style = "position:relative; margin-left: auto; margin-right:auto;
              width: 95%;height:2px;border:none;color:#c0bebe;background-color:#c0bebe;">
+             <h4>Skills</h4>
+             {% for tag in person.tags.all %}
+            <a href="#" class="mr-1 badge badge-info">{{ tag }}</a>
+            {% endfor %}
         </div>
     </div>
 </body>
 
 <div class = "writingSection">
     <div class = "container" >
-        <h2> Hi, I'm {{user.first_name}}</h2>
+        <h2> Hi, I'm {{person.user.first_name}}</h2>
         <div class = "", style = "text-align: left; color:#5C5C5C;">
             <font size = "5">
-                {{user.profile.intro | safe }}
+                {{person.intro | safe }}
             </font>    
         </div>
 
     </div>
 </div>
 <div class="container-fluid">
-    <h5 style = "line-height:300%; font-weight: bolder; color:#0E7D29;">{{user.first_name}} is verified</h5>
+    <h5 style = "line-height:300%; font-weight: bolder; color:#0E7D29;">{{person.user.first_name}} is verified</h5>
     <p style = "font-size:20px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
         that each tutor <br> meets our high standards of trust & excellence.</p>
         <img class="shield-img" src="{%static 'media\Shield.png' %}">

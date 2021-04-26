@@ -6,6 +6,7 @@ from django.forms import Textarea
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_summernote.fields import SummernoteTextFormField
 from captcha.fields import CaptchaField
+from taggit.forms import TagWidget
 
 class TutorForm(UserCreationForm):
 	captcha = CaptchaField()
@@ -68,9 +69,9 @@ class ResendConfirmationForm(forms.Form):
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['pro_pic','descript','intro']
+		fields = ['pro_pic','descript','intro','city','state','tags']
 		widgets = {
 			'intro': SummernoteWidget(),
+			'tags':forms.TextInput(attrs={'data-role':'tagsinput'})
 
 		}
-

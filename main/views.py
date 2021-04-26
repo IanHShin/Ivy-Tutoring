@@ -11,12 +11,14 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
 from django.views.generic import ListView
+from django.template.defaultfilters import slugify
 from django.core.mail import send_mail, BadHeaderError, EmailMessage
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt 
 from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.db.models import Q
+from taggit.models import Tag
 import stripe
 from .decorator import *
 from .forms import *
@@ -232,7 +234,7 @@ def UserLogin(request):
 			user = authenticate(username=username, password=password)
 			if user.is_superuser or (user is not None and user.email_confirm):
 				login(request,user)
-				return redirect("main:Profile")
+				return redirect("main:homepage")
 			elif user is not None and not user.email_confirm:
 				messages.error(request, "Email not confirmed, <a href='/Resend'>Resend Email Confirmation</a>")
 				return HttpResponseRedirect(reverse("main:Login"))
@@ -327,22 +329,11 @@ class tutorList(ListView):
 		data = super().get_context_data(**kwargs)
 		return data
 
-@login_required(login_url="main:Login")
-def profile(request):
-	return render(request, "main/Profile.html")
-	
-@login_required(login_url="main:Login")
-def profileEdit(request):
-	form = ProfileForm(instance = request.user)
-	if request.method == "POST":
-		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
-		if form.is_valid():
-			form.save()
-			return redirect("main:Profile")
-		else:
-			form = ProfileForm()
-	context = {'form':form}	
-	return render(request,"main/EditProfile.html", context)
+
+def profile(request, username):
+	test = (User.objects.get(username=username))
+	person = Profile.objects.get(user=test)	
+	return render(request,'main/Profile.html',{'person':person})
 
 def Search_Results(request):
     query = request.GET.get('searchBar')
@@ -353,3 +344,43 @@ def Search_Results(request):
         Q(first_name__icontains = query) |
         Q(last_name__icontains = query))
         return render(request, "main/TutorSearch.html", context)
+	
+@login_required(login_url="main:Login")
+def profileEdit(request,username):
+	form = ProfileForm(instance = request.user.profile)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
+		print(form.errors)
+		if form.is_valid():
+			obj = form.save(commit = False)
+			obj.save(update_fields = ['descript', 'intro', 'pro_pic'])
+			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
+		else:
+			form = ProfileForm()
+	context = {'form':form}	
+	return render(request,"main/EditProfile.html", context)
+
+def LocationEdit(request,username):
+	form = ProfileForm(instance = request.user.profile)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
+		if form.is_valid():
+			obj = form.save(commit=False)
+			obj.save(update_fields = ['city', 'state'])
+			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
+		else:
+			form = ProfileForm()
+	context = {'form':form}	
+	return render(request,"main/EditLocation.html", context)
+
+def EditSkills(request,username):
+	form = ProfileForm(instance = request.user.profile)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,instance = request.user.profile)
+		if form.is_valid():
+			form.save(commit=False)
+			form.save_m2m()
+			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
+	context = {'form':form}	
+	return render(request,"main/EditSkills.html", context)
+	

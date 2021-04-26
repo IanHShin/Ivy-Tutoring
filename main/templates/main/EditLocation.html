@@ -44,9 +44,8 @@
                         <form method = "POST" action = "" enctype="multipart/form-data">
                             {%csrf_token%}
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
-                                    {{ form.pro_pic|safe }}
-                                    {{ form.descript|safe }}
-                                    {{ form.intro|safe }}
+                                    {{ form.city|safe }}
+                                    {{ form.state|safe }}
                                 </div>
                                     <div>
                                         <input class="btn btn-primary" type="submit">
@@ -61,6 +60,7 @@
         </div>
     </div>
 </body>
+
 
 
 
