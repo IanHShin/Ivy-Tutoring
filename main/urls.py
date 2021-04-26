@@ -29,7 +29,8 @@ urlpatterns = [
 	path("Search_Results/", views.Search_Results,name = "SearchResults"),
 	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
 	path("Profile/<str:username>/EditProfile/EditLocation/", views.LocationEdit, name = "LocationEdit"),
-	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit")
+	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit"),
+	path("ForgotUsername/", views.SendUsername, name='SendUsername'),
 
 
 ]

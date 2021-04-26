@@ -2,33 +2,48 @@
 {%include "main/HeadNav.html" %}
 
 
-<body>
-    <h2 class="line1" style="text-align:left;"><strong><font color="#000000">Let's Chat</font></strong></h2>
-    <h2 class="line2" style="text-align:left;"><strong><font color="#000000">Whether you have a question, </font></strong></h2>
-    <h2 class="line3" style="text-align:left;"><strong><font color="#000000">or want to be a tutor! </font></strong></h2>
-    <h5 class="line4" style="text-align:left;"><strong><font color="#a82e2e">Lets build something together </font></strong></h5>
-        <div class="container bcontent">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-                <form method="POST" class="form-group">
-                    {% csrf_token %}
-                    <div class="form-label-group">
-                        {% render_field form.first_name placeholder="First Name" class+="form-control"  %}
-                        {% render_field form.last_name placeholder="Last Name" class+="form-control"  %}
-                        {% render_field form.email placeholder="abc123@gmail.com" class+="form-control"  %}
-                        {% render_field form.subject placeholder="Subject" class+="form-control"  %}
-                        {% render_field form.message placeholder="Message" class+="form-control"  %}
-                        {% render_field form.captcha placeholder="aBcD" class+="form-control"  %}
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
 
-                    </div>
-                    <button type="submit" class="btn btn-success" style = "font-size:18px; margin-top:20px; box-shadow:1px 1px rgb(63, 62, 62);">Send Message</button>
-                </form>
-        
-        </div>  
-    
+<body>
+    <div class = "container">
+        <div class = "row">
+            <div class = "col my-auto">
+                <h2 class="" style="text-align:left;"><strong><font color="#000000">Let's Chat</font></strong></h2>
+                <h2 class="" style="text-align:left;"><strong><font color="#000000">Whether you have a question, </font></strong></h2>
+                <h2 class="" style="text-align:left;"><strong><font color="#000000">or want to be a tutor! </font></strong></h2>
+                <h4 class="" style="text-align:left;"><strong><font color="#a82e2e">Lets build something together </font></strong></h4>
+            </div>
+            <div class = "col my-auto">
+                
+                    <div class="containerB">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                            <form method="POST" class="form-group">
+                                {% csrf_token %}
+                                <div class="form-label-group">
+                                    {% render_field form.first_name placeholder="First Name" class+="form-control"  %}
+                                    {% render_field form.last_name placeholder="Last Name" class+="form-control"  %}
+                                    {% render_field form.email placeholder="abc123@gmail.com" class+="form-control"  %}
+                                    {% render_field form.subject placeholder="Subject" class+="form-control"  %}
+                                    {% render_field form.message placeholder="Message" class+="form-control"  %}
+                                    {% render_field form.captcha placeholder="aBcD" class+="form-control"  %}
+                                </div>
+                                <button type="submit" class="btn btn-success" style = "font-size:18px; margin-top:20px; box-shadow:1px 1px rgb(63, 62, 62);">Send Message</button>
+                            </form>
+                        
+                    </div>  
+            </div>
+        </div>
+</div>
 </body>
 
+{%include "main/Footer.html" %}
 
 <style>
     body{
@@ -61,30 +76,30 @@
         left:7%;
     }
 
-    .container {
-        min-width:700px;
+    .containerB {
+        min-width:750px;
         width:40%;
         position:relative;
         top:-10%;
         left:25%;
         border:20px solid white;
         background-color:white;
-        height:850px;
+        height:700px;
 
     }
-    .container input[type="text"] {
-        height:6rem;
+    .containerB input[type="text"] {
+        height:5rem;
         font-size:22px;
     }
-    .container input[type = "email"]{
-        height:6rem;
+    .containerB input[type = "email"]{
+        height:5rem;
         font-size:22px
     }
-    .container textarea{
-        height:10rem;
+    .containerB textarea{
+        height:8rem;
         font-size:20px
     }
-    .container button{
+    .containerB button{
         width:250px;
         height:60px;
         border-radius:10%;
