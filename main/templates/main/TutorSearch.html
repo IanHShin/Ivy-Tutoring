@@ -39,21 +39,29 @@
       <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}">
         <input name = "searchBar" type = "text" class = "input" placeholder = "Search.." , value = {{request.GET.searchBar}}>   
       </form>
+    
+
   {%if all_results %}
+    <div class="row card-container">
       {% for results in all_results %}
-        <div class="col s12 m8 offset-m2 l6 offset-l3">
-            <div class="card-panel grey lighten-5 z-depth-1">
-            {% if results.profile.pro_pic %} 
-                    <img class="card-img" src="{{ results.profile.pro_pic.url }}">
-                    {{results.first_name}} {{results.last_name}}
-                    <br>
-                    {{results.profile.descript}} 
-                {% else %}
-                    <img class="card-img" src="{%static 'media/Default.jpg' %}">
-                {% endif %}
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            {% if results.profile.pro_pic %}
+              <img class="activator" src="{{ results.profile.pro_pic.url }}">
+            {% else %}
+              <img class="activator" src="{%static 'media/Default.jpg' %}">
+            {% endif %}
           </div>
-       {%endfor%}   
-      </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{results.first_name}} {{results.last_name}}<i class="material-icons right">{{results.profile.state}}</i></span>
+            <p><a href="{% url 'main:profile' username=results.username %}">Profile</a></p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{results.first_name}} {{results.last_name}}<i class="material-icons right">close</i></span>
+            <p>{{results.profile.intro|safe}}</p>
+          </div>
+        </div>
+      {% endfor %} 
     {% else %}
     <div class="col s12 m8 offset-m2 l6 offset-l3">
       <div class="card-panel grey lighten-5 z-depth-1">
@@ -61,6 +69,24 @@
       </div>
       </div>
     {% endif %}
+
+    
+    <style>
+      div.card-container {
+        -moz-column-width: 23rem;
+        -webkit-column-width: 23rem;
+        -moz-column-gap: 1rem;
+        -webkit-column-gap: 1rem;
+      }
+    
+      .card{
+    
+        width: 30%;
+        height:430px;
+      }
+    </style>
+    
+          
   
   <style type= "text/css">
       .col {
