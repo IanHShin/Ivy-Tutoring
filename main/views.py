@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.contrib.auth.models import Group, User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout, get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout, get_user_model, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -295,6 +295,21 @@ def SendUsername(request):
 	else:
 		form = ResendUsernameForm() 
 	return render(request, 'main/ForgotUsername.html', {'form': form })
+
+@login_required(login_url="main:Login")
+def ChangePassword(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)
+			messages.success(request, 'Your password was successfully updated!')
+			return redirect('main:password_change')
+		else:
+			messages.error(request, 'Please correct the error')
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'main/password_change.html', {'form': form})
 
 # When user click on the link that is sended to their email to activate 
 def activate(request, uidb64, token):
