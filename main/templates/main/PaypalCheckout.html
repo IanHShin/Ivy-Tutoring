@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
     <!-- Add meta tags for mobile and IE -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title> PayPal Test </title>
+    {%include "main/HeadNav.html" %}
 </head>
 
+
 <body>
-    <p>{{email}}</p>
-    <p>{{detail}}</p>
-
-
-
+    <br>
+    <br>
+    <br>
+    <p>Email Address: {{email}}</p>
+    <p>Price: ${{price}}</p>
+    <p>Detail: {{detail}}</p>
+    {% if status == False %}
+        <p>Status: Not Paid</p>
+    {% else %}
+        <p>Status: Paid</p>
+        <p>Thank you vert much for using Ivy Tutoring Service</p>
+    {% endif %}
+{% if status != True %}
 <div id="paypal-button"></div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
@@ -57,7 +67,7 @@
                 }],
                 redirect_urls: {
                     return_url: '/PaypalSuccess/'+'{{invoice_number}}',
-                    cancel_url: '/CheckOut',
+                    cancel_url: '/PaypalCheckout/'+'{{invoice_number}}',
                 },
             });
         },
@@ -79,6 +89,7 @@
     }, '#paypal-button');
 
 </script>
+{% endif %}
 </body>
 
 </html>

@@ -39,10 +39,7 @@ def Payment(request):
 			invoice_id = form.cleaned_data.get('invoice_id')
 			if Invoice.objects.filter(invoice_id=invoice_id).exists():
 				invoice = Invoice.objects.get(invoice_id=invoice_id)
-				if invoice.paid == False:
-					return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
-				elif invoice.paid==True:
-					messages.error(request, "Invoice is already paid")
+				return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
 			else:
 				messages.error(request, "Invoice ID does not exist, please contact admin")
 	else:
@@ -57,6 +54,7 @@ def PaypalCheckout(request, invoice_id):
 			'price' : invoice.amount,
 			'email' : invoice.email,
 			'detail' : invoice.detail,
+			'status' : invoice.paid,
 		}
 		return render(request, "main/PaypalCheckout.html", context=context)
 	else:
@@ -190,7 +188,7 @@ def CreateInvoice(request):
 			messages.success(request, "Invoice Created")
 			subject = "Invoice"
 			current_site = get_current_site(request)
-			content = f"Please Click On the Link {str(current_site)}/CheckOut and enter the invoice ID to pay {invoice_id}."
+			content = f"Please Click On the Link {str(current_site)}/PaypalCheckout/{invoice_id}/ or visit {str(current_site)}/PaypalCheckout enter the invoice ID '{invoice_id}' to pay."
 			sendEmail(subject, content, sender, receiver)
 		return HttpResponseRedirect(reverse("main:CreateInvoice"))
 	else:

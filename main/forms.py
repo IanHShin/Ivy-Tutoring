@@ -72,7 +72,7 @@ class InvoiceForm(forms.ModelForm):
 
 class PaymentForm(forms.Form):
 	invoice_id = forms.CharField(label="Invoice ID")
-
+	
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
