@@ -27,6 +27,7 @@ import json
 import os
 import random
 import string
+import requests
 
 #IanShin -> homepage, logout_request
 #ChenWei -> TutorReg, UserLogin
@@ -62,17 +63,21 @@ def PaypalCheckout(request, invoice_id):
 @csrf_exempt
 def PaymentDetailEndpoint(request):
 	if request.method == 'POST':
-		print(request.POST)
+		data = dict(request.POST)
+		invoice_id = data["transactions[0][invoice_number]"][0]
+		pay_id = data['id'][0]
+		status = data['state'][0]
+		if Invoice.objects.filter(invoice_id=invoice_id).exists():
+			invoice = Invoice.objects.get(invoice_id=invoice_id)
+			invoice.pay_id = pay_id
+			if status == 'approved':
+				invoice.paid = True
+			invoice.save()
 	return HttpResponse('')
 
-def PaypalSuccess(request, invoice_id):
-	# if Invoice.objects.filter(invoice_id=invoice_id).exists():
-	# 	invoice = Invoice.objects.get(invoice_id=invoice_id)
-	# 	invoice.paid = True
-	# 	invoice.save()
-	return render(request, 'main/PaypalSuccess.html', {})
-	# else:
-	# 	return redirect("main:homepage")
+class PaypalSuccessView(TemplateView):
+	template_name = 'main/PaypalSuccess.html'
+
 
 def homepage(request):
     return render(request=request,

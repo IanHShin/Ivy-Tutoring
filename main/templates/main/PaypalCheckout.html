@@ -60,17 +60,15 @@
                 transactions: [{
                 amount: {
                     total: '{{price}}',
-                    // total: '0.50',
                     currency: 'USD',
                 },
                 description: '{{detail}}',
                 // Disable invoice number during development, since is unqiue, same order will fail   
-                // invoice_number: '{{invoice_number}}',
-                // invoice_number: '37'
+                invoice_number: '{{invoice_number}}',
                 }],
                 redirect_urls: {
 
-                    return_url: '/PaypalSuccess/'+'{{invoice_number}}',
+                    return_url: '/PaypalSuccess/',
                     cancel_url: '/PaypalCheckout/'+'{{invoice_number}}',
                 },
             });
@@ -79,13 +77,11 @@
         // Execute the payment
         onAuthorize: function(data, actions) {
             // Make a call to the REST API to execute the payment
-            return actions.payment.execute().then(function(details) {
-                // Extract invoice number from the order since payment is completed
-                // datas = {'TID':details.transactions[0].invoice_number}
+            return actions.payment.execute().then(function(data) {
                 $.ajax({
                     url: '/PaymentDetailEndpoint/',
                     type: "POST",
-                    data: details,
+                    data: data,
                     success: function (data) {},
                     complete:function(){},
                 });
@@ -96,7 +92,6 @@
             actions.redirect();
         }
     }, '#paypal-button');
-
 </script>
 {% endif %}
 </body>

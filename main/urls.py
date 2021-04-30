@@ -34,7 +34,7 @@ urlpatterns = [
 	path("CreateInvoice/", views.CreateInvoice, name='CreateInvoice'),
 	path("Payment/", views.Payment, name='Payment'),
 	path('PaypalCheckout/<invoice_id>/', views.PaypalCheckout, name='PaypalCheckout'),
-	path('PaypalSuccess/<invoice_id>/', views.PaypalSuccess, name='PaypalSuccess'),
+	path('PaypalSuccess/', views.PaypalSuccessView.as_view(), name='PaypalSuccess'),
 	path('password_change/', views.ChangePassword, name='password_change'),
 	path('reset_password/',auth_views.PasswordResetView.as_view(template_name="main/password_reset.html"),name="reset_password"),
 	path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="main/password_reset_sent.html"), name="password_reset_done"),
