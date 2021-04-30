@@ -240,8 +240,7 @@ def CreateInvoice(request):
 			email = form.cleaned_data.get('email')
 			amount = form.cleaned_data.get('amount')
 			detail = form.cleaned_data.get('detail')
-			print(detail)
-			Invoice.objects.create(email=receiver, invoice_id=invoice_id, amount=amount, detail=detail.rstrip())
+			Invoice.objects.create(email=receiver, invoice_id=invoice_id, amount=amount, detail=detail)
 			messages.success(request, "Invoice Created")
 			subject = "Invoice"
 			current_site = get_current_site(request)
