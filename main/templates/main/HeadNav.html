@@ -1,15 +1,22 @@
 {%load static%}
 
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+        <!-- Compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+
 <!-- stripe api and js file -->
-<script src="https://js.stripe.com/v3/"></script>
-<script src="{% static 'main.js' %}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'main.js' %}"></script>
 </head>
 
-
-<div class="navbar-fixed">
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a href = "/Contact/"> Contact </a></li>
+        <li><a href = "/Applicant">Career</a></li>
+    </ul>
     <nav>
         <div class='nav-wrapper'>
             <a href="/" class="brand-logo"><img src="{%static 'media\logo.png' %}" width="150" height="100"></a>
@@ -27,8 +34,8 @@
                     <li><a href = "/AboutUs"> About us </a></li> 
                     <li><a href= "/Services"> Services </a></li>
                     <li><a href = "/Tutor"> Tutor </a></li>
-                    <li><a href = "/Contact/"> Contact </a></li>
-                    <li><a href = "/Applicant">Career</a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Contact Us    <i class="material-icons right">arrow_drop_down</i></a></li>
+
                     <li><a id="submitBtn">Purchase</a></li>
                     <li><a href = "/login"> Login </a></li>
                 {% endif %}
@@ -36,7 +43,6 @@
             </ul>
         </div>
     </nav>
-</div>
 
 
 <style>
@@ -44,12 +50,25 @@ nav{
     height:115px;
     background-color:#98AFA5;
 }
+nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i{
+    line-height:95px;
+}
 nav ul a{
 font-size: 20px;
 letter-spacing:3px;
 }
 
 </style>
+    <script>
+        $(document).ready(function(){
+        $(".dropdown-trigger").dropdown(
+            {
+                "coverTrigger": false
+            }
+        );
+        });
+    </script>
+
 
 
 

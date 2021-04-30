@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'taggit',
     
     
+    
 ]
 AUTH_USER_MODEL = 'main.User'
 

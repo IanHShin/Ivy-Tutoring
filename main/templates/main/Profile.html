@@ -58,17 +58,20 @@
     </div>
 </body>
 
-<div class = "writingSection">
-    <div class = "container" >
-        <h2> Hi, I'm {{person.user.first_name}}</h2>
+
+ 
+    <h2 style = "position: absolute; top:121px; 
+    left:673px; width:70% ">
+     Hi, I'm {{person.user.first_name}}
+    </h2>
+
+    <div class = "writingSection">
         <div class = "", style = "text-align: left; color:#5C5C5C;">
             <font size = "5">
                 {{person.intro | safe }}
             </font>    
         </div>
-
     </div>
-</div>
 <div class="container-fluid">
     <h5 style = "line-height:300%; font-weight: bolder; color:#0E7D29;">{{person.user.first_name}} is verified</h5>
     <p style = "font-size:20px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
@@ -81,14 +84,16 @@
 <style>
     body{
         background-color:#FAFAFA;
+        
     }
     .card{
-        position:relative;
-        top:70;
-        width:45%;
-        right:25%;
-        border-radius:4%;   
-        height:60%;
+        position: absolute;
+        top: 156px;
+        width: 25%;
+        right: 71%;
+        border-radius: 4%;
+        height: 56%;
+       
     }
     .row{
         margin-left:0;
@@ -103,11 +108,11 @@
         border:1.5px solid #c0bebe;
     }
     .writingSection{
-        position:relative;
-        bottom:550px;
-        left:25%;
-        width:70%;
-
+        position: absolute;
+        top: 255px;
+        left: 33%;
+        width: 55%;
+}
     }
     .col-sm-5{
         position:absoulte;
@@ -115,12 +120,12 @@
         width:100%;
     }
     .container-fluid{
-        background-color:#def3ec;
-        position:relative;
-        bottom:50%;
-        left:178;
-        height:17%;
-        width:45%;
+        background-color: #def3ec;
+        position: relative;
+        left: 133px;
+        top: 600;
+        height: 17%;
+        width: 47%;
     }
     .shield-img{
         position:relative;

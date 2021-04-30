@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
+from multiselectfield import MultiSelectField
+
 
 class User(AbstractUser):
 	email_confirm = models.BooleanField(default=False)
@@ -13,6 +15,7 @@ class Profile(models.Model):
 	city = models.CharField(max_length= 100,blank = True)
 	state = models.CharField(max_length = 100,blank = True)
 	tags = TaggableManager(blank = True)
+	
 
 	def __str__(self):
 		return f'{self.user.username} Profile'

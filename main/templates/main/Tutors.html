@@ -1,27 +1,17 @@
 <head>
-  <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!-- Compiled and minified JavaScript -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
   <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>-->
 </head>
 
 {%include "main/HeadNav.html" %}
 {%load static%}
-
-<div class="parallax-container">
-  <div class="parallax">
-      <img src="{%static 'media\Student.jpg' %}" class = "responsive-img">
-              <h1 class="ml131">Our Team</h1>
-  </div>
-</div>
-
-
+<body>
   <div class = "container" >
       <h4 class="" style="text-align:left;"><strong><font color="#a82e2e">A little bit about our team...</font></strong></h4>
         <hr>
@@ -31,54 +21,78 @@
                   <br>
                   With a robust online scheduling system, thorough hiring process, and personalized learning
                   <br>
-                  Ivy Tutoring guarentees an effective, and safe enviroment for your child to learn!
+                  Ivy Tutoring guarantees an effective, and safe environment for your child to learn!
                   
               </font>    
           </div>
         <hr>
 
+
+    <div class = "search-container"> 
       <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}">
-        <input name = "searchBar" type = "text" class = "input" placeholder = "Search.." , value = {{request.GET.searchBar}}>       
+          <input name = "searchBar" type = "text" class = "input" placeholder = "Search for a Tutor" , value = {{request.GET.searchBar}}>       
       </form>
-    
-    </div>
 
 
-<div class="row card-container">
-  {% for use in users %}
-    <div class="card">
-      <div class="card-image waves-effect waves-block waves-light">
-        {% if use.profile.pro_pic %}
-        <img class="activator" src="{{ use.profile.pro_pic.url }}">
-        {% else %}
-        <img class="activator" src="{%static 'media/Default.jpg' %}">
-        {% endif %}
+      <form class = "wrapper" method = "GET" action ="{% url 'main:TagResults' %}">
+          <input name = "searchBarTags" type = "text" class = "input" placeholder = "Search for a Subject!" , value = {{request.GET.searchBar}}>       
+        </form>          
+    </div>  
+  </div>
+
+
+  <div class="row card-container">
+    {% for use in users %}
+      <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+              {% if use.profile.pro_pic %}
+                <img class="activator" src="{{ use.profile.pro_pic.url }}">
+              {% else %}
+                <img class="activator" src="{%static 'media/Default.jpg' %}">
+            {% endif %}
+          </div>
+
+
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">{{use.first_name}} {{use.last_name}}<i class="material-icons right">{{use.profile.state}}</i></span>
+            <p><a href="{% url 'main:profile' username=use.username %}">Profile</a></p>
+        </div>
+
+
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">{{use.first_name}} {{use.last_name}}<i class="material-icons right">close</i></span>
+            <p>{{use.profile.intro|safe}}</p>
+        </div>
       </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">{{use.first_name}} {{use.last_name}}<i class="material-icons right">{{use.profile.state}}</i></span>
-        <p><a href="{% url 'main:profile' username=use.username %}">Profile</a></p>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">{{use.first_name}} {{use.last_name}}<i class="material-icons right">close</i></span>
-        <p>{{use.profile.intro|safe}}</p>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+    {% endfor %}
+  </div>
+</body>
+
 
 
 <style>
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    
+    background:linear-gradient(90deg, rgb(71, 71, 71), rgba(33, 88, 70, 0.3)),url( "{% static 'media/AboutUs.jpg' %}");
+  }
+  
   .card-container{
     position: absolute;
     width: 60%;
-    top: 585px;
+    top: 165px;
     left: 42%;
+  }
+  .search-container{
+    position:relative;
+    top:70px;
   }
   div.card-container {
     -moz-column-width: 23rem;
     -webkit-column-width: 23rem;
     -moz-column-gap: 1rem;
-    -webkit-column-gap: 1rem;
+    -webkit-column-gap: 1.5rem;
   }
 
   .card{
@@ -87,48 +101,18 @@
   }
 
   .container{
-    width:30%;
+    width:35%;
     margin: 0 auto;
     max-width: 1280px;
     position: relative;
     right: 31%;
+    top:160;
   }
+  .wrapper{
+    width:65%;
+  }
+
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-{% for use in users %}
-  <div class="col s12 m8 offset-m2 l6 offset-l3">
-    <div class="card-panel grey lighten-5 z-depth-1">
-      {% if use.profile.pro_pic %}
-        <a href="{% url 'main:profile' username=use.username %}" target="_blank">
-          <img class="card-img" src="{{ use.profile.pro_pic.url }}">
-        </a>
-            {{use.first_name}} {{use.last_name}}
-            <br>
-              {{use.profile.descript}} 
-          {% else %}
-          <a href="{% url 'main:profile' username=use.username %}" target="_blank">
-              <img class="card-img" src="{%static 'media/Default.jpg' %}">
-          </a>
-              {{use.first_name}} {{use.last_name}}
-            <br>
-              {{use.profile.descript}} 
-          {% endif %}
-      </div>
-    </div>
- {%endfor%}   
-</div>-->
 
 <style type= "text/css">
     .col {
@@ -136,43 +120,4 @@
       top:6%;
     }
 </style>
-<script>
-  $(document).ready(function(){
-      $('.parallax').parallax();
-  });
-    var textWrapper = document.querySelector('.ml131');
-    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-  
-    anime.timeline({loop: false})
-      .add({
-        targets: '.ml131 .letter',
-        translateY: [100,0],
-        translateZ: 0,
-        opacity: [0,1],
-        easing: "easeOutExpo",
-        duration: 6000,
-        delay: (el, i) => 300 + 30 * i
-      })
-</script>
-<style>
-  
-.ml131{
-      position:absolute;
-      font-size: 6em;
-      color:black;
-      letter-spacing:1px;
-      width:100%;
-      text-align:center;
-      top:40%;
-  }
-.letter{
-  font-family:emoji;
-}
-.card-img{
-        max-width:15%;
-        max-height:25%;
-        border-radius:50%;
-        border:1.5px solid #c0bebe;
-    }
 
-</style>

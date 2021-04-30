@@ -62,12 +62,13 @@ class ResendConfirmationForm(forms.Form):
 class ResendUsernameForm(forms.Form):
 	email = forms.EmailField(label='Email')
 
-class ProfileForm(forms.ModelForm):
+
+class ProfileForm(forms.ModelForm):	
+	
 	class Meta:
 		model = Profile
 		fields = ['pro_pic','descript','intro','city','state','tags']
 		widgets = {
 			'intro': SummernoteWidget(),
-			'tags':forms.TextInput(attrs={'data-role':'tagsinput'})
-
+			'tags':forms.TextInput(attrs={'data-role':'tagsinput'}),
 		}

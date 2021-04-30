@@ -358,14 +358,26 @@ def profile(request, username):
 	return render(request,'main/Profile.html',{'person':person})
 
 def Search_Results(request):
-    query = request.GET.get('searchBar')
-    print(query)
-    if query:
-        context = {}
-        context["all_results"] = User.objects.filter(Q(username__icontains = query) | 
-        Q(first_name__icontains = query) |
-        Q(last_name__icontains = query))
-        return render(request, "main/TutorSearch.html", context)
+    
+	q = request.GET['searchBar'].split()  # I am assuming space separator in URL like "random stuff"
+	query = Q()
+	for word in q:
+		print(word)
+		query = query | Q(username__icontains = word) | Q(first_name__icontains = word) | Q(last_name__icontains = word)
+	context = User.objects.filter(query)
+	print(context)
+	return render(request, "main/TutorSearch.html", context = {"all_results":context})
+
+
+def tag(request):
+	context = {}
+	q = request.GET['searchBarTags'].split()  # I am assuming space separator in URL like "random stuff"
+	query = Q()
+	for word in q:
+		query = query | Q(tags__name__icontains=word)
+	results = Profile.objects.filter(query)
+	return render(request, "main/TagSearch.html", context = {"all_results":results})
+	
 	
 @login_required(login_url="main:Login")
 def profileEdit(request,username):
@@ -400,7 +412,7 @@ def EditSkills(request,username):
 	if request.method == "POST":
 		form = ProfileForm(request.POST,instance = request.user.profile)
 		if form.is_valid():
-			form.save(commit=False)
+			form.save(commit = False)
 			form.save_m2m()
 			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
 	context = {'form':form}	

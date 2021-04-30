@@ -31,6 +31,8 @@ urlpatterns = [
 	path("Profile/<str:username>/EditProfile/EditLocation/", views.LocationEdit, name = "LocationEdit"),
 	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit"),
 	path("ForgotUsername/", views.SendUsername, name='SendUsername'),
+	path("TagResults/", views.tag,name = "TagResults"),
+	
 
 
 ]

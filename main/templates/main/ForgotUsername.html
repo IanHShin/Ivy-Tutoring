@@ -1,13 +1,36 @@
 {% include "main/HeadNav.html" %}
 
-<form method = "POST">
-    {% csrf_token %}
-    <br>
-    <br>
-    <br>
-	{% for message in messages %}
-		<p>{{ message }}</p>
-	{% endfor %}
-    {{ form.as_p }} 
-    <button type="submit" class="btn btn-success">Submit</button>
-</form>
+<div class="card-panel grey lighten-5 z-depth-1"></div>
+<div class = "LogBlock"> 
+    <h4>Forgot your username?</h4>
+    <h5>No problem! Submit your email below</h5>
+
+    <h5 class="" style="text-align:left;"><strong><font color="#a82e2e">Log in</font></strong></h5>
+    <form method = "POST">
+        {% csrf_token %}
+            {% for message in messages %}
+            <p>{{ message|safe }}</p>
+            {% endfor %}
+        {{form.as_p}}
+        <p>Forgot<a href="/ForgotUsername"> Username</a> or <a href="/ForgotPassword">Password</a></p>
+        <button class = "btn" style= "background-color:#98AFA5033; color:white"
+        type= "submit">Submit</button>
+    </form>
+    </div>
+</div>
+
+<style>
+    div.LogBlock{
+        position:absolute;
+        top:240px;
+        margin-left:30%;
+        width:500px;
+    }
+    div.card-panel{
+        position:relative;
+        top:100px;
+        height:550px;
+        left:28%;
+        width:900px;
+    }
+</style>

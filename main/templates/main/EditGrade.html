@@ -37,17 +37,20 @@
                             {% render_field request.user.username %}      
                         </b>    
                     </div>
+                    
                     <div class="card-body">
-                        <form method = "POST">
-                            <div class="form-group">
-                                <label>Tags</label>
-                                <input class="form-select" name="tags" data-role="tagsinput">
-                                {% csrf_token %}
-                                </input>
-                              </div>         
-                              <button type="submit" value="upload" class="btn btn-primary">Submit</button>
-                            </form>
-                            {{user.profile.tags.all|join:", "}}
+                        
+                    {% for value,text in form.grade_level.field.choices %}
+                        <label>
+                            <input type="checkbox" name = "grades" value = "{{text}}">
+                            <span>{{value}}</span>
+                            
+                            
+                        </label>   
+                    {% endfor %}
+                    
+                    </input>
+                    <button type="submit" value="upload" class="btn btn-primary">Submit</button>   
                     </div>
                 </div>
                 
@@ -59,7 +62,10 @@
     <ul>
         
     </ul>
-
+    
+                                    
+   
+    
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
