@@ -60,7 +60,7 @@ def Payment(request):
 				invoice = Invoice.objects.get(invoice_id=invoice_id)
 				return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
 			else:
-				messages.error(request, "Invoice ID does not exist, please contact admin")
+				messages.error(request, "Invoice ID does not exist")
 	else:
 		form = PaymentForm()
 	return render(request, "main/Payment.html", {'form':form})
@@ -195,7 +195,7 @@ def TutorReg(request, token):
 			form = TutorForm(request.POST)
 			if form.is_valid():
 				user = form.save()
-				messages.success(request, user.username + " Account created, Please Confirm Email")
+				messages.success(request, "Account created, Please Confirm Email")
 				sender = "admin@gmail.com"
 				receiver = form.cleaned_data.get('email')
 				# Get the current site
@@ -335,7 +335,7 @@ def activate(request, uidb64, token):
 		messages.success(request, "Email Confirmed")
 	else:
 		messages.error(request, "Invalid Link")
-	return redirect("main:homepage")
+	return redirect("main:Login")
 
 @Check_Login
 def UserLogin(request):
@@ -406,7 +406,7 @@ def ContactUs(request):
 			for key, value in body.items():
 				content += "\n" + key + ":\n\t" + value
 			sendEmail(subject, content, sender, receiver)
-			messages.success(request, "Contact form sent, please allow 24 hours for us to reply.")
+			messages.success(request, "Message sent, Please allow 24 hours for us to reply to the provided email.")
 			return HttpResponseRedirect(reverse("main:contactus"))
 		else:
 			messages.error(request, "Invalid Captcha")
