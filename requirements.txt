@@ -4,3 +4,4 @@ Pillow==8.1.2
 django-summernote==0.8.11.6
 stripe==2.56.0
 django-simple-captcha==0.5.14
+django-taggit==1.4.0
