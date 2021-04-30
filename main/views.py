@@ -48,6 +48,7 @@ def about(request):
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
 
+@Check_Login
 def Payment(request):
 	if request.method == "POST":
 		form = PaymentForm(request.POST)
@@ -62,6 +63,7 @@ def Payment(request):
 		form = PaymentForm()
 	return render(request, "main/Payment.html", {'form':form})
 
+@Check_Login
 def PaypalCheckout(request, invoice_id):
 	if Invoice.objects.filter(invoice_id=invoice_id).exists():
 		invoice = Invoice.objects.get(invoice_id=invoice_id)
@@ -447,7 +449,6 @@ def profile(request, username):
 	return render(request,'main/Profile.html',{'person':person})
 
 def Search_Results(request):
-    
 	q = request.GET['searchBar'].split()  # I am assuming space separator in URL like "random stuff"
 	query = Q()
 	for word in q:
@@ -467,7 +468,6 @@ def tag(request):
 	results = Profile.objects.filter(query)
 	return render(request, "main/TagSearch.html", context = {"all_results":results})
 	
-	
 @login_required(login_url="main:Login")
 def profileEdit(request,username):
 	form = ProfileForm(instance = request.user.profile)
@@ -483,6 +483,7 @@ def profileEdit(request,username):
 	context = {'form':form}	
 	return render(request,"main/EditProfile.html", context)
 
+@login_required(login_url="main:Login")
 def LocationEdit(request,username):
 	form = ProfileForm(instance = request.user.profile)
 	if request.method == "POST":
@@ -496,6 +497,7 @@ def LocationEdit(request,username):
 	context = {'form':form}	
 	return render(request,"main/EditLocation.html", context)
 
+@login_required(login_url="main:Login")
 def EditSkills(request,username):
 	form = ProfileForm(instance = request.user.profile)
 	if request.method == "POST":
