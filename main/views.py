@@ -28,7 +28,6 @@ import os
 import random
 import string
 
-
 #IanShin -> homepage, logout_request
 #ChenWei -> TutorReg, UserLogin
 
@@ -60,14 +59,20 @@ def PaypalCheckout(request, invoice_id):
 	else:
 		return redirect("main:homepage")
 
+@csrf_exempt
+def PaymentDetailEndpoint(request):
+	if request.method == 'POST':
+		print(request.POST)
+	return HttpResponse('')
+
 def PaypalSuccess(request, invoice_id):
-	if Invoice.objects.filter(invoice_id=invoice_id).exists():
-		invoice = Invoice.objects.get(invoice_id=invoice_id)
-		invoice.paid = True
-		invoice.save()
-		return render(request, 'main/PaypalSuccess.html', {})
-	else:
-		return redirect("main:homepage")
+	# if Invoice.objects.filter(invoice_id=invoice_id).exists():
+	# 	invoice = Invoice.objects.get(invoice_id=invoice_id)
+	# 	invoice.paid = True
+	# 	invoice.save()
+	return render(request, 'main/PaypalSuccess.html', {})
+	# else:
+	# 	return redirect("main:homepage")
 
 def homepage(request):
     return render(request=request,

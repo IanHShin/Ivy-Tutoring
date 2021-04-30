@@ -23,7 +23,8 @@ class OTP(models.Model):
 
 class Invoice(models.Model):
 	email = models.EmailField(max_length=100)
-	invoice_id = models.CharField(max_length=20)
+	invoice_id = models.CharField(max_length=100, default=None)
+	transaction_id = models.CharField(max_length=100)
 	amount = models.DecimalField(max_digits=6, decimal_places=2)
 	detail = models.CharField(max_length=100)
 	paid = models.BooleanField(default=False)

@@ -5,6 +5,7 @@
     <!-- Add meta tags for mobile and IE -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <title> PayPal Test </title>
     {%include "main/HeadNav.html" %}
 </head>
@@ -28,6 +29,7 @@
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 <script>
+    var datas;
     paypal.Button.render({
         // Configure environment
         //sandbox test account to pay dummy data, username: payout@money.com, password: test0201
@@ -63,26 +65,33 @@
                 },
                 description: '{{detail}}',
                 // Disable invoice number during development, since is unqiue, same order will fail   
-                invoice_number: '{{invoice_number}}',
+                // invoice_number: '{{invoice_number}}',
+                // invoice_number: '37'
                 }],
                 redirect_urls: {
+
                     return_url: '/PaypalSuccess/'+'{{invoice_number}}',
                     cancel_url: '/PaypalCheckout/'+'{{invoice_number}}',
                 },
             });
         },
 
-
-
         // Execute the payment
         onAuthorize: function(data, actions) {
-
             // Make a call to the REST API to execute the payment
-            return actions.payment.execute().then(function() {
+            return actions.payment.execute().then(function(details) {
+                // Extract invoice number from the order since payment is completed
+                // datas = {'TID':details.transactions[0].invoice_number}
+                $.ajax({
+                    url: '/PaymentDetailEndpoint/',
+                    type: "POST",
+                    data: details,
+                    success: function (data) {},
+                    complete:function(){},
+                });
                 actions.redirect();
             });
         },
-
         onCancel: function(data, actions) {
             actions.redirect();
         }
