@@ -1,0 +1,6 @@
+{% autoescape off %}    
+Thank you for choosing Ivy Tutoring Service
+New bill received
+Please Click On the Link: {% if request.is_secure %}HTTPS{% else %}HTTP{% endif %}://{{ domain }}{% url 'main:PaypalCheckout' invoice_id=invoice_id %}  
+or visit us at {% if request.is_secure %}HTTPS{% else %}HTTP{% endif %}://{{ domain }}{% url 'main:Payment' %} and enter your invoice id: {{ invoice_id }} to pay the bill 
+{% endautoescape %}
