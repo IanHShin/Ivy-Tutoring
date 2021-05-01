@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
-from multiselectfield import MultiSelectField
 
 
 class User(AbstractUser):
