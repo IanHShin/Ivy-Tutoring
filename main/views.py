@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.contrib.auth.models import Group, User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout, get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout, get_user_model, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -27,6 +27,7 @@ import json
 import os
 import random
 import string
+import requests
 
 #IanShin -> homepage, logout_request
 #ChenWei -> TutorReg, UserLogin
@@ -46,6 +47,52 @@ def about(request):
 	}
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
+
+def Payment(request):
+	if request.method == "POST":
+		form = PaymentForm(request.POST)
+		if form.is_valid():
+			invoice_id = form.cleaned_data.get('invoice_id')
+			if Invoice.objects.filter(invoice_id=invoice_id).exists():
+				invoice = Invoice.objects.get(invoice_id=invoice_id)
+				return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
+			else:
+				messages.error(request, "Invoice ID does not exist, please contact admin")
+	else:
+		form = PaymentForm()
+	return render(request, "main/Payment.html", {'form':form})
+
+def PaypalCheckout(request, invoice_id):
+	if Invoice.objects.filter(invoice_id=invoice_id).exists():
+		invoice = Invoice.objects.get(invoice_id=invoice_id)
+		context = {
+			'invoice_number' : invoice.invoice_id,
+			'price' : invoice.amount,
+			'email' : invoice.email,
+			'detail' : invoice.detail,
+			'status' : invoice.paid,
+		}
+		return render(request, "main/PaypalCheckout.html", context=context)
+	else:
+		return redirect("main:homepage")
+
+@csrf_exempt
+def PaymentDetailEndpoint(request):
+	if request.method == 'POST':
+		data = dict(request.POST)
+		invoice_id = data["transactions[0][invoice_number]"][0]
+		pay_id = data['id'][0]
+		status = data['state'][0]
+		if Invoice.objects.filter(invoice_id=invoice_id).exists():
+			invoice = Invoice.objects.get(invoice_id=invoice_id)
+			invoice.pay_id = pay_id
+			if status == 'approved':
+				invoice.paid = True
+			invoice.save()
+	return HttpResponse('')
+
+class PaypalSuccessView(TemplateView):
+	template_name = 'main/PaypalSuccess.html'
 
 @csrf_exempt
 def stripe_config(request):
@@ -174,6 +221,33 @@ def TutorReg(request, token):
 		messages.error(request, "Invalid Link")
 		return redirect("main:homepage")
 
+#Admin User only
+@login_required(login_url="main:Login")
+@Check_Superuser
+def CreateInvoice(request):
+	if request.method == "POST":
+		form = InvoiceForm(request.POST)
+		if form.is_valid():
+			sender = "admin@gmail.com"
+			receiver = form.cleaned_data.get('email')
+			while True:
+				invoice_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 20))
+				if not Invoice.objects.filter(invoice_id=invoice_id).exists():
+					break
+			email = form.cleaned_data.get('email')
+			amount = form.cleaned_data.get('amount')
+			detail = form.cleaned_data.get('detail')
+			Invoice.objects.create(email=receiver, invoice_id=invoice_id, amount=amount, detail=detail)
+			messages.success(request, "Invoice Created")
+			subject = "Invoice"
+			current_site = get_current_site(request)
+			content = f"Please Click On the Link {str(current_site)}/PaypalCheckout/{invoice_id}/ or visit {str(current_site)}/PaypalCheckout enter the invoice ID '{invoice_id}' to pay."
+			sendEmail(subject, content, sender, receiver)
+		return HttpResponseRedirect(reverse("main:CreateInvoice"))
+	else:
+		form = InvoiceForm() 
+	return render(request, 'main/CreateInvoice.html', {'form': form })
+
 @Check_Login
 def ResendConfirmation(request):
 	if request.method == 'POST':
@@ -228,6 +302,21 @@ def SendUsername(request):
 	else:
 		form = ResendUsernameForm() 
 	return render(request, 'main/ForgotUsername.html', {'form': form })
+
+@login_required(login_url="main:Login")
+def ChangePassword(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)
+			messages.success(request, 'Your password was successfully updated!')
+			return redirect('main:password_change')
+		else:
+			messages.error(request, 'Please correct the error')
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'main/password_change.html', {'form': form})
 
 # When user click on the link that is sended to their email to activate 
 def activate(request, uidb64, token):
