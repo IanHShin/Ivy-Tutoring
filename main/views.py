@@ -314,8 +314,6 @@ def ChangePassword(request):
 			update_session_auth_hash(request, user)
 			messages.success(request, 'Your password was successfully updated!')
 			return redirect('main:password_change')
-		else:
-			messages.error(request, 'Please correct the error')
 	else:
 		form = PasswordChangeForm(request.user)
 	return render(request, 'main/password_change.html', {'form': form})
