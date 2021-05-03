@@ -50,7 +50,6 @@ def about(request):
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
 
-@Check_Login
 def Payment(request):
 	if request.method == "POST":
 		form = PaymentForm(request.POST)
@@ -245,7 +244,10 @@ def CreateInvoice(request):
 			messages.success(request, "Invoice Created")
 			subject = "Invoice"
 			current_site = get_current_site(request)
-			content = f"Please Click On the Link {str(current_site)}/PaypalCheckout/{invoice_id}/ or visit {str(current_site)}/PaypalCheckout enter the invoice ID '{invoice_id}' to pay."
+			content = render_to_string('main/invoice.html', {
+				'domain': current_site.domain,
+				'invoice_id': invoice_id,
+			})
 			sendEmail(subject, content, sender, receiver)
 		return HttpResponseRedirect(reverse("main:CreateInvoice"))
 	else:
