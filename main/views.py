@@ -17,8 +17,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt 
 from django.conf import settings
 from django.views.generic.base import TemplateView
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from taggit.models import Tag
+from itertools import chain
 import stripe
 from .decorator import *
 from .forms import *
@@ -357,8 +359,7 @@ def profile(request, username):
 	person = Profile.objects.get(user=test)	
 	return render(request,'main/Profile.html',{'person':person})
 
-def Search_Results(request):
-    
+'''def Search_Results(request):
 	q = request.GET['searchBar'].split()  # I am assuming space separator in URL like "random stuff"
 	query = Q()
 	for word in q:
@@ -366,8 +367,26 @@ def Search_Results(request):
 		query = query | Q(username__icontains = word) | Q(first_name__icontains = word) | Q(last_name__icontains = word)
 	context = User.objects.filter(query)
 	print(context)
-	return render(request, "main/TutorSearch.html", context = {"all_results":context})
+	return render(request, "main/TutorSearch.html", context = {"all_results":context})'''
 
+def Search_Results(request):
+	data_user = []
+	if request.method == 'POST':
+		search_str = json.loads(request.body).get('searchText')
+
+		query = Profile.objects.filter(
+			user__first_name__icontains = search_str)|Profile.objects.filter(
+				user__last_name__icontains = search_str
+				)
+		user_qs = User.objects.filter(
+			first_name__icontains = search_str)|User.objects.filter(
+				last_name__icontains = search_str
+			)
+	data1 = list(chain(query.values(),user_qs.values()))
+	data = {}
+	for dictionary in data1:
+		data.update(dictionary)
+	return JsonResponse([data], safe = False)
 
 def tag(request):
 	context = {}
@@ -418,3 +437,7 @@ def EditSkills(request,username):
 	context = {'form':form}	
 	return render(request,"main/EditSkills.html", context)
 	
+"""<div class = "search-container"> 
+      <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}"></form>
+          <input id = "searchBar" type = "text" class = "input" placeholder = "Search for a Tutor" , value = {{request.GET.searchBar}}>       
+      </form> """

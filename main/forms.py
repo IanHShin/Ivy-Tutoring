@@ -6,6 +6,7 @@ from django.forms import Textarea
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_summernote.fields import SummernoteTextFormField
 from captcha.fields import CaptchaField
+from countable_field.widgets import CountableWidget
 from taggit.forms import TagWidget
 
 class TutorForm(UserCreationForm):
@@ -69,6 +70,11 @@ class ProfileForm(forms.ModelForm):
 		model = Profile
 		fields = ['pro_pic','descript','intro','city','state','tags']
 		widgets = {
-			'intro': SummernoteWidget(),
 			'tags':forms.TextInput(attrs={'data-role':'tagsinput'}),
 		}
+	def __init__(self, *args, **kwargs):
+		super(ProfileForm, self).__init__(*args, **kwargs)
+		self.fields['intro'].widget = CountableWidget(attrs={'data-max-count': 1000,
+															'data-count': 'characters',
+															'data-count-direction': 'down'})
+		self.fields['intro'].label = False

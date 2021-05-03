@@ -1,17 +1,19 @@
 {% load widget_tweaks %}
+{% load crispy_forms_tags %}
 {% load static %}
 <head>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    
     
 </head>
 {%include "main/HeadNav.html" %}
@@ -28,7 +30,9 @@
                     <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
                 
                 </div>
-            
+                <script type = "text/javascript">
+                  
+                        </script> 
                 <div class="col-sm-7">
                     {% if request.user.profile.pro_pic %} 
                             <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
@@ -45,9 +49,11 @@
                             {%csrf_token%}
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
                                     {{ form.pro_pic|safe }}
-                                    {{ form.descript|safe }}
-                                    {{ form.intro|safe }}
+                                    {{ form.descript|safe }} <label id = "Descript_cnt">Characters Remaining: 50</label>
+                                    {{ form.intro|as_crispy_field }}
+                                    
                                 </div>
+                               
                                     <div>
                                         <input class="btn btn-primary" type="submit">
                                         
@@ -57,12 +63,43 @@
                 </div>
             </div>   
                 <div class = 'vl'></div> 
-                <hr style = "height:2px;width:20%; position: absolute; top: 570px;border:none;color:#c0bebe;background-color:#c0bebe;">
+                <hr style = "height:2px;width:20%; position: absolute; top: 80%;border:none;color:#c0bebe;background-color:#c0bebe;">
         </div>
     </div>
+
 </body>
-
-
+<script>
+    const myText = document.getElementById("id_intro");
+    const remainChars = document.getElementsByClassName("text-count-current")[0];
+    const MaxChars = 1000;
+    const initDiff = MaxChars - myText.value.length;
+    remainChars.textContent = `${initDiff}`;
+    myText.addEventListener("input",() => {
+        const remaining = MaxChars - myText.value.length;
+        const color = remaining < MaxChars * .1 ? 'red':null;
+        remainChars.textContent = `${remaining}`;
+        remainChars.style.color = color;
+        if (myText.value.length >= 1000){
+            myText.stop()
+        };
+    });     
+</script>
+<script>
+    const myText1 = document.getElementById("id_descript");
+    const remainChars1 = document.getElementById('Descript_cnt');
+    const MaxChars1 = 50;
+    const initDiff1 = MaxChars1 - myText1.value.length;
+    remainChars1.textContent = `Characters Remaining: ${initDiff1}`;
+    myText1.addEventListener("input",() => {
+        const remaining1 = MaxChars1 - myText1.value.length;
+        const color1 = remaining1 < MaxChars1 * .1 ? 'red':null;
+        remainChars1.textContent = `Characters Remaining: ${remaining1}`;
+        remainChars1.style.color = color;
+        if (myText1.value.length >= 50){
+            myText1.stop()
+        };
+    });   
+</script>
 
 
 
@@ -85,11 +122,13 @@
         font-size:17;
     }
     .card{
-        position:relative;
-        top:70;
-        width:90%;
-        left:25;
-        height:700;
+        position: absolute;
+        top: 20%;
+        width: 74%;
+        left: 13%;
+        height: 605px;
+        max-height: 605px;
+        max-width: 1200px;
     }
     .row{
         margin-left:0;
@@ -101,10 +140,10 @@
         position:absolute;
     }
     .col-sm-7{
-        position:relative;
-        left:35%;
-        top:10%;
-    }
+        position: relative;
+        left: 30%;
+        top: 25px;
+        }
     .card-img{
         max-width:50%;
         max-height:25%;
@@ -117,6 +156,32 @@
         left: 200;
         top:54.6;
     }
-    
+    textarea {
+        position: absolute;
+        top: 72%;
+        width: 138%;
+        height: 12rem;
+        background-color: whitesmoke;
+        min-height: 12rem;
+        max-height: 12rem;
+    }
+    #Descript_cnt{
+        position: absolute;
+        width: 100%;
+        top: 66%;
+        left: 62%;
+    }
+    #id_intro_counter{
+        position: relative;
+        top: 200px;
+        left: 113%;
+        font-size: 80%;
+        color: #818a91;
+    }
+    .btn{
+        position: absolute;
+        top: 115%;
+
+    }
     
 </style>

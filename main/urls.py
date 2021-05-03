@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from .views import tutorList
 from main.views import *
 
@@ -26,12 +27,13 @@ urlpatterns = [
 	path('create-checkout-session/', create_checkout_session),
 	path('success/', SuccessView.as_view()),  # new
 	path('cancelled/', CancelledView.as_view()),
-	path("Search_Results/", views.Search_Results,name = "SearchResults"),
+	#path("Search_Results/", views.Search_Results,name = "SearchResults"),
 	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
 	path("Profile/<str:username>/EditProfile/EditLocation/", views.LocationEdit, name = "LocationEdit"),
 	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit"),
 	path("ForgotUsername/", views.SendUsername, name='SendUsername'),
 	path("TagResults/", views.tag,name = "TagResults"),
+	path("Search_Results/",csrf_exempt(views.Search_Results),name = "Search_Results")
 	
 
 
