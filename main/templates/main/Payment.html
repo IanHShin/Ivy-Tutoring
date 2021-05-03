@@ -1,0 +1,14 @@
+{% include "main/HeadNav.html" %}
+
+<form method = "POST">
+    {% csrf_token %}
+    <br>
+    <br>
+    <br>
+    <p>View bill status or to pay bill</p>
+	{% for message in messages %}
+		<p>{{ message }}</p>
+	{% endfor %}
+    {{ form.as_p }} 
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>

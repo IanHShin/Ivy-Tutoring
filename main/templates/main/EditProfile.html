@@ -24,7 +24,7 @@
             <div class="row no-gutters">
                 <div class="list-group">
                     <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
-                    <a href="#" class="list-group-item list-group-item-action">Change Password</a>
+                    <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
                     <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
                     <a href="{% url 'main:LocationEdit' username=request.user.username %}"  class="list-group-item list-group-item-action">Change location</a>
                     <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
