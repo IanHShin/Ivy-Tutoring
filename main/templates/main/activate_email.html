@@ -1,6 +1,6 @@
 {% autoescape off %}  
 Hi {{ user.username }},  
 Click on the link below to confirm your registration,
-http://{{ domain }}{% url 'main:activate' uidb64=uid token=token %}  
+{% if request.is_secure %}HTTPS{% else %}HTTP{% endif %}://{{ domain }}{% url 'main:activate' uidb64=uid token=token %}  
 Please ignore this email if is not you.  
 {% endautoescape %}
