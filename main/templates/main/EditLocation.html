@@ -22,7 +22,7 @@
             <div class="row no-gutters">
                 <div class="list-group">
                     <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
-                    <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
+                    <a href="#" class="list-group-item list-group-item-action">Change Password</a>
                     <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
                     <a href="{% url 'main:LocationEdit' username=request.user.username %}"  class="list-group-item list-group-item-action">Change location</a>
                     <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
@@ -44,9 +44,8 @@
                         <form method = "POST" action = "" enctype="multipart/form-data">
                             {%csrf_token%}
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
-                                    {{ form.pro_pic|safe }}
-                                    {{ form.descript|safe }}
-                                    {{ form.intro|safe }}
+                                    {{ form.city|safe }}
+                                    {{ form.state|safe }}
                                 </div>
                                     <div>
                                         <input class="btn btn-primary" type="submit">
@@ -61,6 +60,7 @@
         </div>
     </div>
 </body>
+
 
 
 

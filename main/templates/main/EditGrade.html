@@ -6,14 +6,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
    
     <!-- Compiled and minified JavaScript -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/tagsinput.css">
 </head>
+
 {%include "main/HeadNav.html" %}
 
 <body>
@@ -22,7 +19,7 @@
             <div class="row no-gutters">
                 <div class="list-group">
                     <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
-                    <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
+                    <a href="#" class="list-group-item list-group-item-action">Change Password</a>
                     <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
                     <a href="{% url 'main:LocationEdit' username=request.user.username %}"  class="list-group-item list-group-item-action">Change location</a>
                     <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
@@ -40,29 +37,42 @@
                             {% render_field request.user.username %}      
                         </b>    
                     </div>
+                    
                     <div class="card-body">
-                        <form method = "POST" action = "" enctype="multipart/form-data">
-                            {%csrf_token%}
-                                <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
-                                    {{ form.pro_pic|safe }}
-                                    {{ form.descript|safe }}
-                                    {{ form.intro|safe }}
-                                </div>
-                                    <div>
-                                        <input class="btn btn-primary" type="submit">
-                                        
-                                    </div>
-                        </form>
+                        
+                    {% for value,text in form.grade_level.field.choices %}
+                        <label>
+                            <input type="checkbox" name = "grades" value = "{{text}}">
+                            <span>{{value}}</span>
+                            
+                            
+                        </label>   
+                    {% endfor %}
+                    
+                    </input>
+                    <button type="submit" value="upload" class="btn btn-primary">Submit</button>   
                     </div>
                 </div>
+                
             </div>   
                 <div class = 'vl'></div> 
                 <hr style = "height:2px;width:20%; position: absolute; top: 570px;border:none;color:#c0bebe;background-color:#c0bebe;">
         </div>
     </div>
+    <ul>
+        
+    </ul>
+    
+                                    
+   
+    
 </body>
 
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Tags Input Bootstrap 4 JS -->
+<script src="/static/js/tagsinput.js"></script>
 
 
 
@@ -117,6 +127,6 @@
         left: 200;
         top:54.6;
     }
-    
+ 
     
 </style>

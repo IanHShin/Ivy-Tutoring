@@ -3,20 +3,22 @@ from django.urls import reverse
 from django.contrib.auth.models import Group, User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout, get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout, get_user_model, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
 from django.views.generic import ListView
+from django.template.defaultfilters import slugify
 from django.core.mail import send_mail, BadHeaderError, EmailMessage
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt 
 from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.db.models import Q
+from taggit.models import Tag
 import stripe
 from .decorator import *
 from .forms import *
@@ -25,6 +27,7 @@ import json
 import os
 import random
 import string
+import requests
 
 #IanShin -> homepage, logout_request
 #ChenWei -> TutorReg, UserLogin
@@ -44,6 +47,54 @@ def about(request):
 	}
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
+
+@Check_Login
+def Payment(request):
+	if request.method == "POST":
+		form = PaymentForm(request.POST)
+		if form.is_valid():
+			invoice_id = form.cleaned_data.get('invoice_id')
+			if Invoice.objects.filter(invoice_id=invoice_id).exists():
+				invoice = Invoice.objects.get(invoice_id=invoice_id)
+				return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
+			else:
+				messages.error(request, "Invoice ID does not exist, please contact admin")
+	else:
+		form = PaymentForm()
+	return render(request, "main/Payment.html", {'form':form})
+
+@Check_Login
+def PaypalCheckout(request, invoice_id):
+	if Invoice.objects.filter(invoice_id=invoice_id).exists():
+		invoice = Invoice.objects.get(invoice_id=invoice_id)
+		context = {
+			'invoice_number' : invoice.invoice_id,
+			'price' : invoice.amount,
+			'email' : invoice.email,
+			'detail' : invoice.detail,
+			'status' : invoice.paid,
+		}
+		return render(request, "main/PaypalCheckout.html", context=context)
+	else:
+		return redirect("main:homepage")
+
+@csrf_exempt
+def PaymentDetailEndpoint(request):
+	if request.method == 'POST':
+		data = dict(request.POST)
+		invoice_id = data["transactions[0][invoice_number]"][0]
+		pay_id = data['id'][0]
+		status = data['state'][0]
+		if Invoice.objects.filter(invoice_id=invoice_id).exists():
+			invoice = Invoice.objects.get(invoice_id=invoice_id)
+			invoice.pay_id = pay_id
+			if status == 'approved':
+				invoice.paid = True
+			invoice.save()
+	return HttpResponse('')
+
+class PaypalSuccessView(TemplateView):
+	template_name = 'main/PaypalSuccess.html'
 
 @csrf_exempt
 def stripe_config(request):
@@ -172,6 +223,33 @@ def TutorReg(request, token):
 		messages.error(request, "Invalid Link")
 		return redirect("main:homepage")
 
+#Admin User only
+@login_required(login_url="main:Login")
+@Check_Superuser
+def CreateInvoice(request):
+	if request.method == "POST":
+		form = InvoiceForm(request.POST)
+		if form.is_valid():
+			sender = "admin@gmail.com"
+			receiver = form.cleaned_data.get('email')
+			while True:
+				invoice_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 20))
+				if not Invoice.objects.filter(invoice_id=invoice_id).exists():
+					break
+			email = form.cleaned_data.get('email')
+			amount = form.cleaned_data.get('amount')
+			detail = form.cleaned_data.get('detail')
+			Invoice.objects.create(email=receiver, invoice_id=invoice_id, amount=amount, detail=detail)
+			messages.success(request, "Invoice Created")
+			subject = "Invoice"
+			current_site = get_current_site(request)
+			content = f"Please Click On the Link {str(current_site)}/PaypalCheckout/{invoice_id}/ or visit {str(current_site)}/PaypalCheckout enter the invoice ID '{invoice_id}' to pay."
+			sendEmail(subject, content, sender, receiver)
+		return HttpResponseRedirect(reverse("main:CreateInvoice"))
+	else:
+		form = InvoiceForm() 
+	return render(request, 'main/CreateInvoice.html', {'form': form })
+
 @Check_Login
 def ResendConfirmation(request):
 	if request.method == 'POST':
@@ -227,6 +305,21 @@ def SendUsername(request):
 		form = ResendUsernameForm() 
 	return render(request, 'main/ForgotUsername.html', {'form': form })
 
+@login_required(login_url="main:Login")
+def ChangePassword(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)
+			messages.success(request, 'Your password was successfully updated!')
+			return redirect('main:password_change')
+		else:
+			messages.error(request, 'Please correct the error')
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'main/password_change.html', {'form': form})
+
 # When user click on the link that is sended to their email to activate 
 def activate(request, uidb64, token):
 	UserModel = get_user_model()
@@ -254,7 +347,7 @@ def UserLogin(request):
 			user = authenticate(username=username, password=password)
 			if user.is_superuser or (user is not None and user.email_confirm):
 				login(request,user)
-				return redirect("main:Profile")
+				return redirect("main:homepage")
 			elif user is not None and not user.email_confirm:
 				messages.error(request, "Email not confirmed, <a href='/Resend'>Resend Email Confirmation</a>")
 				return HttpResponseRedirect(reverse("main:Login"))
@@ -349,29 +442,70 @@ class tutorList(ListView):
 		data = super().get_context_data(**kwargs)
 		return data
 
-@login_required(login_url="main:Login")
-def profile(request):
-	return render(request, "main/Profile.html")
+
+def profile(request, username):
+	test = (User.objects.get(username=username))
+	person = Profile.objects.get(user=test)	
+	return render(request,'main/Profile.html',{'person':person})
+
+def Search_Results(request):
+	q = request.GET['searchBar'].split()  # I am assuming space separator in URL like "random stuff"
+	query = Q()
+	for word in q:
+		print(word)
+		query = query | Q(username__icontains = word) | Q(first_name__icontains = word) | Q(last_name__icontains = word)
+	context = User.objects.filter(query)
+	print(context)
+	return render(request, "main/TutorSearch.html", context = {"all_results":context})
+
+
+def tag(request):
+	context = {}
+	q = request.GET['searchBarTags'].split()  # I am assuming space separator in URL like "random stuff"
+	query = Q()
+	for word in q:
+		query = query | Q(tags__name__icontains=word)
+	results = Profile.objects.filter(query)
+	return render(request, "main/TagSearch.html", context = {"all_results":results})
 	
 @login_required(login_url="main:Login")
-def profileEdit(request):
-	form = ProfileForm(instance = request.user)
+def profileEdit(request,username):
+	form = ProfileForm(instance = request.user.profile)
 	if request.method == "POST":
 		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
+		print(form.errors)
 		if form.is_valid():
-			form.save()
-			return redirect("main:Profile")
+			obj = form.save(commit = False)
+			obj.save(update_fields = ['descript', 'intro', 'pro_pic'])
+			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
 		else:
 			form = ProfileForm()
 	context = {'form':form}	
 	return render(request,"main/EditProfile.html", context)
 
-def Search_Results(request):
-    query = request.GET.get('searchBar')
-    print(query)
-    if query:
-        context = {}
-        context["all_results"] = User.objects.filter(Q(username__icontains = query) | 
-        Q(first_name__icontains = query) |
-        Q(last_name__icontains = query))
-        return render(request, "main/TutorSearch.html", context)
+@login_required(login_url="main:Login")
+def LocationEdit(request,username):
+	form = ProfileForm(instance = request.user.profile)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
+		if form.is_valid():
+			obj = form.save(commit=False)
+			obj.save(update_fields = ['city', 'state'])
+			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
+		else:
+			form = ProfileForm()
+	context = {'form':form}	
+	return render(request,"main/EditLocation.html", context)
+
+@login_required(login_url="main:Login")
+def EditSkills(request,username):
+	form = ProfileForm(instance = request.user.profile)
+	if request.method == "POST":
+		form = ProfileForm(request.POST,instance = request.user.profile)
+		if form.is_valid():
+			form.save(commit = False)
+			form.save_m2m()
+			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
+	context = {'form':form}	
+	return render(request,"main/EditSkills.html", context)
+	

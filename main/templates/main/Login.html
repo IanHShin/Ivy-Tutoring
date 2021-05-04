@@ -1,10 +1,23 @@
+{% load static %}
+<head>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--Includes HTTP:/HTTPS: is compatible for Chrome/FireFox -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
 {%include "main/HeadNav.html" %}
 
     <div class="card-panel grey lighten-5 z-depth-1">
     </div>
 
     <div class = "LogBlock">
-        <hr>   
+        <hr>
         <h5 class="" style="text-align:left;"><strong><font color="#a82e2e">Log in</font></strong></h5>
         {% for message in messages %}
             <p>{{ message|safe }}</p>
@@ -12,12 +25,12 @@
         <form method = "POST">
             {% csrf_token %}
             {{form.as_p}}
-            <p>Forgot<a href="/ForgotUsername"> Username</a> or <a href="/ForgotPassword">Password</a></p>
+            <p>Forgot<a href="/ForgotUsername"> Username</a> or <a href="/reset_password/">Password</a></p>
             <button class = "btn" style= "background-color:cc0033; color:white"
             type= "submit">Login</button>
         </form>
-        </div>
     </div>
+    
     <div class = "container" style = "width:25%;">
         <div class="col s12 m2 offset-m2 l6 offset-l3">
             <div class="card-panel grey lighten-5 z-depth-1" style = "position:relative; left:400px;top:-435px; height:273px; width:250px;">
@@ -27,8 +40,8 @@
             </div>
             </div>
         </div>
-    
-
+    </div>
+{%include "main/Footer.html" %}
 <!-- <p class = "OptReg">If you do not have an account <a href= "/signup/tutor">Sign Up!</a></p> -->
 
 <style>
@@ -41,7 +54,7 @@
     }
     div.LogBlock{
         position:absolute;
-        top:200px;
+        top:240px;
         margin-left:30%;
         width:500px;
     }

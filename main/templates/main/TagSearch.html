@@ -36,42 +36,37 @@
             </font>    
         </div>
         <hr>
-      <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}">
-        <input name = "searchBar" type = "text" class = "input" placeholder = "Search.." , value = {{request.GET.searchBar}}>   
-      </form>
-    
+  
 
-  {%if all_results %}
-    <div class="row card-container">
-      {% for results in all_results %}
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            {% if results.profile.pro_pic %}
-              <img class="activator" src="{{ results.profile.pro_pic.url }}">
-            {% else %}
-              <img class="activator" src="{%static 'media/Default.jpg' %}">
-            {% endif %}
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">{{results.first_name}} {{results.last_name}}<i class="material-icons right">{{results.profile.state}}</i></span>
-            <p><a href="{% url 'main:profile' username=results.username %}">Profile</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">{{results.first_name}} {{results.last_name}}<i class="material-icons right">close</i></span>
-            <p>{{results.profile.intro|safe}}</p>
-          </div>
-        </div>
-      {% endfor %} 
-    {% else %}
-    <div class="col s12 m8 offset-m2 l6 offset-l3">
-      <div class="card-panel grey lighten-5 z-depth-1">
-        <h4>Uh oh... We can't seem to find a match! </h4>
-      </div>
-      </div>
-    {% endif %}
+{%if all_results %}
+<div class="row card-container">
+  {% for result in all_results %}
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      {% if result.pro_pic %}
+      <img class="activator" src="{{ result.pro_pic.url }}">
+      {% else %}
+      <img class="activator" src="{%static 'media/Default.jpg' %}">
+      {% endif %}
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{result.user.first_name}} {{result.user.last_name}}<i class="material-icons right">{{result.state}}</i></span>
+      <p><a href="{% url 'main:profile' username=result.user.username %}">Profile</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">{{result.first_name}} {{result.last_name}}<i class="material-icons right">close</i></span>
+      <p>{{result.intro|safe}}</p>
+      
+    </div>
+  </div>
+{% endfor %}
+</div>
+{%else%}
+Nothing is found
+{%endif%}
 
     
-    <style>
+  <style>
       div.card-container {
         -moz-column-width: 23rem;
         -webkit-column-width: 23rem;
@@ -134,4 +129,4 @@
       }
   
   </style>
-  
+ 

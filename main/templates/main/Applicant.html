@@ -1,25 +1,117 @@
+{% load widget_tweaks %}
 {%include "main/HeadNav.html" %}
-<div style="margin:80px">
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}
-    <h1>Career</h1>
-    <h4>Join our team! We are accepting applications for online tutors!</h4>
-    <p>
-        Please write your name, email address and a message below if you have any questions.
-    </p>
-    <ul>
-        <h4> Are you qualified to become a tutor?</h4>
-            <li>Currently reside in the US with a valid SSN</li>
-            <li>Eligible to work in the US</li>
-            <li> Avaliable at least 3 days a week</li>
-            <li> Posses strong communication skills</li>
-            <li> Fluent in english<li>
-    </ul>
 
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Submit</button>
-    </form>
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Khula:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class = "container">
+        <div class = "row">
+            <div class = "col">
+                <br>
+                <br>
+            </div>
+
+        </div>
+        <div class = "row" align-items-center>
+            <div class = "col my-auto">
+                <h2 class="" style="text-align:left;"><strong><font color="#000000">Let's Chat</font></strong></h2>
+                <h2 class="" style="text-align:left;"><strong><font color="#000000">Whether you have a question, </font></strong></h2>
+                <h2 class="" style="text-align:left;"><strong><font color="#000000">or want to be a tutor! </font></strong></h2>
+                <h4 class="" style="text-align:left;"><strong><font color="#a82e2e">Lets build something together </font></strong></h4>
+            </div>
+            <div class = "col my-auto">
+                <div class="d-flex justify-content-center">
+                    <div class="containerB">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                            <form method="POST" class="form-group">
+                                {% csrf_token %}
+                                <div class="form-label-group">
+                                    {% render_field form.firstName placeholder="First Name" class+="form-control"  %}
+                                    {% render_field form.lastName placeholder="Last Name" class+="form-control"  %}
+                                    {% render_field form.emailAddress placeholder="abc123@gmail.com" class+="form-control"  %}
+                                    {% render_field form.message placeholder="Message" class+="form-control"  %}
+                                    {% render_field form.resume placeholder="Resume" class+="form-control"  %}
+                                    {% render_field form.captcha placeholder="aBcD" class+="form-control"  %}
+                                </div>
+                                <button type="submit" class="btn btn-success" style = "font-size:18px; margin-top:20px; box-shadow:1px 1px rgb(63, 62, 62);">Send Message</button>
+                            </form>
+                        
+                    </div>
+                </div>  
+            </div>
+        </div>
 </div>
+{%include "main/Footer.html" %}
+
+</body>
+
+
+<style>
+    body{
+        background-color:#edf1f1;
+        
+    }
+   
+    .line1{
+        min-width:700px;
+        position:relative;
+        top:27%;
+        left:7%;
+    }
+    .line2{
+        min-width:700px;
+        position:relative;
+        top:25%;
+        left:7%;
+    }
+    .line3{
+        min-width:700px;
+        position:relative;
+        top:23%;
+        left:7%;
+    }
+    .line4{
+        min-width:700px;
+        position:relative;
+        top:23%;
+        left:7%;
+    }
+
+    .containerB {
+        min-width:750px;
+        width:40%;
+        position:relative;
+        top:-10%;
+        left:25%;
+        border:20px solid white;
+        background-color:white;
+        height:700px;
+
+    }
+    .containerB input[type="text"] {
+        height:5rem;
+        font-size:22px;
+    }
+    .containerB input[type = "email"]{
+        height:5rem;
+        font-size:22px
+    }
+    .containerB textarea{
+        height:8rem;
+        font-size:20px
+    }
+    .containerB button{
+        width:250px;
+        height:60px;
+        border-radius:10%;
+    }
+
+</style>
