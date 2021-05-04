@@ -36,7 +36,7 @@ searchField.addEventListener("keyup", (e) => {
                             </div>
                             <div class="card-content">
                             <span class="card-title activator grey-text text-darken-4">${item.first_name} ${item.last_name} <i class="material-icons right">${item.state}</i></span>
-                            <p><a href="{% url 'main:profile' username=${item.username}%}">Profile</a></p>
+                            <p><a href="Profile/${item.username}">Profile</a></p>
                             </div>
                          <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">${item.first_name} ${item.last_name}<i class="material-icons right">close</i></span>

@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.core.serializers.json import DjangoJSONEncoder
+from django.forms import modelformset_factory
 from django.db.models import Q
 from taggit.models import Tag
 from itertools import chain
@@ -446,7 +447,9 @@ class tutorList(ListView):
 def profile(request, username):
 	test = (User.objects.get(username=username))
 	person = Profile.objects.get(user=test)	
-	return render(request,'main/Profile.html',{'person':person})
+	exp = Experience.objects.filter(user=test)
+	ed = School.objects.filter(user=test)
+	return render(request,'main/Profile.html',{'person':person,"exp":exp,"ed":ed})
 
 
 
@@ -500,7 +503,7 @@ def LocationEdit(request,username):
 		form = ProfileForm(request.POST,request.FILES,instance = request.user.profile)
 		if form.is_valid():
 			obj = form.save(commit=False)
-			obj.save(update_fields = ['city', 'state'])
+			obj.save(update_fields = ['city', 'state','college','major'])
 			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
 		else:
 			form = ProfileForm()
@@ -518,6 +521,76 @@ def EditSkills(request,username):
 			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
 	context = {'form':form}	
 	return render(request,"main/EditSkills.html", context)
+
+@login_required(login_url="main:Login")
+def editJob(request,username):
+	Exp = Experience.objects.filter(user = request.user)[:5]
+	form = ExperienceForm()
+	if request.method == "POST":
+		form = ExperienceForm(request.POST,request.FILES)
+		if form.is_valid():
+			obj = form.save(commit = False)
+			obj.user = request.user
+			obj.save()
+			return redirect(request.path)
+	else:
+		context = {'form':form, "Exp":Exp}	
+	return render(request,"main/EditJob.html", context)
+		
+def updateJob(request,pk):
+	exp = Experience.objects.get(id = pk)
+	form = ExperienceForm(instance = exp)
+	if request.method == "POST":
+		form = ExperienceForm(request.POST,instance = exp)
+		if form.is_valid():
+			form.save()
+			return redirect(reverse("main:JobEdit", kwargs = {"username":request.user}))
+	context = {'form':form}
+	return render(request,"main/UpdateJob.html", context)
+
+def deleteJob(request,pk):
+	item = Experience.objects.get(id=pk)
+	if request.method == "POST":
+		item.delete()
+		return redirect(reverse("main:JobEdit", kwargs = {"username":request.user}))
+	context = {'item':item}
+	return render(request,"main/DeleteJob.html",context)
+
+@login_required(login_url="main:Login")	
+def editSchool(request,username):
+	Ed = School.objects.filter(user = request.user)[:5]
+	form = SchoolForm()
+	if request.method == "POST":
+		form = SchoolForm(request.POST,request.FILES)
+		if form.is_valid():
+			obj = form.save(commit = False)
+			obj.user = request.user
+			obj.save()
+			return redirect(request.path)
+	else:
+		context = {'form':form, "Ed":Ed}	
+	return render(request,"main/EditLocation.html", context)
+
+def updateSchool(request,pk):
+	ed = School.objects.get(id = pk)
+	form = SchoolForm(instance = ed)
+	if request.method == "POST":
+		form = SchoolForm(request.POST,instance = ed)
+		print(form.errors)
+		if form.is_valid():
+			form.save()
+			return redirect(reverse("main:EditSchol", kwargs = {"username":request.user}))
+	context = {'form':form}
+	return render(request,"main/UpdateEd.html", context)
+
+def deleteSchool(request,pk):
+	item = School.objects.get(id=pk)
+	if request.method == "POST":
+		item.delete()
+		return redirect(reverse("main:EditSchol", kwargs = {"username":request.user}))
+	context = {'item':item}
+	return render(request,"main/DeleteEd.html",context)
+
 	
 """<div class = "search-container"> 
       <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}"></form>
