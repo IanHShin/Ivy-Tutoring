@@ -1,5 +1,6 @@
 {% autoescape off %}  
-Click on the link below to register,
-http://{{ domain }}{% url 'main:TutorReg' token=token %}  
+Welcome to Ivy Tutoring Service
+Click on the link below to register for a account:
+{% if request.is_secure %}HTTPS{% else %}HTTP{% endif %}://{{ domain }}{% url 'main:TutorReg' token=token %}  
 Please ignore this email if is not you.  
 {% endautoescape %}

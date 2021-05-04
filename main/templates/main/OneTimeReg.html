@@ -1,10 +1,8 @@
 {% include "main/HeadNav.html" %}
-
+<title>Register a Tutor</title>
+<p>Enter the tutor's email to sent them a one time registration link</p>
 <form method = "POST">
     {% csrf_token %}
-    <br>
-    <br>
-    <br>
 	{% for message in messages %}
 		<p>{{ message }}</p>
 	{% endfor %}

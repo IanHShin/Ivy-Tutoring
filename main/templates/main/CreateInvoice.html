@@ -1,10 +1,8 @@
 {% include "main/HeadNav.html" %}
-
+<title>Invoices</title>
 <form method = "POST">
     {% csrf_token %}
-    <br>
-    <br>
-    <br>
+    <p>Enter information below to sent invoice</p>
 	{% for message in messages %}
 		<p>{{ message }}</p>
 	{% endfor %}

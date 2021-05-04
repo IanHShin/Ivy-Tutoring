@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <title> PayPal Checkout </title>
+    <title> Status </title>
     {%include "main/HeadNav.html" %}
 </head>
 
@@ -36,8 +36,8 @@
         //sandbox test account to pay dummy data, username: payout@money.com, password: test0201
         env: 'sandbox',
         client: {
-            sandbox: 'AZq5c2nVb-X_j-WbZFOOPDEsEBAyHYLIES9nMlGyAqfHG_NcIZez174HnvN_yhsfRPjN3MvZdU9705oa',
-            production: 'demo_production_client_id'
+            sandbox: 'AXrpmNSM_KHXNe1mzSdwh9OhclxVStpiJ-lF6VVLFBYqUhlbugcc6rXUGHoywo4xW_pGvFwN-ZuyOOqe',
+            production: ''
         },
         // Customize button (optional)
         locale: 'en_US',
@@ -63,7 +63,7 @@
                     total: '{{price}}',
                     currency: 'USD',
                 },
-                description: '{{detail}}',
+                description: '{detail}',
                 // Disable invoice number during development, since is unqiue, same order will fail   
                 invoice_number: '{{invoice_number}}',
                 }],
