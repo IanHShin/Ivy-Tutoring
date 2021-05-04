@@ -49,10 +49,11 @@ INSTALLED_APPS = [
     'django_summernote',
     'captcha',
     'taggit',
-    
-    
+    'countable_field',
+    'crispy_forms',
     
 ]
+CRISPY_TEMPLATE_PACK = 'uni_form'
 AUTH_USER_MODEL = 'main.User'
 
 MIDDLEWARE = [
@@ -155,20 +156,24 @@ XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode, default
-    'iframe': True,
+    'iframe': False,
 
     'summernote': {
 
         'width': '500px',
         'height': '200px',
+
+        'lang':"en-US",
+
         'toolbar': [
-            ['style', ['style']],
             ['font', ['bold', 'underline', 'clear']],
             ['fontname', ['fontname']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
            
         ],
+    
+     'js': ('/static/js/SummerNote.js')
     }
 }
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

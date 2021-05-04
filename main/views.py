@@ -17,8 +17,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt 
 from django.conf import settings
 from django.views.generic.base import TemplateView
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from taggit.models import Tag
+from itertools import chain
 import stripe
 from .decorator import *
 from .forms import *
@@ -48,7 +50,6 @@ def about(request):
 	pictureTexts = ["Our Story", "Learn more about us here" ]
 	return render(request=request,template_name='main/AboutUs.html', context = {"aboutUsContext" : aboutUsContext})
 
-@Check_Login
 def Payment(request):
 	if request.method == "POST":
 		form = PaymentForm(request.POST)
@@ -58,7 +59,7 @@ def Payment(request):
 				invoice = Invoice.objects.get(invoice_id=invoice_id)
 				return HttpResponseRedirect(f'/PaypalCheckout/{invoice_id}')
 			else:
-				messages.error(request, "Invoice ID does not exist, please contact admin")
+				messages.error(request, "Invoice ID does not exist")
 	else:
 		form = PaymentForm()
 	return render(request, "main/Payment.html", {'form':form})
@@ -193,7 +194,7 @@ def TutorReg(request, token):
 			form = TutorForm(request.POST)
 			if form.is_valid():
 				user = form.save()
-				messages.success(request, user.username + " Account created, Please Confirm Email")
+				messages.success(request, "Account created, Please Confirm Email")
 				sender = "admin@gmail.com"
 				receiver = form.cleaned_data.get('email')
 				# Get the current site
@@ -243,7 +244,10 @@ def CreateInvoice(request):
 			messages.success(request, "Invoice Created")
 			subject = "Invoice"
 			current_site = get_current_site(request)
-			content = f"Please Click On the Link {str(current_site)}/PaypalCheckout/{invoice_id}/ or visit {str(current_site)}/PaypalCheckout enter the invoice ID '{invoice_id}' to pay."
+			content = render_to_string('main/invoice.html', {
+				'domain': current_site.domain,
+				'invoice_id': invoice_id,
+			})
 			sendEmail(subject, content, sender, receiver)
 		return HttpResponseRedirect(reverse("main:CreateInvoice"))
 	else:
@@ -314,8 +318,6 @@ def ChangePassword(request):
 			update_session_auth_hash(request, user)
 			messages.success(request, 'Your password was successfully updated!')
 			return redirect('main:password_change')
-		else:
-			messages.error(request, 'Please correct the error')
 	else:
 		form = PasswordChangeForm(request.user)
 	return render(request, 'main/password_change.html', {'form': form})
@@ -335,7 +337,7 @@ def activate(request, uidb64, token):
 		messages.success(request, "Email Confirmed")
 	else:
 		messages.error(request, "Invalid Link")
-	return redirect("main:homepage")
+	return redirect("main:Login")
 
 @Check_Login
 def UserLogin(request):
@@ -406,7 +408,7 @@ def ContactUs(request):
 			for key, value in body.items():
 				content += "\n" + key + ":\n\t" + value
 			sendEmail(subject, content, sender, receiver)
-			messages.success(request, "Contact form sent, please allow 24 hours for us to reply.")
+			messages.success(request, "Message sent, Please allow 24 hours for us to reply to the provided email.")
 			return HttpResponseRedirect(reverse("main:contactus"))
 		else:
 			messages.error(request, "Invalid Captcha")
@@ -448,16 +450,26 @@ def profile(request, username):
 	person = Profile.objects.get(user=test)	
 	return render(request,'main/Profile.html',{'person':person})
 
-def Search_Results(request):
-	q = request.GET['searchBar'].split()  # I am assuming space separator in URL like "random stuff"
-	query = Q()
-	for word in q:
-		print(word)
-		query = query | Q(username__icontains = word) | Q(first_name__icontains = word) | Q(last_name__icontains = word)
-	context = User.objects.filter(query)
-	print(context)
-	return render(request, "main/TutorSearch.html", context = {"all_results":context})
 
+
+def Search_Results(request):
+	data_user = []
+	if request.method == 'POST':
+		search_str = json.loads(request.body).get('searchText')
+
+		query = Profile.objects.filter(
+			user__first_name__icontains = search_str)|Profile.objects.filter(
+				user__last_name__icontains = search_str
+				)
+		user_qs = User.objects.filter(
+			first_name__icontains = search_str)|User.objects.filter(
+				last_name__icontains = search_str
+			)
+	data1 = list(chain(query.values(),user_qs.values()))
+	data = {}
+	for dictionary in data1:
+		data.update(dictionary)
+	return JsonResponse([data], safe = False)
 
 def tag(request):
 	context = {}
@@ -509,3 +521,7 @@ def EditSkills(request,username):
 	context = {'form':form}	
 	return render(request,"main/EditSkills.html", context)
 	
+"""<div class = "search-container"> 
+      <form class = "wrapper" method = "GET" action ="{% url 'main:SearchResults' %}"></form>
+          <input id = "searchBar" type = "text" class = "input" placeholder = "Search for a Tutor" , value = {{request.GET.searchBar}}>       
+      </form> """

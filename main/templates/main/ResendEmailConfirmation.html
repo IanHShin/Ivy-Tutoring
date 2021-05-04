@@ -1,10 +1,9 @@
 {% include "main/HeadNav.html" %}
-
+<title>Resend Email Confirmation</title>
+<p>Miss the first email confirmation?</p>
+<p>We can send email confirmation again</p>
 <form method = "POST">
     {% csrf_token %}
-    <br>
-    <br>
-    <br>
 	{% for message in messages %}
 		<p>{{ message }}</p>
 	{% endfor %}

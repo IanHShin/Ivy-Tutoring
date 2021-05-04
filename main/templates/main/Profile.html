@@ -19,8 +19,8 @@
             <div class="row no-gutters">
                 <div class="col-sm-5">
                     <!-- I am going to replace conditional, after I edit media path. I messed up and put media as parent dir.-->
-                    {% if request.user.profile.pro_pic %} 
-                        <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
+                    {% if person.user.profile.pro_pic %} 
+                        <img class="card-img" src="{{ person.user.profile.pro_pic.url }}">
                     {% else %}
                         <img class="card-img" src="{%static 'media/Default.jpg' %}">
                     {% endif %}
@@ -33,7 +33,7 @@
                                     <img class="img" style  = "width:15%;border-radius: 20%;" src="{%static 'media\TutorSticker.png' %}">      
                                 </b>
                                 
-                                <div class="card-text" style = "width:500px;max-width:-webkit-fill-available; font-size:20px;">   
+                                <div class="card-text" style = "width:500px;max-width:fit-content; font-size:20px;">   
                                     {%render_field person.descript %}
                                     <br>    
                                     {{person.city}} {{person.state}}
@@ -52,9 +52,11 @@
             <hr style = "position:relative; margin-left: auto; margin-right:auto;
              width: 95%;height:2px;border:none;color:#c0bebe;background-color:#c0bebe;">
              <h4>Skills</h4>
+             <div class = "row">
              {% for tag in person.tags.all %}
-            <a href="#" class="mr-1 badge badge-info">{{ tag }}</a>
+                <a href="#" class="mr-1 badge badge-info">{{ tag }}</a>
             {% endfor %}
+            </div>
         </div>
     </div>
 </body>
@@ -62,7 +64,7 @@
 
  
     <h2 style = "position: absolute; top:121px; 
-    left:673px; width:70% ">
+    left:33%; max-width:70% ">
      Hi, I'm {{person.user.first_name}}
     </h2>
 
@@ -74,8 +76,8 @@
         </div>
     </div>
 <div class="container-fluid">
-    <h5 style = "line-height:300%; font-weight: bolder; color:#0E7D29;">{{person.user.first_name}} is verified</h5>
-    <p style = "font-size:20px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
+    <h5 style = "line-height:235%; font-weight: bolder; color:#0E7D29;">{{person.user.first_name}} is verified</h5>
+    <p style = "font-size:15px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
         that each tutor <br> meets our high standards of trust & excellence.</p>
         <img class="shield-img" src="{%static 'media\Shield.png' %}">
   </div>
@@ -89,8 +91,8 @@
     }
     .card{
         position: absolute;
-        top: 156px;
-        width: 25%;
+        top: 19%;
+        width: 26%;
         right: 71%;
         border-radius: 4%;
         height: 56%;
@@ -105,7 +107,7 @@
         border-radius:50%;
         left:15%;
         position:absolute;
-        top:15;
+        top:7%;
         border:1.5px solid #c0bebe;
     }
     .writingSection{
@@ -120,11 +122,16 @@
         height:200;
         width:100%;
     }
+    .col-sm-5{
+        position: relative;
+        width: 100%;
+        right: 2%;
+    }
     .container-fluid{
         background-color: #def3ec;
         position: relative;
-        left: 133px;
-        top: 600;
+        left: 6%;
+        top: 70%;
         height: 17%;
         width: 47%;
     }
@@ -132,7 +139,18 @@
         position:relative;
         width:26%;
         left:80%;
-        bottom:137px;
+        bottom:93%;
+    }
+    .card-body{
+        padding: 0rem;
+    }
+    .mr-1{
+        width: 96px;
+        height: 35px;
+        font-size: 22px;
+        margin: 2px 10px;
+        background-color: #d6dce2;
+        color: #7c7e81;
     }
 
     
