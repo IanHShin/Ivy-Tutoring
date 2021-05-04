@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User,Profile, Invoice
+from .models import User,Profile, Invoice, Experience,School
 from django.forms import Textarea
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_summernote.fields import SummernoteTextFormField
@@ -13,7 +13,7 @@ class TutorForm(UserCreationForm):
 	captcha = CaptchaField()
 	class Meta:
 		model = User
-		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'captcha']
+		fields = ['email', 'username', 'password1', 'password2', 'first_name', 'last_name','captcha']
 
 	def clean(self):
 		email = self.cleaned_data.get('email')
@@ -79,7 +79,7 @@ class ProfileForm(forms.ModelForm):
 	
 	class Meta:
 		model = Profile
-		fields = ['pro_pic','descript','intro','city','state','tags']
+		fields = ['pro_pic','descript','intro','city','state','tags',"college","major"]
 		widgets = {
 			'tags':forms.TextInput(attrs={'data-role':'tagsinput'}),
 		}
@@ -89,3 +89,34 @@ class ProfileForm(forms.ModelForm):
 															'data-count': 'characters',
 															'data-count-direction': 'down'})
 		self.fields['intro'].label = False
+		self.fields['city'].widget.attrs['placeholder'] = "City"
+		self.fields['state'].widget.attrs['placeholder'] = "State"
+		self.fields['college'].widget.attrs['placeholder'] = "College"
+		self.fields['major'].widget.attrs['placeholder'] = "Major"
+		self.fields['descript'].widget.attrs['placeholder'] = "Write a welcoming message!"
+		self.fields['intro'].widget.attrs['placeholder'] = "Write a paragraph about yourself!"
+
+
+class ExperienceForm(forms.ModelForm):
+	class Meta:
+		model = Experience
+		fields = ['employer','position','start_year',"end_year"]
+		
+	def __init__(self, *args, **kwargs):
+		super(ExperienceForm, self).__init__(*args, **kwargs)
+		self.fields['employer'].widget.attrs['placeholder'] = 'Employer'
+		self.fields['position'].widget.attrs['placeholder'] = 'Position'
+		self.fields['start_year'].widget.attrs['placeholder'] = 'ex:2020'
+		self.fields['end_year'].widget.attrs['placeholder'] = 'ex:2021'
+
+
+class SchoolForm(forms.ModelForm):
+	class Meta:
+		model = School
+		fields = ["college","major","c_start_year","c_end_year"]
+	def __init__(self, *args, **kwargs):
+		super(SchoolForm, self).__init__(*args, **kwargs)
+		self.fields['college'].widget.attrs['placeholder'] = 'School'
+		self.fields['major'].widget.attrs['placeholder'] = 'Area of Study'
+		self.fields['c_start_year'].widget.attrs['placeholder'] = 'ex:2020'
+		self.fields['c_end_year'].widget.attrs['placeholder'] = 'ex:2021'

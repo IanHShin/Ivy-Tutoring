@@ -30,7 +30,6 @@ urlpatterns = [
 	path('cancelled/', CancelledView.as_view()),
 	#path("Search_Results/", views.Search_Results,name = "SearchResults"),
 	path("Resend/", views.ResendConfirmation, name='ResendConfirmation'),
-	path("Profile/<str:username>/EditProfile/EditLocation/", views.LocationEdit, name = "LocationEdit"),
 	path("Profile/<str:username>/EditProfile/EditSkills/", views.EditSkills, name = "SkillEdit"),
 	path("ForgotUsername/", views.SendUsername, name='SendUsername'),
 	path("TagResults/", views.tag,name = "TagResults"),
@@ -45,6 +44,12 @@ urlpatterns = [
 	path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name="main/password_reset_form.html"), name="password_reset_confirm"),
 	path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name="main/password_reset_done.html"), name="password_reset_complete"),
 	path('PaymentDetailEndpoint/', views.PaymentDetailEndpoint, name='PaymentDetailEndpoint'),
+	path("Profile/<str:username>/EditProfile/JobEdit/", views.editJob, name = "JobEdit"),
+	path("UpdateJob/<str:pk>/", views.updateJob, name= "UpdateJob"),
+	path("DeleteJob/<str:pk>/", views.deleteJob, name = "DeleteJob"),
+	path("Profile/<str:username>/EditProfile/EditSchool/", views.editSchool, name = "EditSchool"),
+	path("UpdateEd/<str:pk>/", views.updateSchool, name= "UpdateEd"),
+	path("DeleteEd/<str:pk>/", views.deleteSchool, name= "DeleteEd"),
 	
 ]
 if settings.DEBUG:

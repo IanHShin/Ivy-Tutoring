@@ -12,16 +12,13 @@
 {%include "main/HeadNav.html" %}
 {%load static%}
 <div class = "container" >
-  <h4 class="" style="text-align:left;"><strong><font color="#a82e2e">A little bit about our team...</font></strong></h4>
+  <h4 class="" style="text-align:left;"><strong><font color="#eee6e6">A little bit about our team:</font></strong></h4>
     <hr>
-      <div class = "", style = "text-align: left;">
+      <div class = "", style = "text-align: left; color:#eee6e6;">
           <font size = "3">
               Give your child the study help they need with passionate and intelligent tutors.
-              <br>
-              With a robust online scheduling system, thorough hiring process, and personalized learning
-              <br>
-              Ivy Tutoring guarantees an effective, and safe environment for your child to learn!
-              
+              With a robust online scheduling system, thorough hiring process, and personalized learning.
+              Ivy Tutoring guarantees an effective, and safe environment for your child to learn!       
           </font>    
       </div>
     <hr>
@@ -36,6 +33,13 @@
   <form class = "wrapper" method = "GET" action ="{% url 'main:TagResults' %}">
       <input name = "searchBarTags" type = "text" class = "input" placeholder = "Search for a Subject!" , value = {{request.GET.searchBar}}>       
     </form>          
+
+    <h4 class="Subject-head" style="text-align:left;"></h4><font color="#d6dce2">Subject Popular:</font></h4>
+    <div class = "Subjects", style = "text-align: left; color:#eee6e6;">
+      <font size = "4">
+          Math, Science, Spanish, French, Language Arts       
+      </font>    
+  </div>
 </div>  
 
 <p class="no-results" style="display: none;">No results </p>
@@ -66,6 +70,10 @@
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">{{use.first_name}} {{use.last_name}}<i class="material-icons right">{{use.profile.state}}</i></span>
             <p><a href="{% url 'main:profile' username=use.username %}">Profile</a></p>
+            <p>I can teach:</p>
+            {%for tag in use.profile.tags.all%}  
+              {{tag}}
+            {%endfor%}
         </div>
 
 
@@ -112,16 +120,22 @@
     }
   
     .container{
-      width:35%;
+      width:30%;
       margin: 0 auto;
       max-width: 1280px;
       position: relative;
-      right: 31%;
+      right: 30%;
       top:160;
     }
     .wrapper{
       width:65%;
     }
+    img {
+    width: 275px;
+    padding-left: 5px;
+    padding-right:5px;
+    padding-top: 8px;
+  } 
   
   </style>
   

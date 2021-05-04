@@ -19,27 +19,23 @@
 {%include "main/HeadNav.html" %}
 
 <body>
-    <div class="container bcontent">
+    
         <div class="card">
             <div class="row no-gutters">
                 <div class="list-group">
                     <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
                     <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
                     <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
-                    <a href="{% url 'main:LocationEdit' username=request.user.username %}"  class="list-group-item list-group-item-action">Change location</a>
-                    <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
-                
+                    <a href="{% url 'main:EditSchool' username=request.user.username %}"  class="list-group-item list-group-item-action">Manage Education</a>
+                    <a href="{% url 'main:JobEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Experience</a>                
                 </div>
-                <script type = "text/javascript">
-                  
-                        </script> 
-                <div class="col-sm-7">
+                <div class="container">
+                    <div class="col-sm-7">
                     {% if request.user.profile.pro_pic %} 
                             <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
                         {% else %}
                             <img class="card-img" src="{%static 'media\Default.jpg' %}">
                         {% endif %}
-                    <div class = 'col-sm-9'>
                         <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
                             {% render_field request.user.username %}      
                         </b>    
@@ -50,27 +46,26 @@
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
                                     {{ form.pro_pic|safe }}
                                     {{ form.descript|safe }} <label id = "Descript_cnt">Characters Remaining: 50</label>
-                                    {{ form.intro|as_crispy_field }}
-                                    
+                                    {{ form.intro}}   
                                 </div>
-                               
                                     <div>
-                                        <input class="btn btn-primary" type="submit">
-                                        
+                                        <input class="btn btn-primary" id = "EP-btn" type="submit">     
                                     </div>
                         </form>
                     </div>
-                </div>
+                
             </div>   
                 <div class = 'vl'></div> 
                 <hr style = "height:2px;width:20%; position: absolute; top: 80%;border:none;color:#c0bebe;background-color:#c0bebe;">
         </div>
     </div>
 
+
 </body>
 <script>
     const myText = document.getElementById("id_intro");
     const remainChars = document.getElementsByClassName("text-count-current")[0];
+    const btn = document.getElementById("EP-btn");
     const MaxChars = 1000;
     const initDiff = MaxChars - myText.value.length;
     remainChars.textContent = `${initDiff}`;
@@ -79,9 +74,12 @@
         const color = remaining < MaxChars * .1 ? 'red':null;
         remainChars.textContent = `${remaining}`;
         remainChars.style.color = color;
-        if (myText.value.length >= 1000){
-            myText.stop()
-        };
+        if (myText.value.length > 1000){
+            btn.disabled = true;
+        }
+        else{
+            btn.disabled = false;
+        }
     });     
 </script>
 <script>
@@ -95,7 +93,7 @@
         const color1 = remaining1 < MaxChars1 * .1 ? 'red':null;
         remainChars1.textContent = `Characters Remaining: ${remaining1}`;
         remainChars1.style.color = color;
-        if (myText1.value.length >= 50){
+        if (myText1.value.length > 50){
             myText1.stop()
         };
     });   
@@ -106,6 +104,11 @@
 <style>
     body{
         background-color:#FAFAFA;
+    }
+    .card-body{
+        top: 2%;
+        left: 10%;
+        position: relative;
     }
     .list-group{
         width:225;
@@ -145,10 +148,15 @@
         top: 25px;
         }
     .card-img{
-        max-width:50%;
-        max-height:25%;
-        border-radius:50%;
-        border:1.5px solid #c0bebe;
+        max-width: 46%;
+        height: 16%;
+        border-radius: 50%;
+        left: -5%;
+        position: relative;
+        /* top: 38px; */
+        border: 2.5px solid #c0bebe;
+        padding-left: 0px;
+        padding-top: 0px;
     }
     .col-sm-9{
         max-width:100%;
@@ -158,8 +166,8 @@
     }
     textarea {
         position: absolute;
-        top: 72%;
-        width: 138%;
+        top: 84%;
+        width: 70%;
         height: 12rem;
         background-color: whitesmoke;
         min-height: 12rem;
@@ -168,19 +176,19 @@
     #Descript_cnt{
         position: absolute;
         width: 100%;
-        top: 66%;
-        left: 62%;
+        top: 69%;
+        left: 38%;
     }
     #id_intro_counter{
         position: relative;
-        top: 200px;
-        left: 113%;
+        top: 205px;
+        left: 101%;
         font-size: 80%;
         color: #818a91;
     }
     .btn{
         position: absolute;
-        top: 115%;
+    top: 335px;
 
     }
     

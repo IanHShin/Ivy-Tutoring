@@ -14,80 +14,107 @@
 
 {%include "main/HeadNav.html" %}
 <body>
-    <div class="container bcontent">
-        <div class="card">
-            <div class="row no-gutters">
-                <div class="col-sm-5">
-                    <!-- I am going to replace conditional, after I edit media path. I messed up and put media as parent dir.-->
-                    {% if person.user.profile.pro_pic %} 
-                        <img class="card-img" src="{{ person.user.profile.pro_pic.url }}">
-                    {% else %}
-                        <img class="card-img" src="{%static 'media/Default.jpg' %}">
+   <div class = container style = "width:70%;height:100%">
+        {% if person.user.profile.pro_pic %} 
+            <img class="card-img" src="{{ person.user.profile.pro_pic.url }}">
+        {% else %}
+            <img class="card-img" src="{%static 'media/Default.jpg' %}">
+        {% endif %}
+
+        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif; font-size:35px;position:relative;left:7.5%;'>
+            {{person.user.first_name}} {{person.user.last_name}} 
+            <img class="img" style  = "width:4%;border-radius: 20%; padding-left:0px; padding-top:0px;" src="{%static 'media\TutorSticker.png' %}"> 
+        </b>
+
+        <div class = "content-wrap">
+            <p style = "margin-bottom:-.2rem;">{%render_field person.descript %}</p>
+            
+
+            {% if person.user.username == user.username %}
+            <a href= "EditProfile"> Edit</a>
+                    {% if user.is_superuser %}   
+                        <a href="/OTL">OTL</a>
+                        <a href="/CreateInvoice/">Invoice</a>
                     {% endif %}
-                </div>
-                <div class="col-sm-7">
-                        <div class="card-body">
-                            <h4>
-                                <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif; font-size:30px;'>
-                                    {{person.user.first_name}} {{person.user.last_name}} 
-                                    <img class="img" style  = "width:15%;border-radius: 20%;" src="{%static 'media\TutorSticker.png' %}">      
-                                </b>
-                                
-                                <div class="card-text" style = "width:500px;max-width:fit-content; font-size:20px;">   
-                                    {%render_field person.descript %}
-                                    <br>    
-                                    {{person.city}} {{person.state}}
-                                </div> 
-                            </h4>
-                    </div>
-                </div>
-                 {% if person.user.username == user.username %}
-                 <center><a href= "EditProfile"> Edit</a></center>
-                        {% if user.is_superuser %}
-                            <a href="/OTL">OTL</a>
-                            <a href="/CreateInvoice/">Invoice</a>
-                        {% endif %}
-                    {% endif %}
-            </div>
-            <hr style = "position:relative; margin-left: auto; margin-right:auto;
-             width: 95%;height:2px;border:none;color:#c0bebe;background-color:#c0bebe;">
-             <h4>Skills</h4>
-             <div class = "row">
-             {% for tag in person.tags.all %}
-                <a href="#" class="mr-1 badge badge-info">{{ tag }}</a>
-            {% endfor %}
-            </div>
+                {% endif %}
         </div>
-    </div>
+        <div class = "button-cnt">
+            <form action="https://google.com">
+                <input class = "btn btn-primary" type="submit" value="Book this tutor!" />
+            </form>
+        </div>
+  
+
+        <h5>About {{person.user.first_name}}</h5>
+            <div class = "", style = "text-align: left; width:60%; color:#5C5C5C;">
+                <font size = "3">
+                    {{person.intro | safe }}
+                </font>    
+            </div>
+            <h5 style = "margin: 1.5rem 0 0.656rem 0;">Subjects</h5>
+            <div class = "row" style = "width:60%;">
+                {% for tag in person.tags.all %}
+                        <a href="#" class="mr-1 badge badge-info">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        
+        <div class="container-fluid">
+            <h5 style = "line-height:235%; font-weight: bolder; color:#0E7D29;">{{person.user.first_name}} is verified</h5>
+            <p style = "font-size:15px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
+            that each tutor <br> meets our high standards of trust & excellence.</p>
+            <img class="shield-img" src="{%static 'media\Shield.png' %}">
+        </div>
+
+        <div class = "right_block">    
+            <h5>Work Experience</h5>
+                <div class="row" style = "width:100%; display:block;">
+                    {%for x in exp%}
+                        <p class = "parent" style = "font-size:14px;">{{x.position}} </p>
+                        <p class  = "child" style = "font-size:12px;">{{x.employer}}</p>
+                        <p class ="child-dates" style="font-size:13px; font-style:italic;">{{x.start_year}}-{{x.end_year}}</p>
+                        <hr style = "margin-top: -3.0rem;
+                        margin-bottom: .5rem;height:2px; width:184%;">        
+                    {%endfor%}
+                </div>
+        </div>
+        <div class = "right_block_ed">    
+            <h5>Education</h5>
+                <div class="row" style = "width:100%; display:block;">
+                    {%for e in ed%}
+                        <p class = "parent" style = "font-size:14px;">{{e.college}} </p>
+                        <p class  = "child1" style = "font-size:12px;">{{e.major}}</p>
+                        <p class ="child-dates1" style="font-size:13px; font-style:italic;">{{e.c_start_year}}-{{e.c_end_year}}</p>
+                        <hr style = "margin-top: -3.0rem;position:relative;left:-34%;
+                        margin-bottom: .5rem;height:2px; width:33%;">        
+                    {%endfor%}
+                </div>
+        </div>
+
+      
+        
+
+    </div>       
 </body>
 
 
  
-    <h2 style = "position: absolute; top:121px; 
-    left:33%; max-width:70% ">
-     Hi, I'm {{person.user.first_name}}
-    </h2>
 
-    <div class = "writingSection">
-        <div class = "", style = "text-align: left; color:#5C5C5C;">
-            <font size = "5">
-                {{person.intro | safe }}
-            </font>    
-        </div>
-    </div>
-<div class="container-fluid">
-    <h5 style = "line-height:235%; font-weight: bolder; color:#0E7D29;">{{person.user.first_name}} is verified</h5>
-    <p style = "font-size:15px;color:#6CB07C"> Our verification process is done for each individual tutor and ensures
-        that each tutor <br> meets our high standards of trust & excellence.</p>
-        <img class="shield-img" src="{%static 'media\Shield.png' %}">
-  </div>
+
 
 
 
 <style>
     body{
-        background-color:#FAFAFA;
-        
+        background-color:#FAFAFA;   
+        overflow-x: hidden;
+    }
+    .content-wrap{
+        font-family: Ubuntu, "times new roman", times, roman, serif;
+        position: relative;
+        left: 23%;
+        top: -65px;
+        font-size: 20px;
+
     }
     .card{
         position: absolute;
@@ -101,21 +128,23 @@
     .row{
         margin-left:0;
     }
-    .card-img{
-        max-width:75%;
-        height:85%;
-        border-radius:50%;
-        left:15%;
-        position:absolute;
-        top:7%;
-        border:1.5px solid #c0bebe;
+    .card-img {
+        max-width: 15%;
+        height: 21%;
+        border-radius: 50%;
+        left: 5%;
+        position: relative;
+        top: 38px;
+        border: 2.5px solid #c0bebe;
+        padding-left: 0px;
+        padding-top: 0px;   
     }
     .writingSection{
-        position: absolute;
-        top: 255px;
+        position: relative;
+        top: 15%;
         left: 33%;
         width: 55%;
-}
+        max-width:900px;
     }
     .col-sm-5{
         position:absoulte;
@@ -130,28 +159,80 @@
     .container-fluid{
         background-color: #def3ec;
         position: relative;
-        left: 6%;
-        top: 70%;
+        left: 0%;
+        top: 0%;
         height: 17%;
-        width: 47%;
+        width: 64%;
+        max-width: 700px;
+        max-height: 126px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: 0;
+        margin-left: 0;
+        
     }
     .shield-img{
-        position:relative;
+        position:absolute;
         width:26%;
-        left:80%;
-        bottom:93%;
+        left:78%;
+        bottom:9%;
+
     }
     .card-body{
         padding: 0rem;
     }
     .mr-1{
-        width: 96px;
-        height: 35px;
-        font-size: 22px;
-        margin: 2px 10px;
+        width: fit-content;
+        height: 27px;
+        font-size: 15px;
+        margin: 3px 0px 3px 0px;
         background-color: #d6dce2;
         color: #7c7e81;
     }
-
-    
+    .right_block{
+        position: absolute;
+        left: 965px;
+        top: 361px;
+    }
+    .right_block_ed{
+        position: relative;
+        left: 722px;
+        top: -32%;
+    }
+    .child{
+        position:relative;
+        top:-18px;
+    }
+    .child-dates{
+        position: relative;
+        top: -69px;
+        left: 150%;
+    }
+    .button-cnt{
+        position: absolute;
+        top: 28%;
+        left: 68%;
+    }
+    .btn{
+        border: none;
+        border-radius: 2px;
+        display: inline-block;
+        font-size:18px;
+        height: 75px;
+        width: 200px;
+        line-height: 36px;
+        padding: 0 16px;
+        text-transform: uppercase;
+        vertical-align: middle;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .child1{
+        position:relative;
+        top:-18px;
+    }
+    .child-dates1{
+        position: relative;
+        top: -69px;
+        left: 26%;
+    }
 </style>

@@ -4,7 +4,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-   
+    
     <!-- Compiled and minified JavaScript -->
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -14,51 +14,56 @@
 {%include "main/HeadNav.html" %}
 
 <body>
-    <div class="container bcontent">
-        <div class="card">
-            <div class="row no-gutters">
-                <div class="list-group">
-                    <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
-                    <a href="#" class="list-group-item list-group-item-action">Change Password</a>
-                    <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
-                    <a href="{% url 'main:LocationEdit' username=request.user.username %}"  class="list-group-item list-group-item-action">Change location</a>
-                    <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
-                
-                </div>
-            
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="list-group">
+                <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
+                <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
+                <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
+                <a href="{% url 'main:EditSchool' username=request.user.username %}"  class="list-group-item list-group-item-action">Manage Education</a>
+                <a href="{% url 'main:JobEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Experience</a>            
+            </div>
+            <div class="container">
                 <div class="col-sm-7">
-                    {% if request.user.profile.pro_pic %} 
-                            <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
-                        {% else %}
-                            <img class="card-img" src="{%static 'media\Default.jpg' %}">
-                        {% endif %}
-                    <div class = 'col-sm-9'>
-                        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
-                            {% render_field request.user.username %}      
-                        </b>    
-                    </div>
-                    <div class="card-body">
-                        <form method = "POST">
+                {% if request.user.profile.pro_pic %} 
+                        <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
+                    {% else %}
+                        <img class="card-img" src="{%static 'media\Default.jpg' %}">
+                    {% endif %}
+                    <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
+                        {% render_field request.user.username %}      
+                    </b>    
+                </div>
+
+                <div class="card-body">
+                    <form method = "POST" action = "" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Tags</label>
-                                <input class="form-select" name="tags" data-role="tagsinput">
-                                {% csrf_token %}
-                                </input>
+                                    <input class="form-select" name="tags" data-role="tagsinput">
+                                    {% csrf_token %}
+                                    </input>
                               </div>         
-                              <button type="submit" value="upload" class="btn btn-primary">Submit</button>
+                                <button type="submit" value="upload" class="btn btn-primary">Submit</button>
                             </form>
-                            {{user.profile.tags.all|join:", "}}
                     </div>
+                    <div class="card" id = "tips">
+                        <div class="card-body">
+                            <h5 class="card-title">Tags.</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Here are some tips!</h6>
+                        <div class = "card-text">
+                            Tags are a great way to increase exposure to potential clients!
+                            <br>
+                            <br>
+                            Use generic tags, such as "Math" to increase views to your profile
+                        </div>
                 </div>
-                
+                </div>   
             </div>   
                 <div class = 'vl'></div> 
                 <hr style = "height:2px;width:20%; position: absolute; top: 80%;border:none;color:#c0bebe;background-color:#c0bebe;">
         </div>
-    </div>
-    <ul>
-        
-    </ul>
+    
+   
 
 </body>
 
@@ -66,6 +71,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!-- Tags Input Bootstrap 4 JS -->
+
 <script src="/static/js/tagsinput.js"></script>
 
 
@@ -76,6 +82,14 @@
     }
     .list-group{
         width:225;
+    }
+    #tips{
+        position: absolute;
+        left: 60%;
+        top: 58%;
+        width: 25rem;
+        height: 16rem;
+
     }
     .list-group-item{
         position:relative;
@@ -111,12 +125,7 @@
         left: 30%;
         top: 25px;
         }
-    .card-img{
-        max-width:50%;
-        max-height:25%;
-        border-radius:50%;
-        border:1.5px solid #c0bebe;
-    }
+  
     .col-sm-9{
         max-width:100%;
         position:absolute;
@@ -130,5 +139,29 @@
         padding: 0px 8px;
         color:white;
     }
+
+
+    .card{
+        position: absolute;
+        top: 20%;
+        width: 74%;
+        left: 13%;
+        height: 605px;
+        max-height: 605px;
+        max-width: 1200px;
+    }
+    .card-img{
+        max-width: 46%;
+        height: 16%;
+        border-radius: 50%;
+        left: -5%;
+        position: relative;
+        /* top: 38px; */
+        border: 2.5px solid #c0bebe;
+        padding-left: 0px;
+        padding-top: 0px;
+    }
+    
+    
     
 </style>

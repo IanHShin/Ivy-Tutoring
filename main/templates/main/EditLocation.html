@@ -17,35 +17,35 @@
 {%include "main/HeadNav.html" %}
 
 <body>
-    <div class="container bcontent">
-        <div class="card">
-            <div class="row no-gutters">
-                <div class="list-group">
-                    <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
-                    <a href="#" class="list-group-item list-group-item-action">Change Password</a>
-                    <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
-                    <a href="{% url 'main:LocationEdit' username=request.user.username %}"  class="list-group-item list-group-item-action">Change location</a>
-                    <a href="#" class="list-group-item list-group-item-action">Customer Service</a>
-                
-                </div>
-            
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="list-group">
+                <a href="{% url 'main:EditProfile' username=request.user.username %}" class="list-group-item list-group-item-action">Edit Profile</a>
+                <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
+                <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
+                <a href="{% url 'main:EditSchool' username=request.user.username %}"  class="list-group-item list-group-item-action">Manage Education</a>
+                <a href="{% url 'main:JobEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Experience</a>            </div>
+
+            <div class="container">
                 <div class="col-sm-7">
-                    {% if request.user.profile.pro_pic %} 
-                            <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
-                        {% else %}
-                            <img class="card-img" src="{%static 'media\Default.jpg' %}">
-                        {% endif %}
-                    <div class = 'col-sm-9'>
-                        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
-                            {% render_field request.user.username %}      
-                        </b>    
-                    </div>
+                {% if request.user.profile.pro_pic %} 
+                        <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
+                    {% else %}
+                        <img class="card-img" src="{%static 'media\Default.jpg' %}">
+                    {% endif %}
+                    <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
+                        {% render_field request.user.username %}      
+                    </b>    
+                </div>
+
                     <div class="card-body">
                         <form method = "POST" action = "" enctype="multipart/form-data">
                             {%csrf_token%}
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
-                                    {{ form.city|safe }}
-                                    {{ form.state|safe }}
+                                    {{form.college}}
+                                    {{form.major}}
+                                    {{form.c_start_year}}
+                                    {{form.c_end_year}}
                                 </div>
                                     <div>
                                         <input class="btn btn-primary" type="submit">
@@ -53,8 +53,32 @@
                                     </div>
                         </form>
                     </div>
+                        <div class = "card" id = "Exp-Card">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Education</th>
+                                    <th scope="col">Area of Study</th>
+                                    <th>Years</th>
+                                    <th>Edit</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {%for x in Ed%}
+                                    <tr>
+                                        <td>{{x.college|default_if_none:''}}</td>
+                                        <td>{{x.major|default_if_none:''}}</td>
+                                        <td>{{x.c_start_year|default_if_none:''}}-{{x.c_end_year|default_if_none:''}}</td>
+                                        <td><a href="{% url 'main:UpdateEd' x.id %}"> Update</a>
+                                            <a href= "{% url 'main:DeleteEd' x.id %}">Delete</a></td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>   
                 </div>
             </div>   
+        
                 <div class = 'vl'></div> 
                 <hr style = "height:2px;width:20%; position: absolute; top: 80%;border:none;color:#c0bebe;background-color:#c0bebe;">
         </div>
@@ -84,15 +108,7 @@
     .list-group.a{
         font-size:17;
     }
-    .card{
-        position: absolute;
-        top: 20%;
-        width: 74%;
-        left: 13%;
-        height: 605px;
-        max-height: 605px;
-        max-width: 1200px;
-    }
+
     .row{
         margin-left:0;
     }
@@ -107,18 +123,42 @@
         left: 30%;
         top: 25px;
         }
-    .card-img{
-        max-width:50%;
-        max-height:25%;
-        border-radius:50%;
-        border:1.5px solid #c0bebe;
-    }
     .col-sm-9{
         max-width:100%;
         position:absolute;
         left: 200;
         top:54.6;
     }
-    
-    
+    .card{
+        position: absolute;
+        top: 20%;
+        width: 74%;
+        left: 13%;
+        height: 605px;
+        max-height: 605px;
+        max-width: 1200px;
+    }
+    .card-img{
+        max-width: 46%;
+        height: 16%;
+        border-radius: 50%;
+        left: -5%;
+        position: relative;
+        /* top: 38px; */
+        border: 2.5px solid #c0bebe;
+        padding-left: 0px;
+        padding-top: 0px;
+    }
+    .card-body{
+        top: 2%;
+        left: 10%;
+        position: relative;
+    }
+    #Exp-Card{
+        position: absolute;
+        left: 75%;
+        top: 30%;
+        height: fit-content;
+        width: 35%;
+    }
 </style>
