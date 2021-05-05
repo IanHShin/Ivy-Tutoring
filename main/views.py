@@ -376,13 +376,21 @@ def applicant(request): #consider using main_admins. Could be easier for Melissa
 				'Email Address': form.cleaned_data['emailAddress'],
 				'Message' : form.cleaned_data['message'],
 			}
-			resume = request.FILES.getlist('resume')[0]
+			try:
+				resume = request.FILES.getlist('resume')[0]
+			except IndexError:
+				resume = None
 			content = ""
 			for key, value in body.items():
 				content += "\n" + key + ":\n\t" + value
-			sendEmail(subject, content, sender, receiver, resume)
+			if resume == None: 
+				sendEmail(subject, content, sender, receiver)
+			else:
+				sendEmail(subject, content, sender, receiver, resume)
 			messages.success(request, "Tutor Applcation Received")
 			return HttpResponseRedirect(reverse("main:Applicant"))
+		else:
+			messages.error(request, "Invalid Captcha")
 	else:
 		form = ApplicantForm()
 	return render(request,"main/Applicant.html", {"form":form})

@@ -34,7 +34,7 @@ class ApplicantForm(forms.Form):
 	lastName = forms.CharField(label = "Last Name", max_length = 30)
 	emailAddress = forms.EmailField(label = "Email Address", max_length = 100)
 	message = forms.CharField(widget=forms.Textarea(attrs={"rows":10,"cols":20}),max_length = 500)
-	resume = forms.FileField()
+	resume = forms.FileField(required=False)
 	captcha = CaptchaField()
 
 class ContactForm(forms.Form):
