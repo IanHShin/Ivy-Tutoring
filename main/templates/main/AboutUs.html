@@ -164,17 +164,10 @@
 .letter{
     font-family:emoji;
 }
-.parallax-container .parallax img {
-    opacity: 0;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    min-width: 105%;
-    min-height: 100%;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+.parallax-container {
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    width: 100%;
 }
-
 </style>

@@ -90,7 +90,7 @@ class ProfileForm(forms.ModelForm):
 															'data-count-direction': 'down'})
 		self.fields['intro'].label = False
 		self.fields['city'].widget.attrs['placeholder'] = "City"
-		self.fields['state'].widget.attrs['placeholder'] = "State"
+		self.fields['state'].widget.attrs['placeholder'] = "State Acronym"
 		self.fields['college'].widget.attrs['placeholder'] = "College"
 		self.fields['major'].widget.attrs['placeholder'] = "Major"
 		self.fields['descript'].widget.attrs['placeholder'] = "Write a welcoming message!"

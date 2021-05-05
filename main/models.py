@@ -11,11 +11,12 @@ class Profile(models.Model):
 	pro_pic =  models.ImageField(upload_to = 'profilePics', blank = True, null = True)
 	descript = models.CharField(max_length = 50, blank = True)
 	intro = models.CharField(max_length = 1000, blank = True)
-	city = models.CharField(max_length= 100,blank = True)
-	state = models.CharField(max_length = 100,blank = True)
+	city = models.CharField(max_length= 50,blank = True)
+	state = models.CharField(max_length = 2,blank = True)
 	tags = TaggableManager(blank = True)
 	college = models.CharField(max_length=100, null=True, blank=True)
 	major= models.CharField(max_length=100, null=True, blank=True)
+	
 
 	def save(self,*args,**kwargs):
 		super(Profile, self).save(*args,**kwargs)
@@ -51,7 +52,7 @@ class Experience(models.Model):
 class School(models.Model):
 	user = models.ForeignKey(User,null= True,on_delete = models.SET_NULL)
 	college = models.CharField(max_length=50, default= None, null = True)
-	major = models.CharField(max_length = 50,default = None, null = True)
+	major = models.CharField(max_length = 25,default = None, null = True)
 	c_start_year = models.SmallIntegerField(blank=True, null=True) 
 	c_end_year = models.CharField(max_length = 4,blank=True,null = True)
 

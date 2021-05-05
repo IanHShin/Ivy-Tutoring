@@ -35,8 +35,9 @@
                             <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
                         {% else %}
                             <img class="card-img" src="{%static 'media\Default.jpg' %}">
-                        {% endif %}
-                        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
+                    {% endif %}
+                        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;top: 70px;
+                        left: 48px; position:absolute;'>
                             {% render_field request.user.username %}      
                         </b>    
                     </div>
@@ -47,6 +48,10 @@
                                     {{ form.pro_pic|safe }}
                                     {{ form.descript|safe }} <label id = "Descript_cnt">Characters Remaining: 50</label>
                                     {{ form.intro}}   
+                                </div>
+                                <div class = "Location">
+                                    {{form.city}}
+                                    {{form.state}}
                                 </div>
                                     <div>
                                         <input class="btn btn-primary" id = "EP-btn" type="submit">     
@@ -105,11 +110,7 @@
     body{
         background-color:#FAFAFA;
     }
-    .card-body{
-        top: 2%;
-        left: 10%;
-        position: relative;
-    }
+    
     .list-group{
         width:225;
     }
@@ -147,17 +148,7 @@
         left: 30%;
         top: 25px;
         }
-    .card-img{
-        max-width: 46%;
-        height: 16%;
-        border-radius: 50%;
-        left: -5%;
-        position: relative;
-        /* top: 38px; */
-        border: 2.5px solid #c0bebe;
-        padding-left: 0px;
-        padding-top: 0px;
-    }
+
     .col-sm-9{
         max-width:100%;
         position:absolute;
@@ -177,7 +168,7 @@
         position: absolute;
         width: 100%;
         top: 69%;
-        left: 38%;
+        left: 286px;
     }
     #id_intro_counter{
         position: relative;
@@ -191,5 +182,30 @@
     top: 335px;
 
     }
-    
+
+    .card-img{
+        max-width: 37%;
+        max-height: 162;
+        border-radius: 50%;
+        left:-31%;
+        position: absolute;
+        border: 2.5px solid #c0bebe;
+        padding-left: 0px;
+        padding-top: 0px;
+    }
+    .container{   
+    position: absolute;
+    left: 22%;
+    }
+    .card-body{
+        top: 190px;
+        left: 9.5%;
+        position: relative;
+    }
+    .location{
+        position: absolute;
+        top: 16.5;
+        left: 450px;
+        width:200px;
+    }
 </style>

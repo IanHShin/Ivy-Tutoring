@@ -491,7 +491,7 @@ def profileEdit(request,username):
 		print(form.errors)
 		if form.is_valid():
 			obj = form.save(commit = False)
-			obj.save(update_fields = ['descript', 'intro', 'pro_pic'])
+			obj.save(update_fields = ['descript', 'intro', 'pro_pic','city','state'])
 			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
 		else:
 			form = ProfileForm()
@@ -514,6 +514,7 @@ def LocationEdit(request,username):
 
 @login_required(login_url="main:Login")
 def EditSkills(request,username):
+	tags = Profile.objects.get(user = request.user)
 	form = ProfileForm(instance = request.user.profile)
 	if request.method == "POST":
 		form = ProfileForm(request.POST,instance = request.user.profile)
@@ -521,12 +522,13 @@ def EditSkills(request,username):
 			form.save(commit = False)
 			form.save_m2m()
 			return redirect(reverse("main:profile", kwargs = {"username":request.user}))
-	context = {'form':form}	
+	context = {'form':form, "tags":tags}	
 	return render(request,"main/EditSkills.html", context)
+
 
 @login_required(login_url="main:Login")
 def editJob(request,username):
-	Exp = Experience.objects.filter(user = request.user)[:5]
+	Exp = Experience.objects.filter(user = request.user)[:3]
 	form = ExperienceForm()
 	if request.method == "POST":
 		form = ExperienceForm(request.POST,request.FILES)
@@ -560,7 +562,7 @@ def deleteJob(request,pk):
 
 @login_required(login_url="main:Login")	
 def editSchool(request,username):
-	Ed = School.objects.filter(user = request.user)[:5]
+	Ed = School.objects.filter(user = request.user)[:3]
 	form = SchoolForm()
 	if request.method == "POST":
 		form = SchoolForm(request.POST,request.FILES)
@@ -581,7 +583,7 @@ def updateSchool(request,pk):
 		print(form.errors)
 		if form.is_valid():
 			form.save()
-			return redirect(reverse("main:EditSchol", kwargs = {"username":request.user}))
+			return redirect(reverse("main:EditSchool", kwargs = {"username":request.user}))
 	context = {'form':form}
 	return render(request,"main/UpdateEd.html", context)
 
@@ -589,7 +591,7 @@ def deleteSchool(request,pk):
 	item = School.objects.get(id=pk)
 	if request.method == "POST":
 		item.delete()
-		return redirect(reverse("main:EditSchol", kwargs = {"username":request.user}))
+		return redirect(reverse("main:EditSchool", kwargs = {"username":request.user}))
 	context = {'item':item}
 	return render(request,"main/DeleteEd.html",context)
 

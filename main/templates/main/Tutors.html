@@ -26,12 +26,12 @@
      
 
   <div class = "form-group">
-    <input type = "text" class = "form-control" id = "searchBar" placeholder ="Search">
+    <input type = "text" class = "form-control" id = "searchBar" placeholder ="Search by Name!">
   </div>
   
 
   <form class = "wrapper" method = "GET" action ="{% url 'main:TagResults' %}">
-      <input name = "searchBarTags" type = "text" class = "input" placeholder = "Search for a Subject!" , value = {{request.GET.searchBar}}>       
+      <input name = "searchBarTags" type = "text" class = "input" placeholder = "Search for by Subject!" , value = {{request.GET.searchBar}}>       
     </form>          
 
     <h4 class="Subject-head" style="text-align:left;"></h4><font color="#d6dce2">Subject Popular:</font></h4>
@@ -69,11 +69,10 @@
 
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">{{use.first_name}} {{use.last_name}}<i class="material-icons right">{{use.profile.state}}</i></span>
-            <p><a href="{% url 'main:profile' username=use.username %}">Profile</a></p>
-            <p>I can teach:</p>
-            {%for tag in use.profile.tags.all%}  
-              {{tag}}
-            {%endfor%}
+            <p style = "font-size:1.2rem;">Learn more about  <a href="{% url 'main:profile' username=use.username %}">{{use.first_name}}</a></p>
+             
+            
+            
         </div>
 
 
@@ -136,6 +135,22 @@
     padding-right:5px;
     padding-top: 8px;
   } 
+  hr{
+      height:3px;
+      border:none;
+      color:#c0bebe;
+      background-color:#c0bebe;  
+  }
+
+  ::placeholder{
+    color:#efefeb
+  }
+  .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+
+    color:#efefeb;
+    opacity:1;
+    font-size:1rem;
+  }
   
   </style>
   

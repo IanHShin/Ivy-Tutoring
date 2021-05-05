@@ -12,16 +12,13 @@
 {%include "main/HeadNav.html" %}
 {%load static%}
 <div class = "container" >
-  <h4 class="" style="text-align:left;"><strong><font color="#a82e2e">A little bit about our team...</font></strong></h4>
+  <h4 class="" style="text-align:left;"><strong><font color="#eee6e6">A little bit about our team:</font></strong></h4>
     <hr>
-      <div class = "", style = "text-align: left;">
+      <div class = "", style = "text-align: left; color:#eee6e6;">
           <font size = "3">
               Give your child the study help they need with passionate and intelligent tutors.
-              <br>
-              With a robust online scheduling system, thorough hiring process, and personalized learning
-              <br>
-              Ivy Tutoring guarantees an effective, and safe environment for your child to learn!
-              
+              With a robust online scheduling system, thorough hiring process, and personalized learning.
+              Ivy Tutoring guarantees an effective, and safe environment for your child to learn!       
           </font>    
       </div>
     <hr>
@@ -78,6 +75,15 @@
   {%else%}
     Nothing is found
   {%endif%}
+  <p class="no-results" style="display: none;">No results </p>
+
+  <div class="table-output">
+    <div class="row card-container"> 
+        <div class="table-body">
+          
+            </div>
+          </div>
+        </div>
   
 <script src = '{% static "js/SearchTag.js" %}'></script> 
  

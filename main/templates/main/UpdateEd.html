@@ -20,8 +20,6 @@
 
 <body>
     
-    <body>
-    
         <div class="card">
             <div class="row no-gutters">
                 <div class="list-group">
@@ -29,8 +27,7 @@
                     <a href="/password_change/" class="list-group-item list-group-item-action">Change Password</a>
                     <a href="{% url 'main:SkillEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Skills</a>
                     <a href="{% url 'main:EditSchool' username=request.user.username %}"  class="list-group-item list-group-item-action">Manage Education</a>
-                    <a href="{% url 'main:JobEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Experience</a>
-                
+                    <a href="{% url 'main:JobEdit' username=request.user.username %}" class="list-group-item list-group-item-action">Manage Experience</a>                
                 </div>
                 <div class="container">
                     <div class="col-sm-7">
@@ -38,36 +35,37 @@
                             <img class="card-img" src="{{ request.user.profile.pro_pic.url }}">
                         {% else %}
                             <img class="card-img" src="{%static 'media\Default.jpg' %}">
-                        {% endif %}
-                        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;'>
+                    {% endif %}
+                        <b style = 'font-family: Ubuntu, "times new roman", times, roman, serif;font-size:30px;top: 70px;
+                        left: 48px; position:absolute;'>
                             {% render_field request.user.username %}      
                         </b>    
                     </div>
-
                     <div class="card-body">
                         <form method = "POST" action = "" enctype="multipart/form-data">
                             {%csrf_token%}
                                 <div class="card-text" style = "width:400px;max-width:-webkit-fill-available;">   
-                                    {{form.college|safe}}<label id = "Employer_cnt">Characters Remaining: 50</label>
-                                    {{form.major |safe }} <label id = "Position_cnt">Characters Remaining: 50</label>
-                                    {{form.c_start_year | safe}}
-                                    {{form.c_end_year | safe}}
+                                    {{form.college}}<label id = "College_cnt"style = "float:right;">Characters Remaining: 50</label>
+                                    {{form.major}}<label id = "Major_cnt" style = "float:right;">Characters Remaining: 25</label>
+                                    {{form.c_start_year}}
+                                    {{form.c_end_year}}
                                 </div>
                                     <div>
                                         <input class="btn btn-primary" id = "EP-btn" type="submit">     
                                     </div>
                         </form>
                     </div>
-                </div>
             </div>
+        </div>   
+    
             <div class = 'vl'></div> 
-            <hr style = "height:2px;width:20%; position: absolute; left:0;
-             top: 80%;border:none;color:#c0bebe;background-color:#c0bebe;"> 
-        </div>
+            <hr style = "height:2px;width:20%; position: absolute; top: 80%;border:none;color:#c0bebe;background-color:#c0bebe;">
+    </div>
 
+</body>
 <script>
-    const myText = document.getElementById("id_employer");
-    const remainChars = document.getElementById('Employer_cnt');
+    const myText = document.getElementById("id_college");
+    const remainChars = document.getElementById('College_cnt');
     const MaxChars = 50;
     const initDiff = MaxChars - myText.value.length;
     remainChars.textContent = `Characters Remaining: ${initDiff}`;
@@ -82,14 +80,14 @@
     });     
 </script>
 <script>
-    const myText1 = document.getElementById("id_position");
-    const remainChars1 = document.getElementById('Position_cnt');
-    const MaxChars1 = 50;
+    const myText1 = document.getElementById("id_major");
+    const remainChars1 = document.getElementById('Major_cnt');
+    const MaxChars1 = 25;
     const initDiff1 = MaxChars1 - myText1.value.length;
     remainChars1.textContent = `Characters Remaining: ${initDiff1}`;
     myText1.addEventListener("input",() => {
         const remaining1 = MaxChars1 - myText1.value.length;
-        const color1 = remaining1 < MaxChars1 * .1 ? 'red':null;
+        const color1 = remaining1 < 5? 'red':null;
         remainChars1.textContent = `Characters Remaining: ${remaining1}`;
         remainChars1.style.color = color1;
         if (myText1.value.length > 50){
@@ -97,26 +95,13 @@
         };
     });  
 </script>
-    
-    
-    
-    
+
+
 <style>
     body{
         background-color:#FAFAFA;
     }
-    #Exp-Card{
-        position: absolute;
-        left: 75%;
-        top: 30%;
-        height: 62%;
-        width: 30%;
-    }
-    .card-body{
-        top: 2%;
-        left: 10%;
-        position: relative;
-    }
+    
     .list-group{
         width:225;
     }
@@ -148,24 +133,13 @@
         height: 100%;
         left:20%;
         position:absolute;
-        top:0;
     }
     .col-sm-7{
         position: relative;
-        left: 30%;
+        left: 378px;
         top: 25px;
         }
-    .card-img{
-        max-width: 46%;
-        height: 16%;
-        border-radius: 50%;
-        left: -5%;
-        position: relative;
-        /* top: 38px; */
-        border: 2.5px solid #c0bebe;
-        padding-left: 0px;
-        padding-top: 0px;
-    }
+
     .col-sm-9{
         max-width:100%;
         position:absolute;
@@ -185,7 +159,7 @@
         position: absolute;
         width: 100%;
         top: 69%;
-        left: 38%;
+        left: 286px;
     }
     #id_intro_counter{
         position: relative;
@@ -196,8 +170,34 @@
     }
     .btn{
         position: absolute;
-        top: 308px;
+        top: 292px;
 
     }
-    
+
+    .card-img{
+        max-width: 37%;
+        max-height: 162;
+        border-radius: 50%;
+        left:-31%;
+        position: absolute;
+        border: 2.5px solid #c0bebe;
+        padding-left: 0px;
+        padding-top: 0px;
+    }
+    .container{   
+        position: absolute;
+        left: 22%;
+    }
+    .card-body{
+        top: 190px;
+        left: 213px;
+        position: relative;
+    }
+    #Exp-Card{
+        position: absolute;
+        left: 70%;
+        top: 30%;
+        height: fit-content;
+        width: 40%;
+    }
 </style>
