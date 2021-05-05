@@ -75,6 +75,7 @@ def PaypalCheckout(request, invoice_id):
 			'email' : invoice.email,
 			'detail' : invoice.detail,
 			'status' : invoice.paid,
+			'pay_id' : invoice.pay_id,
 		}
 		return render(request, "main/PaypalCheckout.html", context=context)
 	else:
