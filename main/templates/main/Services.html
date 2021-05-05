@@ -40,7 +40,7 @@
             <br>
             <br>
             <br>
-            <a href = "/Contact"  class="btn btn-sm btn-outline-secondary" id="contactBtn" role= 'button' style = "position:relative;left:40%;">
+            <a href = "/Contact"  class="btn btn-sm btn-outline-secondary" role= 'button' style = "position:relative;left:40%;">
               Contact Us! </button></a>
       
       </div>
@@ -73,6 +73,7 @@
           </div>        
         
           <div class="card" >
+            <img src="{%static 'media\Books.jpg' %}" alt="">
             <div class="card-body">
               <h4 class="card-title"><b>Reading/Writing</b></h4>
               <p class="card-text">Ivy Tutoring Services provides personally tailored reading lessons from
@@ -82,7 +83,6 @@
                 skilled thought process. Our tutors can work with you 1:1 to improve
                 writing skills and improve your grades.</p>
             </div>
-            <img src="{%static 'media\Books.jpg' %}" alt="">
           </div>
 
           <div class="card" >
@@ -109,6 +109,7 @@
           </div>
           
           <div class="card" >
+            <img src="{%static 'media\history.jpg' %}" alt="">
             <div class="card-body">
               <h4 class="card-title"><b>History</b></h4>
               <p class="card-text">Our History and Social Science tutors will help you to understand your
@@ -125,7 +126,6 @@
                   </div>
               </p>
             </div>
-            <img src="{%static 'media\history.jpg' %}" alt="">
           </div>
 
           <div class="card" >
@@ -147,6 +147,7 @@
           </div>
           
           <div class="card" >
+            <img src="{%static 'media\Books.jpg' %}" alt="">
             <div class="card-body">
               <h4 class="card-title"><b>Orton Gillingham</b></h4>
               <p class="card-text">Ivy Tutoring Service specializes in the Orton-Gillingham method, a
@@ -165,7 +166,6 @@
                 Please call for more information about our “OG” program.
               </p>
             </div>
-            <img src="{%static 'media\Books.jpg' %}" alt="">
           </div>
           
     </div>
@@ -219,7 +219,7 @@
 
     .card{
         margin: 5px;
-        width: 45%;
+        width: 30%;
         background-color: #98AFA5;  
     }
 
@@ -229,14 +229,15 @@
       margin-right: 1%;
     }
 
-    .row{
-      width: 100%;
-    }
+  
     .list{
       text-align: left;
     }
-    
-    #contactbtn{
+    .card img{
+      background-color: whitesmoke;
+      height: 170px;
+    }
+    .btn{
       height:7%;
       font-size:20px;
       width:18%;
@@ -244,17 +245,5 @@
       line-height:3.5;
       background-color:#FFD45A;
     }
-  .parallax-container .parallax img {
-    opacity: 0;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    min-width: 105%;
-    min-height: 100%;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-}
 
 </style>
