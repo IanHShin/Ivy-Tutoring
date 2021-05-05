@@ -1,11 +1,79 @@
-{% include "main/HeadNav.html" %}
-<title>Register a Tutor</title>
-<p>Enter the tutor's email to sent them a one time registration link</p>
-<form method = "POST">
-    {% csrf_token %}
-	{% for message in messages %}
-		<p>{{ message }}</p>
-	{% endfor %}
-    {{ form.as_p }} 
-    <button type="submit" class="btn btn-success">Submit</button>
+<!DOCTYPE html>
+{%include "main/HeadNav.html" %}
+<div class="container">
+   <div class="row">
+      <div class="col-md-6 mx-auto mt-1">
+         <div class="email">
+            <div class="email_header">
+             </div>
+            <div class="content">
+            <div class="envelope"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+
+            </p>
+             <h1>Please enter you email!</h1>
+               <p>You will recieve a one time registration email. </p>
+               </div>
+<form method="POST">
+  {% csrf_token %} {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %} {{ form.as_p }}
+  <button type="submit" class="btn btn-success">Submit</button>
 </form>
+                  </div>
+      </div>
+   </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<style type="text/css">
+
+
+    body
+    {
+        background:#f2f2f2;
+        
+    }
+     
+     .envelope
+    {
+      margin: 40px auto;
+      width: 180px;
+      height: 180px;
+      border-radius:100%;
+      background:#fff;
+      text-align:center;
+    border: 5px solid #222;
+}
+   
+   
+   .envelope i
+   {
+       margin:20px auto;
+       vertical-align:middle;
+       line-height: 1.3;
+        font-size: 100px;
+        text-align:center;
+   }
+
+    .content 
+    {
+        text-align:center;
+    }
+
+    .content  h1
+    {
+        font-size:25px;
+        padding-top:25px;
+    }
+
+    
+   
+.btn-success {
+    color: #fff;
+    background-color:#98AFA5;
+    background-color:#98AFA5;
+}
+
+
+</style
