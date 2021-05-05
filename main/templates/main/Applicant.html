@@ -32,7 +32,7 @@
                         {% for message in messages %}
                             <p>{{ message }}</p>
                         {% endfor %}
-                            <form method="POST" class="form-group">
+                            <form method="POST" class="form-group" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-label-group">
                                     {% render_field form.firstName placeholder="First Name" class+="form-control"  %}
