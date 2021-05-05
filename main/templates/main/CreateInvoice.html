@@ -16,7 +16,7 @@
 <title>Invoices</title>
 <form method="POST">
   {% csrf_token %}
-  <p>Please enter your information below to recieve a invoice</p>
+  <p>Please enter recipient's information below for them to recieve a invoice</p>
   {% for message in messages %}
   <p>{{ message }}</p>
   {% endfor %} {{ form.as_p }}
