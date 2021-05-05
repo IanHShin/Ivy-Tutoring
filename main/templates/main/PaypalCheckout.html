@@ -19,9 +19,9 @@
     <p>Email Address: {{email}}</p>
     <p>Price: ${{price}}</p>
     <p>Detail: {{detail}}</p>
-    {% if status == False %}
+    {% if status == False and not pay_id %}
         <p>Status: Not Paid</p>
-    {% else %}
+    {% elif status == True and pay_id %}
         <p>Status: Paid</p>
         <p>Thank you vert much for using Ivy Tutoring Service</p>
     {% endif %}
@@ -63,7 +63,7 @@
                     total: '{{price}}',
                     currency: 'USD',
                 },
-                description: '{detail}',
+                description: `{{ detail }}`,
                 // Disable invoice number during development, since is unqiue, same order will fail   
                 invoice_number: '{{invoice_number}}',
                 }],
